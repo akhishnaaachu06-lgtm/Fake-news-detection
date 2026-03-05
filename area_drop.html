@@ -1,0 +1,724 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="/allocate_area_post1/{{ id }}" method="post"><table width="200" border="1">#}
+{#  <tr>#}
+{#    <th scope="row">Select subadmin</th>#}
+{#    <td><label for="select"></label>#}
+{#      <label for="select2"></label>#}
+{#      <select name="select" id="select2">#}
+{#          {% for i in data %}#}
+{#        <option value="{{ i.id }}">{{ i.name }}-{{ i.email }}</option>#}
+{#          {% endfor %}#}
+{##}
+{#      </select></td>#}
+{#  </tr>#}
+{#<tr>#}
+{#          <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Allocate" /></th>#}
+{##}
+{#</tr>#}
+{#</table>#}
+{##}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{##}
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#<style>#}
+{#    /* Modern attractive styling */#}
+{#    .allocate-container {#}
+{#        max-width: 900px;#}
+{#        margin: 30px auto;#}
+{#        padding: 30px;#}
+{#        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);#}
+{#        border-radius: 20px;#}
+{#        box-shadow: 0 10px 40px rgba(0,0,0,0.2);#}
+{#        animation: slideIn 0.5s ease-out;#}
+{#    }#}
+{##}
+{#    @keyframes slideIn {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translateY(-30px);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translateY(0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    .allocate-table {#}
+{#        width: 100%;#}
+{#        background: white;#}
+{#        border-radius: 15px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 5px 20px rgba(0,0,0,0.1);#}
+{#        border-collapse: separate;#}
+{#        border-spacing: 0;#}
+{#    }#}
+{##}
+{#    .allocate-table th {#}
+{#        background: rgba(102, 126, 234, 0.1);#}
+{#        padding: 20px;#}
+{#        font-size: 16px;#}
+{#        color: #2c3e50;#}
+{#        font-weight: 600;#}
+{#        text-transform: uppercase;#}
+{#        letter-spacing: 1px;#}
+{#        border-bottom: 2px solid #667eea;#}
+{#    }#}
+{##}
+{#    .allocate-table td {#}
+{#        padding: 15px 20px;#}
+{#        border-bottom: 1px solid #eef2f7;#}
+{#    }#}
+{##}
+{#    .allocate-table tr:last-child td {#}
+{#        border-bottom: none;#}
+{#    }#}
+{##}
+{#    /* Select dropdown styling */#}
+{#    select {#}
+{#        width: 100%;#}
+{#        padding: 12px 15px;#}
+{#        border: 2px solid #e0e0e0;#}
+{#        border-radius: 10px;#}
+{#        font-size: 14px;#}
+{#        color: #333;#}
+{#        background-color: white;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.3s ease;#}
+{#        appearance: none;#}
+{#        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");#}
+{#        background-repeat: no-repeat;#}
+{#        background-position: right 15px center;#}
+{#        background-size: 15px;#}
+{#    }#}
+{##}
+{#    select:hover {#}
+{#        border-color: #667eea;#}
+{#        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);#}
+{#    }#}
+{##}
+{#    select:focus {#}
+{#        outline: none;#}
+{#        border-color: #764ba2;#}
+{#        box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);#}
+{#    }#}
+{##}
+{#    select option {#}
+{#        padding: 10px;#}
+{#        font-size: 14px;#}
+{#    }#}
+{##}
+{#    /* Submit button styling */#}
+{#    .allocate-btn {#}
+{#        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);#}
+{#        color: white;#}
+{#        border: none;#}
+{#        padding: 14px 40px;#}
+{#        font-size: 16px;#}
+{#        font-weight: 600;#}
+{#        text-transform: uppercase;#}
+{#        letter-spacing: 1px;#}
+{#        border-radius: 50px;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.3s ease;#}
+{#        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);#}
+{#        width: 100%;#}
+{#        max-width: 200px;#}
+{#        margin: 0 auto;#}
+{#        display: block;#}
+{#    }#}
+{##}
+{#    .allocate-btn:hover {#}
+{#        transform: translateY(-2px);#}
+{#        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);#}
+{#    }#}
+{##}
+{#    .allocate-btn:active {#}
+{#        transform: translateY(0);#}
+{#    }#}
+{##}
+{#    /* Header styling */#}
+{#    .page-header {#}
+{#        text-align: center;#}
+{#        margin-bottom: 25px;#}
+{#    }#}
+{##}
+{#    .page-header h2 {#}
+{#        color: white;#}
+{#        font-size: 28px;#}
+{#        font-weight: 600;#}
+{#        margin: 0;#}
+{#        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);#}
+{#        letter-spacing: 1px;#}
+{#    }#}
+{##}
+{#    .page-header p {#}
+{#        color: rgba(255,255,255,0.9);#}
+{#        margin: 10px 0 0;#}
+{#        font-size: 16px;#}
+{#    }#}
+{##}
+{#    /* Option hover effect */#}
+{#    select option:hover {#}
+{#        background-color: #f0f4ff;#}
+{#    }#}
+{##}
+{#    /* Empty state styling */#}
+{#    .no-options {#}
+{#        text-align: center;#}
+{#        color: #999;#}
+{#        padding: 20px;#}
+{#        font-style: italic;#}
+{#    }#}
+{##}
+{#    /* Responsive design */#}
+{#    @media (max-width: 768px) {#}
+{#        .allocate-container {#}
+{#            margin: 20px;#}
+{#            padding: 20px;#}
+{#        }#}
+{##}
+{#        .allocate-table th,#}
+{#        .allocate-table td {#}
+{#            padding: 15px;#}
+{#        }#}
+{##}
+{#        .page-header h2 {#}
+{#            font-size: 24px;#}
+{#        }#}
+{##}
+{#        .allocate-btn {#}
+{#            max-width: 100%;#}
+{#        }#}
+{#    }#}
+{##}
+{#    /* Label styling */#}
+{#    label {#}
+{#        font-weight: 500;#}
+{#        color: #555;#}
+{#        margin-bottom: 5px;#}
+{#        display: block;#}
+{#    }#}
+{##}
+{#    /* Table row hover effect */#}
+{#    .allocate-table tr:hover td {#}
+{#        background-color: #f8faff;#}
+{#    }#}
+{##}
+{#    /* Border radius for table corners */#}
+{#    .allocate-table tr:first-child th:first-child {#}
+{#        border-top-left-radius: 15px;#}
+{#    }#}
+{##}
+{#    .allocate-table tr:first-child th:last-child {#}
+{#        border-top-right-radius: 15px;#}
+{#    }#}
+{##}
+{#    .allocate-table tr:last-child td:first-child {#}
+{#        border-bottom-left-radius: 15px;#}
+{#    }#}
+{##}
+{#    .allocate-table tr:last-child td:last-child {#}
+{#        border-bottom-right-radius: 15px;#}
+{#    }#}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#    <div class="allocate-container">#}
+{#        <div class="page-header">#}
+{#            <h2>Allocate Area to Subadmin</h2>#}
+{#            <p>Select a subadmin from the list below</p>#}
+{#        </div>#}
+{##}
+{#        <form action="/allocate_area_post1/{{ id }}" method="post">#}
+{#            <table class="allocate-table">#}
+{#                <tr>#}
+{#                    <th scope="row">Select Subadmin</th>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td>#}
+{#                        <label for="select2" style="margin-bottom: 8px; color: #667eea;">Choose Subadmin *</label>#}
+{#                        <select name="select" id="select2" required>#}
+{#                            {% if data %}#}
+{#                                {% for i in data %}#}
+{#                                    <option value="{{ i.id }}">{{ i.name }} - {{ i.email }}</option>#}
+{#                                {% endfor %}#}
+{#                            {% else %}#}
+{#                                <option value="" disabled selected>No subadmins available</option>#}
+{#                            {% endif %}#}
+{#                        </select>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td style="text-align: center; background: #f8faff;">#}
+{#                        <input type="submit" name="button" id="button" value="Allocate Area" class="allocate-btn" />#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Allocate Area to Subadmin</title>
+<style>
+    /* Main container */
+    .allocate-wrapper {
+        min-height: calc(100vh - 100px);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 60px 40px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .allocate-card {
+        width: 600px;
+        max-width: 700px;
+        height: 700px;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Header section */
+    .card-header {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        padding: 35px 40px 25px;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
+    }
+
+    .card-header p {
+        margin: 10px 0 0;
+        color: #6b7280;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    /* Form section */
+    .card-body {
+        padding: 40px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        color: #374151;
+    }
+
+    .form-label span {
+        color: #ef4444;
+        font-size: 18px;
+    }
+
+    .label-icon {
+        color: #667eea;
+        font-size: 20px;
+    }
+
+    /* Enhanced dropdown styling */
+    .select-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    select {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1f2937;
+        background-color: #f9fafc;
+        border: 2px solid #e5e7eb;
+        border-radius: 16px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 20px center;
+        background-size: 20px;
+    }
+
+    select:hover {
+        border-color: #667eea;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+    }
+
+    select:focus {
+        border-color: #764ba2;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.15);
+    }
+
+    /* Improved dropdown options */
+    select option {
+        padding: 15px 20px;
+        font-size: 16px;
+        line-height: 1.8;
+        min-height: 50px;
+        background-color: white;
+        color: #1f2937;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    /* Style for optgroup if needed */
+    select optgroup {
+        font-weight: 700;
+        color: #667eea;
+        background-color: #f8faff;
+        padding: 10px;
+    }
+
+    /* Selected option styling */
+    select option:checked {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    /* Hover effect for options (works in some browsers) */
+    select option:hover {
+        background-color: #f0f4ff !important;
+    }
+
+    /* Dropdown container when open */
+    select:focus option {
+        padding: 15px;
+    }
+
+    /* Info box for selected items preview */
+    .selection-preview {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f8faff;
+        border-radius: 16px;
+        border-left: 4px solid #667eea;
+    }
+
+    .selection-preview p {
+        margin: 0 0 8px 0;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .preview-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .preview-content i {
+        color: #667eea;
+        font-style: normal;
+        font-weight: 600;
+    }
+
+    /* Button section */
+    .form-actions {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px dashed #eef2f7;
+    }
+
+    .allocate-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 16px 48px;
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .allocate-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+    }
+
+    .allocate-btn:active {
+        transform: translateY(-1px);
+    }
+
+    .btn-icon {
+        font-size: 20px;
+    }
+
+    /* Available subadmins count */
+    .available-count {
+        display: inline-block;
+        padding: 4px 12px;
+        background-color: #e0e7ff;
+        color: #667eea;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 12px;
+    }
+
+    /* Empty state styling */
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        background: #f8fafc;
+        border-radius: 16px;
+    }
+
+    .empty-state p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 16px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 640px) {
+        .allocate-wrapper {
+            padding: 15px;
+        }
+
+        .card-header {
+            padding: 25px 20px;
+        }
+
+        .card-header h2 {
+            font-size: 26px;
+        }
+
+        .card-body {
+            padding: 25px 20px;
+        }
+
+        select {
+            padding: 14px 16px;
+            font-size: 15px;
+        }
+
+        select option {
+            padding: 12px;
+            font-size: 15px;
+        }
+
+        .allocate-btn {
+            padding: 14px 32px;
+            font-size: 16px;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* Custom scrollbar for dropdown */
+    select::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    select::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    select::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+    }
+
+    select::-webkit-scrollbar-thumb:hover {
+        background: #667eea;
+    }
+
+    /* Animation for dropdown */
+    @keyframes dropdownOpen {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    select:focus {
+        animation: dropdownOpen 0.2s ease-out;
+    }
+
+    /* Helper text */
+    .helper-text {
+        margin-top: 8px;
+        font-size: 13px;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .helper-text i {
+        color: #667eea;
+        font-style: normal;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+    <div class="allocate-wrapper">
+        <div class="allocate-card">
+            <div class="card-header">
+                <h2>🎯 Allocate Area to Subadmin</h2>
+                <p>Select a subadmin from the dropdown list below</p>
+            </div>
+
+            <div class="card-body">
+                <form action="/allocate_area_post1/{{ id }}" method="post">
+                    <div class="form-group">
+                        <div class="form-label">
+                            <span class="label-icon">👤</span>
+                            Select Subadmin
+                            <span>*</span>
+                            {% if data %}
+                                <span class="available-count">{{ data|length }} available</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="select-wrapper">
+                            <select name="select" id="select2" required>
+                                <option value="" disabled selected>-- Choose a subadmin from the list --</option>
+                                {% if data %}
+                                    {% for i in data %}
+                                        <option value="{{ i.id }}" style="padding: 12px 15px;">
+                                            {{ i.name }} — {{ i.email }}
+                                        </option>
+                                    {% endfor %}
+                                {% else %}
+                                    <option value="" disabled>No subadmins available at the moment</option>
+                                {% endif %}
+                            </select>
+                        </div>
+
+                        <div class="helper-text">
+                            <i>ⓘ</i> Click to expand the dropdown and see all available subadmins
+                        </div>
+
+                        {% if data %}
+                        <div class="selection-preview" id="selectionPreview" style="display: none;">
+                            <p>Selected Subadmin:</p>
+                            <div class="preview-content" id="previewContent">
+                                <i>👤</i> <span id="selectedName">None selected</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" name="button" id="button" class="allocate-btn">
+                            <span class="btn-icon">✓</span>
+                            Allocate Area
+                        </button>
+                    </div>
+                </form>
+
+                {% if not data %}
+                <div class="empty-state">
+                    <p>🔔 No subadmins are available for allocation at this time.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Optional: Show preview of selected subadmin
+    document.getElementById('select2')?addEventListener('change', function(e) {
+        const preview = document.getElementById('selectionPreview');
+        const selectedName = document.getElementById('selectedName');
+        const selectedOption = this.options[this.selectedIndex];
+
+        if (this.selectedIndex > 0) {
+            if (preview) {
+                preview.style.display = 'block';
+                if (selectedName) {
+                    selectedName.textContent = selectedOption.text;
+                }
+            }
+        } else {
+            if (preview) {
+                preview.style.display = 'none';
+            }
+        }
+    });
+    </script>
+</body>
+</html>
+{% endblock %}

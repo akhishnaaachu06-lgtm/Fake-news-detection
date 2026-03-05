@@ -1,0 +1,442 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">#}
+{#  <table width="311" height="127" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Slno</th>#}
+{#      <th>Area</th>#}
+{#      <th>News</th>#}
+{#      <th>Status</th>#}
+{#      <th>Action</th>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">&nbsp;</th>#}
+{#      <td></td>#}
+{#      <td>&nbsp;</td>#}
+{#      <td>&nbsp;</td>#}
+{#      <td><p><a href="#">access</a></p>#}
+{#      <p><a href="#">verify</a></p></td>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>News Management Panel</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        min-height: 100vh;
+        padding: 30px 20px;
+    }
+
+    .dashboard-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        max-width: 1200px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease-out;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        padding: 30px 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+        background-size: 30px 30px;
+        transform: rotate(15deg);
+        opacity: 0.3;
+    }
+
+    .card-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        position: relative;
+        letter-spacing: -0.5px;
+    }
+
+    .card-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+        font-weight: 400;
+        position: relative;
+    }
+
+    .table-container {
+        padding: 35px;
+        overflow-x: auto;
+    }
+
+    .management-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 800px;
+        background: white;
+    }
+
+    .management-table thead {
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .management-table th {
+        padding: 22px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 3px solid #e2e8f0;
+        position: relative;
+    }
+
+    .management-table th::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 25px;
+        width: calc(100% - 50px);
+        height: 3px;
+        background: linear-gradient(90deg, #4f46e5, #7c3aed);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .management-table th:hover::after {
+        transform: scaleX(1);
+    }
+
+    .management-table th:first-child {
+        border-top-left-radius: 12px;
+    }
+
+    .management-table th:last-child {
+        border-top-right-radius: 12px;
+    }
+
+    .management-table tbody tr {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .management-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(79, 70, 229, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+
+    .management-table td {
+        padding: 24px 25px;
+        color: #475569;
+        font-size: 15px;
+        font-weight: 500;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .management-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Serial number styling */
+    .management-table th:nth-child(1),
+    .management-table td:nth-child(1) {
+        width: 80px;
+        text-align: center;
+        color: #4f46e5;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    /* Area column */
+    .management-table th:nth-child(2),
+    .management-table td:nth-child(2) {
+        width: 180px;
+        color: #1e293b;
+    }
+
+    /* News column */
+    .management-table th:nth-child(3),
+    .management-table td:nth-child(3) {
+        color: #475569;
+    }
+
+    /* Status column */
+    .management-table th:nth-child(4),
+    .management-table td:nth-child(4) {
+        width: 120px;
+        color: #64748b;
+    }
+
+    /* Action column styling */
+    .management-table th:nth-child(5),
+    .management-table td:nth-child(5) {
+        width: 150px;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 5px 0;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-access {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+
+    .btn-access:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-verify {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+    }
+
+    .btn-verify:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+    }
+
+    /* Empty state styling */
+    .management-table td {
+        color: #94a3b8;
+        font-style: italic;
+        position: relative;
+    }
+
+    .management-table td::before {
+        content: '—';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #cbd5e1;
+    }
+
+    .management-table tr:hover td::before {
+        opacity: 0;
+    }
+
+    .management-table tr:hover td {
+        color: #475569;
+        font-style: normal;
+    }
+
+    .table-footer {
+        padding: 25px 35px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .footer-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .record-count {
+        background: #e2e8f0;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #475569;
+    }
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+        .dashboard-card {
+            margin: 0 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 15px;
+        }
+
+        .card-header {
+            padding: 25px 30px;
+        }
+
+        .card-title {
+            font-size: 24px;
+        }
+
+        .table-container {
+            padding: 20px;
+        }
+
+        .management-table th,
+        .management-table td {
+            padding: 18px 20px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card-header {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+        }
+
+        .table-container {
+            padding: 15px;
+        }
+
+        .management-table th,
+        .management-table td {
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+        }
+    }
+
+    /* Decorative elements */
+    .accent-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border-radius: 50%;
+        top: 50%;
+        right: 25px;
+        transform: translateY(-50%);
+        opacity: 0.7;
+    }
+</style>
+</head>
+<body>
+<div class="dashboard-card">
+    <div class="card-header">
+        <div class="card-title">News Management</div>
+        <div class="card-subtitle">Manage and verify news submissions across different areas</div>
+    </div>
+
+    <div class="table-container">
+        <form id="form1" name="form1" method="post" action="" enctype="multipart/form-data">
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th scope="row">Slno</th>
+                        <th>Area</th>
+                        <th>News</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><span class="area-cell">{{ i.AREA.areas }}</span></td>
+                        <td class="news-content">{{ i.newss }}</td>
+
+                        <td class="status-content">{{ i.status }}</td>
+{#                        <td>&nbsp;<span class="accent-dot"></span></td>#}
+                        <td>
+                            <div class="action-buttons">
+                                <a href="/accept_news/{{ i.id }}" class="btn btn-access">Accept</a>
+                                <a href="/reject_news/{{ i.id }}" class="btn btn-verify">Reject</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div class="table-footer">
+        <div class="footer-info">
+            <span>Total Entries:</span>
+            <span class="record-count">1</span>
+        </div>
+        <div class="footer-info">
+            <span>Last Updated: Just now</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

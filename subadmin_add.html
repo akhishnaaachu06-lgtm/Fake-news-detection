@@ -1,0 +1,1077 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="subadmin_add_post" enctype="multipart/form-data">#}
+{#<table width="379" border="1">#}
+{#<caption>Subadmin Add</caption>#}
+{#  <tr>#}
+{#    <th width="132" scope="row">name</th>#}
+{#    <td width="231">#}
+{#      <label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">photo</th>#}
+{#    <td>#}
+{#      <label for="textfield2"></label>#}
+{#      <input name="files" type="file" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">email</th>#}
+{#    <td>#}
+{#      <label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">phone</th>#}
+{#    <td>#}
+{#      <label for="textfield4"></label>#}
+{#      <input type="text" name="textfield4" id="textfield4" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row">#}
+{#      <input type="submit" name="button" id="button" value="Login" />#}
+{#   </th>#}
+{#  </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Add Subadmin</title>#}
+{#<style>#}
+{#    /* Elegant gradient background */#}
+{#    body1 {#}
+{#        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);#}
+{#        min-height: 100vh;#}
+{#        margin: 0;#}
+{#        padding: 40px 20px;#}
+{#        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;#}
+{#        display: flex;#}
+{#        justify-content: center;#}
+{#        align-items: center;#}
+{#    }#}
+{##}
+{#    /* Premium glass card effect */#}
+{#    #form1 {#}
+{#        background: rgba(255, 255, 255, 0.95);#}
+{#        backdrop-filter: blur(10px);#}
+{#        border-radius: 24px;#}
+{#        padding: 50px;#}
+{#        max-width: 550px;#}
+{#        width: 100%;#}
+{#        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);#}
+{#        border: 1px solid rgba(255, 255, 255, 0.3);#}
+{#        animation: slideUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);#}
+{#    }#}
+{##}
+{#    @keyframes slideUp {#}
+{#        from { opacity: 0; transform: translateY(30px) scale(0.98); }#}
+{#        to { opacity: 1; transform: translateY(0) scale(1); }#}
+{#    }#}
+{##}
+{#    /* Elegant table styling */#}
+{#    #form1 table {#}
+{#        width: 100%;#}
+{#        border-collapse: separate;#}
+{#        border-spacing: 0 20px;#}
+{#    }#}
+{##}
+{#    /* Sophisticated caption */#}
+{#    #form1 caption {#}
+{#        font-size: 28px;#}
+{#        font-weight: 700;#}
+{#        color: transparent;#}
+{#        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);#}
+{#        -webkit-background-clip: text;#}
+{#        background-clip: text;#}
+{#        padding-bottom: 25px;#}
+{#        margin-bottom: 10px;#}
+{#        position: relative;#}
+{#        text-align: center;#}
+{#        letter-spacing: 0.5px;#}
+{#    }#}
+{##}
+{#    #form1 caption::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 15px;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#        width: 60px;#}
+{#        height: 4px;#}
+{#        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);#}
+{#        border-radius: 2px;#}
+{#    }#}
+{##}
+{#    /* Premium table headers */#}
+{#    #form1 th {#}
+{#        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);#}
+{#        padding: 18px 25px;#}
+{#        text-align: left;#}
+{#        font-weight: 600;#}
+{#        color: white;#}
+{#        border: none;#}
+{#        border-radius: 12px 0 0 12px;#}
+{#        width: 35%;#}
+{#        font-size: 15px;#}
+{#        letter-spacing: 0.5px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 6px 20px rgba(75, 108, 183, 0.3);#}
+{#    }#}
+{##}
+{#    #form1 th::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: -100%;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);#}
+{#        transition: 0.6s;#}
+{#    }#}
+{##}
+{#    #form1 th:hover::before {#}
+{#        left: 100%;#}
+{#    }#}
+{##}
+{#    /* Elegant table cells */#}
+{#    #form1 td {#}
+{#        padding: 0;#}
+{#        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 255, 0.9) 100%);#}
+{#        border: none;#}
+{#        border-radius: 0 12px 12px 0;#}
+{#        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    /* Luxury input fields */#}
+{#    #form1 input[type="text"] {#}
+{#        width: 100%;#}
+{#        padding: 16px 20px;#}
+{#        border: 2px solid transparent;#}
+{#        border-radius: 10px;#}
+{#        font-size: 15px;#}
+{#        color: #333;#}
+{#        background: white;#}
+{#        transition: all 0.3s ease;#}
+{#        font-weight: 500;#}
+{#        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);#}
+{#    }#}
+{##}
+{#    #form1 input[type="text"]:hover {#}
+{#        border-color: rgba(75, 108, 183, 0.3);#}
+{#        box-shadow: 0 5px 20px rgba(75, 108, 183, 0.1), inset 0 2px 8px rgba(75, 108, 183, 0.05);#}
+{#        transform: translateY(-1px);#}
+{#    }#}
+{##}
+{#    #form1 input[type="text"]:focus {#}
+{#        outline: none;#}
+{#        border-color: #4b6cb7;#}
+{#        box-shadow: 0 5px 25px rgba(75, 108, 183, 0.2), inset 0 2px 8px rgba(75, 108, 183, 0.05);#}
+{#        background: white;#}
+{#    }#}
+{##}
+{#    /* Premium file input */#}
+{#    #form1 input[type="file"] {#}
+{#        width: 100%;#}
+{#        padding: 16px 20px;#}
+{#        border: 2px dashed rgba(75, 108, 183, 0.3);#}
+{#        border-radius: 10px;#}
+{#        font-size: 14px;#}
+{#        color: #555;#}
+{#        background: linear-gradient(135deg, rgba(75, 108, 183, 0.05) 0%, rgba(24, 40, 72, 0.05) 100%);#}
+{#        transition: all 0.3s ease;#}
+{#        cursor: pointer;#}
+{#    }#}
+{##}
+{#    #form1 input[type="file"]::-webkit-file-upload-button {#}
+{#        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);#}
+{#        color: white;#}
+{#        padding: 10px 20px;#}
+{#        border: none;#}
+{#        border-radius: 8px;#}
+{#        font-size: 14px;#}
+{#        font-weight: 600;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.3s ease;#}
+{#        margin-right: 15px;#}
+{#    }#}
+{##}
+{#    #form1 input[type="file"]::-webkit-file-upload-button:hover {#}
+{#        transform: translateY(-1px);#}
+{#        box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);#}
+{#    }#}
+{##}
+{#    #form1 input[type="file"]:hover {#}
+{#        border-color: #4b6cb7;#}
+{#        background: linear-gradient(135deg, rgba(75, 108, 183, 0.08) 0%, rgba(24, 40, 72, 0.08) 100%);#}
+{#        transform: translateY(-1px);#}
+{#    }#}
+{##}
+{#    /* Last row styling */#}
+{#    #form1 tr:last-child th {#}
+{#        background: transparent;#}
+{#        border: none;#}
+{#        padding: 20px 0 0 0;#}
+{#        text-align: center;#}
+{#        box-shadow: none;#}
+{#        width: 100%;#}
+{#    }#}
+{##}
+{#    #form1 tr:last-child td {#}
+{#        background: transparent;#}
+{#        border: none;#}
+{#        padding: 20px 0 0 0;#}
+{#        box-shadow: none;#}
+{#    }#}
+{##}
+{#    /* Luxury submit button */#}
+{#    #form1 input[type="submit"] {#}
+{#        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);#}
+{#        color: white;#}
+{#        padding: 18px 40px;#}
+{#        border: none;#}
+{#        border-radius: 12px;#}
+{#        font-size: 16px;#}
+{#        font-weight: 600;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.4s ease;#}
+{#        width: 100%;#}
+{#        letter-spacing: 1px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 10px 30px rgba(75, 108, 183, 0.3);#}
+{#        text-transform: uppercase;#}
+{#    }#}
+{##}
+{#    #form1 input[type="submit"]:hover {#}
+{#        transform: translateY(-3px);#}
+{#        box-shadow: 0 15px 40px rgba(75, 108, 183, 0.4);#}
+{#        letter-spacing: 1.2px;#}
+{#    }#}
+{##}
+{#    #form1 input[type="submit"]:active {#}
+{#        transform: translateY(-1px);#}
+{#    }#}
+{##}
+{#    #form1 input[type="submit"]::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 50%;#}
+{#        left: 50%;#}
+{#        width: 0;#}
+{#        height: 0;#}
+{#        border-radius: 50%;#}
+{#        background: rgba(255, 255, 255, 0.2);#}
+{#        transform: translate(-50%, -50%);#}
+{#        transition: width 0.6s, height 0.6s;#}
+{#    }#}
+{##}
+{#    #form1 input[type="submit"]:hover::before {#}
+{#        width: 400px;#}
+{#        height: 400px;#}
+{#    }#}
+{##}
+{#    /* Row hover effect */#}
+{#    tr:hover td {#}
+{#        transform: translateX(5px);#}
+{#    }#}
+{##}
+{#    /* Responsive design */#}
+{#    @media (max-width: 768px) {#}
+{#        body {#}
+{#            padding: 20px 15px;#}
+{#        }#}
+{##}
+{#        #form1 {#}
+{#            padding: 30px 25px;#}
+{#            border-radius: 20px;#}
+{#            max-width: 100%;#}
+{#        }#}
+{##}
+{#        #form1 th, #form1 td {#}
+{#            display: block;#}
+{#            width: 100%;#}
+{#            border-radius: 12px;#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{##}
+{#        #form1 th {#}
+{#            border-radius: 12px 12px 0 0;#}
+{#            margin-bottom: 0;#}
+{#        }#}
+{##}
+{#        #form1 td {#}
+{#            border-radius: 0 0 12px 12px;#}
+{#        }#}
+{##}
+{#        #form1 caption {#}
+{#            font-size: 24px;#}
+{#            padding-bottom: 20px;#}
+{#        }#}
+{##}
+{#        #form1 caption::after {#}
+{#            bottom: 10px;#}
+{#        }#}
+{##}
+{#        input[type="text"], input[type="file"] {#}
+{#            padding: 14px 18px;#}
+{#        }#}
+{##}
+{#        #form1 input[type="submit"] {#}
+{#            padding: 16px 30px;#}
+{#        }#}
+{#    }#}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body id="body1">#}
+{#<form id="form1" name="form1" method="post" action="subadmin_add_post" enctype="multipart/form-data">#}
+{#<table width="379" border="1" align="center">#}
+{#<caption>Subadmin Add</caption>#}
+{#  <tr>#}
+{#    <th width="132" scope="row">name</th>#}
+{#    <td width="231">#}
+{#      <label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">photo</th>#}
+{#    <td>#}
+{#      <label for="textfield2"></label>#}
+{#      <input name="files" type="file" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">email</th>#}
+{#    <td>#}
+{#      <label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">phone</th>#}
+{#    <td>#}
+{#      <label for="textfield4"></label>#}
+{#      <input type="text" name="textfield4" id="textfield4" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row">#}
+{#      <input type="submit" name="button" id="button" value="Add" />#}
+{#   </th>#}
+{#  </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Add Subadmin</title>
+<style>
+    /* Elegant gradient background */
+    body1 {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Premium glass card effect */
+    #form1 {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 50px;
+        max-width: 550px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        animation: slideUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(30px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Elegant table styling */
+    #form1 table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 20px;
+    }
+
+    /* Sophisticated caption */
+    #form1 caption {
+        font-size: 28px;
+        font-weight: 700;
+        color: transparent;
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        padding-bottom: 25px;
+        margin-bottom: 10px;
+        position: relative;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    #form1 caption::after {
+        content: '';
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        border-radius: 2px;
+    }
+
+    /* Premium table headers */
+    #form1 th {
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        padding: 18px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        border-radius: 12px 0 0 12px;
+        width: 35%;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(75, 108, 183, 0.3);
+    }
+
+    #form1 th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.6s;
+    }
+
+    #form1 th:hover::before {
+        left: 100%;
+    }
+
+    /* Elegant table cells */
+    #form1 td {
+        padding: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 255, 0.9) 100%);
+        border: none;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    /* Luxury input fields */
+    #form1 input[type="text"] {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #333;
+        background: white;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    #form1 input[type="text"]:hover {
+        border-color: rgba(75, 108, 183, 0.3);
+        box-shadow: 0 5px 20px rgba(75, 108, 183, 0.1), inset 0 2px 8px rgba(75, 108, 183, 0.05);
+        transform: translateY(-1px);
+    }
+
+    #form1 input[type="text"]:focus {
+        outline: none;
+        border-color: #4b6cb7;
+        box-shadow: 0 5px 25px rgba(75, 108, 183, 0.2), inset 0 2px 8px rgba(75, 108, 183, 0.05);
+        background: white;
+    }
+
+    /* Premium file input */
+    #form1 input[type="file"] {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px dashed rgba(75, 108, 183, 0.3);
+        border-radius: 10px;
+        font-size: 14px;
+        color: #555;
+        background: linear-gradient(135deg, rgba(75, 108, 183, 0.05) 0%, rgba(24, 40, 72, 0.05) 100%);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    #form1 input[type="file"]::-webkit-file-upload-button {
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 15px;
+    }
+
+    #form1 input[type="file"]::-webkit-file-upload-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+    }
+
+    #form1 input[type="file"]:hover {
+        border-color: #4b6cb7;
+        background: linear-gradient(135deg, rgba(75, 108, 183, 0.08) 0%, rgba(24, 40, 72, 0.08) 100%);
+        transform: translateY(-1px);
+    }
+
+    /* Last row styling */
+    #form1 tr:last-child th {
+        background: transparent;
+        border: none;
+        padding: 20px 0 0 0;
+        text-align: center;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    #form1 tr:last-child td {
+        background: transparent;
+        border: none;
+        padding: 20px 0 0 0;
+        box-shadow: none;
+    }
+
+    /* Luxury submit button */
+    #form1 input[type="submit"] {
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        color: white;
+        padding: 18px 40px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        width: 100%;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(75, 108, 183, 0.3);
+        text-transform: uppercase;
+    }
+
+    #form1 input[type="submit"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(75, 108, 183, 0.4);
+        letter-spacing: 1.2px;
+    }
+
+    #form1 input[type="submit"]:active {
+        transform: translateY(-1px);
+    }
+
+    #form1 input[type="submit"]::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    #form1 input[type="submit"]:hover::before {
+        width: 400px;
+        height: 400px;
+    }
+
+    /* Row hover effect */
+    tr:hover td {
+        transform: translateX(5px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        #form1 {
+            padding: 30px 25px;
+            border-radius: 20px;
+            max-width: 100%;
+        }
+
+        #form1 th, #form1 td {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        #form1 th {
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+
+        #form1 td {
+            border-radius: 0 0 12px 12px;
+        }
+
+        #form1 caption {
+            font-size: 24px;
+            padding-bottom: 20px;
+        }
+
+        #form1 caption::after {
+            bottom: 10px;
+        }
+
+        input[type="text"], input[type="file"] {
+            padding: 14px 18px;
+        }
+
+        #form1 input[type="submit"] {
+            padding: 16px 30px;
+        }
+    }
+
+    /* Validation Styles */
+    .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2) !important;
+    }
+
+    .success {
+        border-color: #28a745 !important;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .validation-info {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    .file-info {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 8px;
+        padding: 4px 8px;
+        background: rgba(75, 108, 183, 0.05);
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px;
+        background: rgba(220, 53, 69, 0.05);
+        border-radius: 8px;
+        display: none;
+    }
+
+    .valid {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2) !important;
+    }
+
+    .field-wrapper {
+        position: relative;
+    }
+
+    .character-count {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 11px;
+        color: #999;
+        background: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        display: none;
+    }
+
+    .phone-format {
+        font-size: 11px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+</style>
+</head>
+
+<body id="body1">
+<form id="form1" name="form1" method="post" action="subadmin_add_post" enctype="multipart/form-data" onsubmit="return validateForm()">
+<table width="379" border="1" align="center">
+<caption>Subadmin Add</caption>
+  <tr>
+    <th width="132" scope="row">Name<span class="required">*</span></th>
+    <td width="231">
+      <div class="field-wrapper">
+        <input type="text" name="textfield" id="textfield" placeholder="Enter full name" />
+        <span id="nameCount" class="character-count">0/50</span>
+      </div>
+      <div id="nameError" class="error-message">Please enter a valid name (3-50 characters)</div>
+      <div class="validation-info">Only letters and spaces allowed</div>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">Photo<span class="required">*</span></th>
+    <td>
+      <input name="files" type="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif" />
+      <div id="fileInfo" class="file-info" style="display: none;">No file selected</div>
+      <div id="fileError" class="error-message">Please upload a valid image file (JPG, PNG, GIF)</div>
+      <div class="validation-info">Max size: 5MB | Formats: JPG, PNG, GIF</div>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">Email<span class="required">*</span></th>
+    <td>
+      <input type="text" name="textfield3" id="textfield3" placeholder="example@domain.com" />
+      <div id="emailError" class="error-message">Please enter a valid email address</div>
+      <div class="validation-info">Enter a valid email address</div>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">Phone<span class="required">*</span></th>
+    <td>
+      <input type="text" name="textfield4" id="textfield4" placeholder="Enter 10-digit phone number" />
+      <div id="phoneError" class="error-message">Please enter a valid 10-digit phone number</div>
+      <div class="phone-format">Format: 1234567890 or +911234567890</div>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row">
+      <input type="submit" name="button" id="button" value="Add Subadmin" />
+      <div id="formError" class="form-error"></div>
+   </th>
+  </tr>
+</table>
+</form>
+
+<script>
+    // Validation Functions
+    function validateName() {
+        const nameInput = document.getElementById('textfield');
+        const nameValue = nameInput.value.trim();
+        const nameCount = document.getElementById('nameCount');
+
+        // Update character count
+        nameCount.textContent = `${nameValue.length}/50`;
+        nameCount.style.display = nameValue.length > 0 ? 'block' : 'none';
+
+        if (!nameValue) {
+            showError('nameError', 'Name is required');
+            nameInput.classList.add('error');
+            nameInput.classList.remove('success');
+            return false;
+        }
+
+        if (nameValue.length < 3 || nameValue.length > 50) {
+            showError('nameError', 'Name must be between 3 and 50 characters');
+            nameInput.classList.add('error');
+            nameInput.classList.remove('success');
+            return false;
+        }
+
+        // Allow letters, spaces, and common name characters
+        const nameRegex = /^[A-Za-z\s.'-]+$/;
+        if (!nameRegex.test(nameValue)) {
+            showError('nameError', 'Name can only contain letters, spaces, and basic punctuation');
+            nameInput.classList.add('error');
+            nameInput.classList.remove('success');
+            return false;
+        }
+
+        clearError('nameError');
+        nameInput.classList.remove('error');
+        nameInput.classList.add('success');
+        return true;
+    }
+
+    function validateFile() {
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+
+        if (fileInput.files.length === 0) {
+            showError('fileError', 'Please select a photo');
+            fileInput.classList.add('error');
+            return false;
+        }
+
+        const file = fileInput.files[0];
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+
+        // Update file info
+        fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        fileInfo.style.display = 'block';
+
+        if (!allowedTypes.includes(file.type)) {
+            showError('fileError', 'Only JPG, PNG, and GIF files are allowed');
+            fileInput.classList.add('error');
+            return false;
+        }
+
+        if (file.size > maxSize) {
+            showError('fileError', 'File size must be less than 5MB');
+            fileInput.classList.add('error');
+            return false;
+        }
+
+        clearError('fileError');
+        fileInput.classList.remove('error');
+        fileInput.classList.add('success');
+        return true;
+    }
+
+    function validateEmail() {
+        const emailInput = document.getElementById('textfield3');
+        const emailValue = emailInput.value.trim();
+
+        if (!emailValue) {
+            showError('emailError', 'Email is required');
+            emailInput.classList.add('error');
+            emailInput.classList.remove('success');
+            return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailValue)) {
+            showError('emailError', 'Please enter a valid email address');
+            emailInput.classList.add('error');
+            emailInput.classList.remove('success');
+            return false;
+        }
+
+        if (emailValue.length > 100) {
+            showError('emailError', 'Email must be less than 100 characters');
+            emailInput.classList.add('error');
+            emailInput.classList.remove('success');
+            return false;
+        }
+
+        clearError('emailError');
+        emailInput.classList.remove('error');
+        emailInput.classList.add('success');
+        return true;
+    }
+
+    function validatePhone() {
+        const phoneInput = document.getElementById('textfield4');
+        const phoneValue = phoneInput.value.trim();
+
+        if (!phoneValue) {
+            showError('phoneError', 'Phone number is required');
+            phoneInput.classList.add('error');
+            phoneInput.classList.remove('success');
+            return false;
+        }
+
+        // Remove spaces, dashes, and parentheses
+        const cleanedPhone = phoneValue.replace(/[\s\-()]/g, '');
+
+        // Check if it's a valid Indian phone number
+        const phoneRegex = /^(\+91)?[6789]\d{9}$/;
+        if (!phoneRegex.test(cleanedPhone)) {
+            showError('phoneError', 'Please enter a valid 10-digit Indian phone number');
+            phoneInput.classList.add('error');
+            phoneInput.classList.remove('success');
+            return false;
+        }
+
+        clearError('phoneError');
+        phoneInput.classList.remove('error');
+        phoneInput.classList.add('success');
+        return true;
+    }
+
+    function validateForm() {
+        // Clear previous errors
+        clearAllErrors();
+
+        // Validate all fields
+        const isNameValid = validateName();
+        const isFileValid = validateFile();
+        const isEmailValid = validateEmail();
+        const isPhoneValid = validatePhone();
+
+        // If all valid, return true to submit
+        if (isNameValid && isFileValid && isEmailValid && isPhoneValid) {
+            return true;
+        }
+
+        // Show general error message
+        showFormError('Please fix the errors above before submitting');
+        return false;
+    }
+
+    // Helper functions
+    function showError(elementId, message) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+    }
+
+    function clearError(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style.display = 'none';
+        }
+    }
+
+    function showFormError(message) {
+        const formError = document.getElementById('formError');
+        formError.textContent = message;
+        formError.style.display = 'block';
+
+        // Scroll to error
+        formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function clearAllErrors() {
+        clearError('nameError');
+        clearError('fileError');
+        clearError('emailError');
+        clearError('phoneError');
+        clearError('formError');
+    }
+
+    // Real-time validation
+    document.getElementById('textfield').addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateName();
+        } else {
+            clearError('nameError');
+            this.classList.remove('error', 'success');
+            document.getElementById('nameCount').style.display = 'none';
+        }
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function() {
+        if (this.files.length > 0) {
+            validateFile();
+        } else {
+            clearError('fileError');
+            this.classList.remove('error', 'success');
+            document.getElementById('fileInfo').style.display = 'none';
+        }
+    });
+
+    document.getElementById('textfield3').addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateEmail();
+        } else {
+            clearError('emailError');
+            this.classList.remove('error', 'success');
+        }
+    });
+
+    document.getElementById('textfield4').addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validatePhone();
+        } else {
+            clearError('phoneError');
+            this.classList.remove('error', 'success');
+        }
+    });
+
+    // Prevent form submission on Enter key in input fields
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Initialize file info display
+    document.getElementById('fileInput').addEventListener('click', function() {
+        const fileInfo = document.getElementById('fileInfo');
+        if (this.files.length === 0) {
+            fileInfo.textContent = 'No file selected';
+            fileInfo.style.display = 'block';
+        }
+    });
+
+    // Auto-format phone number
+    document.getElementById('textfield4').addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        if (value.length > 10) {
+            value = value.substring(0, 10);
+        }
+
+        // Format as XXX-XXX-XXXX
+        if (value.length > 6) {
+            value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+        } else if (value.length > 3) {
+            value = value.substring(0, 3) + '-' + value.substring(3);
+        }
+
+        this.value = value;
+    });
+</script>
+</body>
+</html>
+{% endblock %}

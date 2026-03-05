@@ -1,0 +1,1174 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form id="form1" name="form1" method="post" action="/add_reporter_post/{{ id }}" enctype="multipart/form-data">#}
+{#<table width="379" border="1">#}
+{#<caption> Add Reporter</caption>#}
+{#  <tr>#}
+{#    <th width="132" scope="row">name</th>#}
+{#    <td width="231">#}
+{#      <label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">photo</th>#}
+{#    <td>#}
+{##}
+{#      <label for="fileField"></label>#}
+{#      <input type="file" name="fileField" id="fileField" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">email</th>#}
+{#    <td>#}
+{#      <label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">phone</th>#}
+{#    <td>#}
+{#      <label for="textfield4"></label>#}
+{#      <input type="text" name="textfield4" id="textfield4" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row">#}
+{#      <input type="submit" name="button" id="button" value="Login" />#}
+{#   </th>#}
+{#  </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+{##}
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Register New Reporter</title>#}
+{#<style>#}
+{#  /* Modern styling */#}
+{#  body1 {#}
+{#    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;#}
+{#    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);#}
+{#    margin: 0;#}
+{#    padding: 40px 20px;#}
+{#    min-height: 100vh;#}
+{#    display: flex;#}
+{#    justify-content: center;#}
+{#    align-items: center;#}
+{#  }#}
+{##}
+{#  .registration-card {#}
+{#    background: white;#}
+{#    border-radius: 16px;#}
+{#    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);#}
+{#    width: 100%;#}
+{#    max-width: 480px;#}
+{#    overflow: hidden;#}
+{#    transition: transform 0.3s ease;#}
+{#  }#}
+{##}
+{#  .registration-card:hover {#}
+{#    transform: translateY(-5px);#}
+{#  }#}
+{##}
+{#  .card-header {#}
+{#    background: linear-gradient(135deg, #2c3e50, #4a6491);#}
+{#    color: white;#}
+{#    padding: 30px;#}
+{#    text-align: center;#}
+{#    position: relative;#}
+{#  }#}
+{##}
+{#  .card-header:after {#}
+{#    content: '';#}
+{#    position: absolute;#}
+{#    bottom: -10px;#}
+{#    left: 50%;#}
+{#    transform: translateX(-50%);#}
+{#    width: 60px;#}
+{#    height: 4px;#}
+{#    background: #3498db;#}
+{#    border-radius: 2px;#}
+{#  }#}
+{##}
+{#  .card-header h1 {#}
+{#    margin: 0 0 10px 0;#}
+{#    font-weight: 600;#}
+{#    font-size: 28px;#}
+{#    letter-spacing: 0.5px;#}
+{#  }#}
+{##}
+{#  .card-header p {#}
+{#    margin: 0;#}
+{#    opacity: 0.85;#}
+{#    font-size: 14px;#}
+{#  }#}
+{##}
+{#  .card-body {#}
+{#    padding: 40px;#}
+{#  }#}
+{##}
+{#  .form-group {#}
+{#    margin-bottom: 28px;#}
+{#    position: relative;#}
+{#  }#}
+{##}
+{#  .form-group label {#}
+{#    display: block;#}
+{#    margin-bottom: 8px;#}
+{#    font-weight: 600;#}
+{#    color: #2c3e50;#}
+{#    font-size: 15px;#}
+{#    display: flex;#}
+{#    align-items: center;#}
+{#  }#}
+{##}
+{#  .form-group label:before {#}
+{#    content: "";#}
+{#    display: inline-block;#}
+{#    width: 6px;#}
+{#    height: 6px;#}
+{#    background: #3498db;#}
+{#    border-radius: 50%;#}
+{#    margin-right: 10px;#}
+{#  }#}
+{##}
+{#  .form-control {#}
+{#    width: 100%;#}
+{#    padding: 14px 16px;#}
+{#    border: 2px solid #eef2f7;#}
+{#    border-radius: 8px;#}
+{#    font-size: 15px;#}
+{#    transition: all 0.3s;#}
+{#    background-color: #fafbfd;#}
+{#    box-sizing: border-box;#}
+{#  }#}
+{##}
+{#  .form-control:focus {#}
+{#    outline: none;#}
+{#    border-color: #3498db;#}
+{#    background-color: white;#}
+{#    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);#}
+{#  }#}
+{##}
+{#  .file-upload-wrapper {#}
+{#    position: relative;#}
+{#    display: flex;#}
+{#    align-items: center;#}
+{#  }#}
+{##}
+{#  .file-upload-button {#}
+{#    background: linear-gradient(135deg, #3498db, #2980b9);#}
+{#    color: white;#}
+{#    padding: 12px 20px;#}
+{#    border-radius: 8px;#}
+{#    cursor: pointer;#}
+{#    display: inline-flex;#}
+{#    align-items: center;#}
+{#    transition: all 0.3s;#}
+{#    font-weight: 500;#}
+{#    font-size: 14px;#}
+{#    white-space: nowrap;#}
+{#  }#}
+{##}
+{#  .file-upload-button:hover {#}
+{#    background: linear-gradient(135deg, #2980b9, #1c5a7a);#}
+{#    transform: translateY(-2px);#}
+{#  }#}
+{##}
+{#  .file-upload-button:before {#}
+{#    content: "📷";#}
+{#    margin-right: 8px;#}
+{#    font-size: 16px;#}
+{#  }#}
+{##}
+{#  input[type="file"] {#}
+{#    position: absolute;#}
+{#    left: 0;#}
+{#    top: 0;#}
+{#    width: 100%;#}
+{#    height: 100%;#}
+{#    opacity: 0;#}
+{#    cursor: pointer;#}
+{#  }#}
+{##}
+{#  .file-name {#}
+{#    margin-left: 15px;#}
+{#    font-size: 14px;#}
+{#    color: #666;#}
+{#    flex-grow: 1;#}
+{#    white-space: nowrap;#}
+{#    overflow: hidden;#}
+{#    text-overflow: ellipsis;#}
+{#    font-style: italic;#}
+{#  }#}
+{##}
+{#  .submit-btn-container {#}
+{#    margin-top: 40px;#}
+{#  }#}
+{##}
+{#  .submit-btn {#}
+{#    background: linear-gradient(135deg, #27ae60, #219653);#}
+{#    color: white;#}
+{#    border: none;#}
+{#    border-radius: 8px;#}
+{#    padding: 16px 30px;#}
+{#    font-size: 16px;#}
+{#    font-weight: 600;#}
+{#    cursor: pointer;#}
+{#    transition: all 0.3s;#}
+{#    width: 100%;#}
+{#    letter-spacing: 0.5px;#}
+{#    display: flex;#}
+{#    align-items: center;#}
+{#    justify-content: center;#}
+{#  }#}
+{##}
+{#  .submit-btn:hover {#}
+{#    background: linear-gradient(135deg, #219653, #1e7e47);#}
+{#    transform: translateY(-3px);#}
+{#    box-shadow: 0 7px 20px rgba(33, 150, 83, 0.3);#}
+{#  }#}
+{##}
+{#  .submit-btn:active {#}
+{#    transform: translateY(-1px);#}
+{#  }#}
+{##}
+{#  .submit-btn:before {#}
+{#    content: "👤";#}
+{#    margin-right: 10px;#}
+{#    font-size: 18px;#}
+{#  }#}
+{##}
+{#  .required-note {#}
+{#    font-size: 13px;#}
+{#    color: #7f8c8d;#}
+{#    margin-top: 25px;#}
+{#    padding-top: 20px;#}
+{#    border-top: 1px solid #eee;#}
+{#    text-align: center;#}
+{#  }#}
+{##}
+{#  .required-note:before {#}
+{#    content: "*";#}
+{#    color: #e74c3c;#}
+{#    margin-right: 4px;#}
+{#  }#}
+{##}
+{#  .input-icon {#}
+{#    position: absolute;#}
+{#    right: 16px;#}
+{#    top: 40px;#}
+{#    color: #95a5a6;#}
+{#    font-size: 18px;#}
+{#  }#}
+{##}
+{#  @media (max-width: 600px) {#}
+{#    body {#}
+{#      padding: 20px 10px;#}
+{#    }#}
+{##}
+{#    .card-body {#}
+{#      padding: 30px 20px;#}
+{#    }#}
+{##}
+{#    .card-header {#}
+{#      padding: 25px 20px;#}
+{#    }#}
+{##}
+{#    .card-header h1 {#}
+{#      font-size: 24px;#}
+{#    }#}
+{#  }#}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body id="body1">#}
+{#<form id="form1" name="form1" method="post" action="/add_reporter_post/{{ id }}" enctype="multipart/form-data" class="registration-form">#}
+{#  <div class="registration-card">#}
+{#    <div class="card-header">#}
+{#      <h1>Register New Reporter</h1>#}
+{#      <p>Add a reporter to your news team</p>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body">#}
+{#      <div class="form-group">#}
+{#        <label for="textfield">Full Name</label>#}
+{#        <input type="text" name="textfield" id="textfield" class="form-control" placeholder="Enter reporter's full name" required />#}
+{#        <div class="input-icon">👤</div>#}
+{#      </div>#}
+{##}
+{#      <div class="form-group">#}
+{#        <label for="fileField">Profile Photo</label>#}
+{#        <div class="file-upload-wrapper">#}
+{#          <div class="file-upload-button">#}
+{#            Choose Photo#}
+{#            <input type="file" name="fileField" id="fileField" accept="image/*" />#}
+{#          </div>#}
+{#          <span class="file-name" id="fileName">No file selected</span>#}
+{#        </div>#}
+{#        <div style="font-size: 13px; color: #95a5a6; margin-top: 5px;">Recommended: Square photo, JPG or PNG format</div>#}
+{#      </div>#}
+{##}
+{#      <div class="form-group">#}
+{#        <label for="textfield3">Email Address</label>#}
+{#        <input type="email" name="textfield3" id="textfield3" class="form-control" placeholder="reporter@example.com" required />#}
+{#        <div class="input-icon">✉️</div>#}
+{#      </div>#}
+{##}
+{#      <div class="form-group">#}
+{#        <label for="textfield4">Phone Number</label>#}
+{#        <input type="tel" name="textfield4" id="textfield4" class="form-control" placeholder="+1 (555) 123-4567" required />#}
+{#        <div class="input-icon">📱</div>#}
+{#      </div>#}
+{##}
+{#      <div class="submit-btn-container">#}
+{#        <button type="submit" class="submit-btn">Register Reporter</button>#}
+{#      </div>#}
+{##}
+{#      <div class="required-note">All fields are required</div>#}
+{#    </div>#}
+{#  </div>#}
+{#</form>#}
+{##}
+{#<script>#}
+{#  // File name display#}
+{#  document.getElementById('fileField').addEventListener('change', function(e) {#}
+{#    const fileName = e.target.files.length > 0 ? e.target.files[0].name : 'No file selected';#}
+{#    document.getElementById('fileName').textContent = fileName;#}
+{##}
+{#    // Optional: Preview image (if needed)#}
+{#    if (e.target.files.length > 0) {#}
+{#      const file = e.target.files[0];#}
+{#      if (file.type.startsWith('image/')) {#}
+{#        // Could add image preview functionality here#}
+{#      }#}
+{#    }#}
+{#  });#}
+{##}
+{#  // Form validation#}
+{#  document.querySelector('.registration-form').addEventListener('submit', function(e) {#}
+{#    const name = document.getElementById('textfield').value.trim();#}
+{#    const email = document.getElementById('textfield3').value.trim();#}
+{#    const phone = document.getElementById('textfield4').value.trim();#}
+{#    const file = document.getElementById('fileField').files.length;#}
+{##}
+{#    let isValid = true;#}
+{#    let errorMessage = '';#}
+{##}
+{#    // Clear previous error styles#}
+{#    document.querySelectorAll('.form-control').forEach(input => {#}
+{#      input.style.borderColor = '#eef2f7';#}
+{#    });#}
+{##}
+{#    // Validate name#}
+{#    if (!name) {#}
+{#      document.getElementById('textfield').style.borderColor = '#e74c3c';#}
+{#      isValid = false;#}
+{#      errorMessage = 'Please enter the reporter\'s full name.';#}
+{#    }#}
+{##}
+{#    // Validate email#}
+{#    else if (!email) {#}
+{#      document.getElementById('textfield3').style.borderColor = '#e74c3c';#}
+{#      isValid = false;#}
+{#      errorMessage = 'Please enter a valid email address.';#}
+{#    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {#}
+{#      document.getElementById('textfield3').style.borderColor = '#e74c3c';#}
+{#      isValid = false;#}
+{#      errorMessage = 'Please enter a valid email format (e.g., user@example.com).';#}
+{#    }#}
+{##}
+{#    // Validate phone#}
+{#    else if (!phone) {#}
+{#      document.getElementById('textfield4').style.borderColor = '#e74c3c';#}
+{#      isValid = false;#}
+{#      errorMessage = 'Please enter a phone number.';#}
+{#    }#}
+{##}
+{#    // Optional: Validate file (if you want to make it required)#}
+{#    // else if (!file) {#}
+{#    //   document.querySelector('.file-upload-button').style.borderColor = '#e74c3c';#}
+{#    //   isValid = false;#}
+{#    //   errorMessage = 'Please select a profile photo.';#}
+{#    // }#}
+{##}
+{#    if (!isValid) {#}
+{#      e.preventDefault();#}
+{#      alert('Registration Error: ' + errorMessage);#}
+{#      return false;#}
+{#    }#}
+{##}
+{#    // If all validations pass#}
+{#    const submitBtn = document.querySelector('.submit-btn');#}
+{#    submitBtn.innerHTML = '⏳ Registering...';#}
+{#    submitBtn.disabled = true;#}
+{##}
+{#    return true;#}
+{#  });#}
+{##}
+{#  // Real-time validation for email#}
+{#  document.getElementById('textfield3').addEventListener('blur', function() {#}
+{#    const email = this.value.trim();#}
+{#    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {#}
+{#      this.style.borderColor = '#e74c3c';#}
+{#    } else if (email) {#}
+{#      this.style.borderColor = '#27ae60';#}
+{#    }#}
+{#  });#}
+{#</script>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Register New Reporter</title>
+<style>
+  /* Modern styling */
+  body1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .registration-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .registration-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+  }
+
+  .card-header:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: #3498db;
+    border-radius: 2px;
+  }
+
+  .card-header h1 {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-header p {
+    margin: 0;
+    opacity: 0.85;
+    font-size: 14px;
+  }
+
+  .card-body {
+    padding: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-group label:before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #3498db;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #eef2f7;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s;
+    background-color: #fafbfd;
+    box-sizing: border-box;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+
+  .form-control.error {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+  }
+
+  .form-control.success {
+    border-color: #27ae60;
+    background-color: #f5fff9;
+  }
+
+  .file-upload-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .file-upload-button {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+    font-weight: 500;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .file-upload-button.error {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+  }
+
+  .file-upload-button:hover {
+    background: linear-gradient(135deg, #2980b9, #1c5a7a);
+    transform: translateY(-2px);
+  }
+
+  .file-upload-button:before {
+    content: "📷";
+    margin-right: 8px;
+    font-size: 16px;
+  }
+
+  input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .file-name {
+    margin-left: 15px;
+    font-size: 14px;
+    color: #666;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+  }
+
+  .file-name.error {
+    color: #e74c3c;
+  }
+
+  .submit-btn-container {
+    margin-top: 40px;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, #27ae60, #219653);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .submit-btn:hover {
+    background: linear-gradient(135deg, #219653, #1e7e47);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(33, 150, 83, 0.3);
+  }
+
+  .submit-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .submit-btn:before {
+    content: "➕";
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .submit-btn:disabled {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .required-note {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+  }
+
+  .required-note:before {
+    content: "*";
+    color: #e74c3c;
+    margin-right: 4px;
+  }
+
+  .input-icon {
+    position: absolute;
+    right: 16px;
+    top: 40px;
+    color: #95a5a6;
+    font-size: 18px;
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+  }
+
+  .error-message.show {
+    display: block;
+  }
+
+  .validation-hint {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .validation-hint:before {
+    content: "ℹ️";
+    margin-right: 5px;
+    font-size: 11px;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 20px 10px;
+    }
+
+    .card-body {
+      padding: 30px 20px;
+    }
+
+    .card-header {
+      padding: 25px 20px;
+    }
+
+    .card-header h1 {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+
+<body id="body1">
+<form id="form1" name="form1" method="post" action="/add_reporter_post/{{ id }}" enctype="multipart/form-data" class="registration-form">
+  <div class="registration-card">
+    <div class="card-header">
+      <h1>Register New Reporter</h1>
+      <p>Add a reporter to your news team</p>
+    </div>
+
+    <div class="card-body">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" name="textfield" id="name" class="form-control" placeholder="Enter reporter's full name" required />
+        <div class="input-icon">👤</div>
+        <div class="error-message" id="name-error"></div>
+        <div class="validation-hint">Minimum 3 characters, maximum 100 characters</div>
+      </div>
+
+      <div class="form-group">
+        <label for="photo">Profile Photo</label>
+        <div class="file-upload-wrapper">
+          <div class="file-upload-button" id="uploadButton">
+            Choose Photo
+            <input type="file" name="fileField" id="photo" accept="image/*" />
+          </div>
+          <span class="file-name" id="fileName">No file selected</span>
+        </div>
+        <div class="error-message" id="photo-error"></div>
+        <div class="validation-hint">Max size: 5MB, Formats: JPG, PNG, GIF</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" name="textfield3" id="email" class="form-control" placeholder="reporter@example.com" required />
+        <div class="input-icon">✉️</div>
+        <div class="error-message" id="email-error"></div>
+        <div class="validation-hint">Must be a valid email format</div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" name="textfield4" id="phone" class="form-control" placeholder="+1 (555) 123-4567" required />
+        <div class="input-icon">📱</div>
+        <div class="error-message" id="phone-error"></div>
+        <div class="validation-hint">Minimum 10 digits, can include +, spaces, dashes</div>
+      </div>
+
+      <div class="submit-btn-container">
+        <button type="submit" name="button" id="button" class="submit-btn">Add Reporter</button>
+      </div>
+
+      <div class="required-note">All fields are required</div>
+    </div>
+  </div>
+</form>
+
+<script>
+  // Validation configurations
+  const validationRules = {
+    name: {
+      minLength: 3,
+      maxLength: 100,
+      pattern: /^[A-Za-z\s.'-]+$/,
+      errorMessages: {
+        required: 'Full name is required',
+        minLength: 'Name must be at least 3 characters',
+        maxLength: 'Name cannot exceed 100 characters',
+        pattern: 'Name can only contain letters, spaces, periods, apostrophes, and hyphens'
+      }
+    },
+    email: {
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      errorMessages: {
+        required: 'Email is required',
+        pattern: 'Please enter a valid email address (e.g., user@example.com)',
+        duplicate: 'This email is already registered'
+      }
+    },
+    phone: {
+      minDigits: 10,
+      maxDigits: 15,
+      pattern: /^[\+]?[0-9\s\-\(\)]+$/,
+      errorMessages: {
+        required: 'Phone number is required',
+        minDigits: 'Phone number must contain at least 10 digits',
+        maxDigits: 'Phone number cannot exceed 15 digits',
+        pattern: 'Please enter a valid phone number'
+      }
+    },
+    photo: {
+      maxSize: 5 * 1024 * 1024, // 5MB
+      allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'],
+      errorMessages: {
+        required: 'Profile photo is required',
+        type: 'Please select a valid image file (JPEG, PNG, GIF)',
+        size: 'File size must be less than 5MB'
+      }
+    }
+  };
+
+  // DOM elements
+  const form = document.getElementById('form1');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+  const photoInput = document.getElementById('photo');
+  const submitBtn = document.getElementById('button');
+  const uploadButton = document.getElementById('uploadButton');
+
+  // Validation state
+  let validationState = {
+    name: false,
+    email: false,
+    phone: false,
+    photo: false
+  };
+
+  // Show error message
+  function showError(fieldId, message) {
+    const errorElement = document.getElementById(`${fieldId}-error`);
+    errorElement.textContent = message;
+    errorElement.classList.add('show');
+
+    const inputElement = document.getElementById(fieldId);
+    inputElement.classList.add('error');
+    inputElement.classList.remove('success');
+
+    if (fieldId === 'photo') {
+      uploadButton.classList.add('error');
+      document.getElementById('fileName').classList.add('error');
+    }
+
+    validationState[fieldId] = false;
+  }
+
+  // Show success state
+  function showSuccess(fieldId) {
+    const errorElement = document.getElementById(`${fieldId}-error`);
+    errorElement.classList.remove('show');
+
+    const inputElement = document.getElementById(fieldId);
+    inputElement.classList.remove('error');
+    inputElement.classList.add('success');
+
+    if (fieldId === 'photo') {
+      uploadButton.classList.remove('error');
+      document.getElementById('fileName').classList.remove('error');
+    }
+
+    validationState[fieldId] = true;
+  }
+
+  // Validate name
+  function validateName() {
+    const value = nameInput.value.trim();
+
+    if (!value) {
+      showError('name', validationRules.name.errorMessages.required);
+      return false;
+    }
+
+    if (value.length < validationRules.name.minLength) {
+      showError('name', validationRules.name.errorMessages.minLength);
+      return false;
+    }
+
+    if (value.length > validationRules.name.maxLength) {
+      showError('name', validationRules.name.errorMessages.maxLength);
+      return false;
+    }
+
+    if (!validationRules.name.pattern.test(value)) {
+      showError('name', validationRules.name.errorMessages.pattern);
+      return false;
+    }
+
+    showSuccess('name');
+    return true;
+  }
+
+  // Validate email
+  function validateEmail() {
+    const value = emailInput.value.trim();
+
+    if (!value) {
+      showError('email', validationRules.email.errorMessages.required);
+      return false;
+    }
+
+    if (!validationRules.email.pattern.test(value)) {
+      showError('email', validationRules.email.errorMessages.pattern);
+      return false;
+    }
+
+    // Check for duplicate email (you would need to implement server-side check)
+    // This is a placeholder for client-side duplicate checking
+    // In real implementation, you would make an AJAX request to check if email exists
+
+    showSuccess('email');
+    return true;
+  }
+
+  // Validate phone
+  function validatePhone() {
+    const value = phoneInput.value.trim();
+    const digitsOnly = value.replace(/\D/g, '');
+
+    if (!value) {
+      showError('phone', validationRules.phone.errorMessages.required);
+      return false;
+    }
+
+    if (!validationRules.phone.pattern.test(value)) {
+      showError('phone', validationRules.phone.errorMessages.pattern);
+      return false;
+    }
+
+    if (digitsOnly.length < validationRules.phone.minDigits) {
+      showError('phone', validationRules.phone.errorMessages.minDigits);
+      return false;
+    }
+
+    if (digitsOnly.length > validationRules.phone.maxDigits) {
+      showError('phone', validationRules.phone.errorMessages.maxDigits);
+      return false;
+    }
+
+    showSuccess('phone');
+    return true;
+  }
+
+  // Validate photo
+  function validatePhoto() {
+    const file = photoInput.files[0];
+
+    if (!file) {
+      showError('photo', validationRules.photo.errorMessages.required);
+      return false;
+    }
+
+    // Check file type
+    if (!validationRules.photo.allowedTypes.includes(file.type)) {
+      showError('photo', validationRules.photo.errorMessages.type);
+      return false;
+    }
+
+    // Check file size
+    if (file.size > validationRules.photo.maxSize) {
+      showError('photo', validationRules.photo.errorMessages.size);
+      return false;
+    }
+
+    // Check image dimensions (optional)
+    const img = new Image();
+    img.onload = function() {
+      // You can add dimension validation here if needed
+      // Example: if (this.width < 100 || this.height < 100) {
+      //   showError('photo', 'Image must be at least 100x100 pixels');
+      // }
+    };
+    img.src = URL.createObjectURL(file);
+
+    showSuccess('photo');
+    return true;
+  }
+
+  // Validate all fields
+  function validateAll() {
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isPhotoValid = validatePhoto();
+
+    return isNameValid && isEmailValid && isPhoneValid && isPhotoValid;
+  }
+
+  // Update submit button state
+  function updateSubmitButton() {
+    const allValid = Object.values(validationState).every(v => v === true);
+    submitBtn.disabled = !allValid;
+  }
+
+  // File name display with validation
+  photoInput.addEventListener('change', function(e) {
+    const fileName = e.target.files.length > 0 ? e.target.files[0].name : 'No file selected';
+    document.getElementById('fileName').textContent = fileName;
+
+    validatePhoto();
+    updateSubmitButton();
+  });
+
+  // Real-time validation for inputs
+  nameInput.addEventListener('input', function() {
+    validateName();
+    updateSubmitButton();
+  });
+
+  nameInput.addEventListener('blur', validateName);
+
+  emailInput.addEventListener('input', function() {
+    validateEmail();
+    updateSubmitButton();
+  });
+
+  emailInput.addEventListener('blur', validateEmail);
+
+  phoneInput.addEventListener('input', function() {
+    // Format phone number as user types
+    let value = this.value.replace(/\D/g, '');
+
+    if (value.length > 0) {
+      // Format as (XXX) XXX-XXXX for US numbers
+      if (value.length <= 3) {
+        value = `(${value}`;
+      } else if (value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+      } else if (value.length <= 10) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+      } else {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)} x${value.slice(10)}`;
+      }
+    }
+
+    this.value = value;
+    validatePhone();
+    updateSubmitButton();
+  });
+
+  // Form submission with comprehensive validation
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validate all fields
+    if (!validateAll()) {
+      // Find first invalid field and scroll to it
+      const invalidField = Object.keys(validationState).find(field => !validationState[field]);
+      if (invalidField) {
+        document.getElementById(invalidField).scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+
+      alert('Please fix all validation errors before submitting.');
+      return false;
+    }
+
+    // Disable submit button and show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ Adding Reporter...';
+
+    // Create FormData object
+    const formData = new FormData(form);
+
+    try {
+      // You can add AJAX submission here if needed
+      // Example:
+      // const response = await fetch(form.action, {
+      //   method: 'POST',
+      //   body: formData
+      // });
+
+      // For now, we'll submit the form normally
+      // But you might want to add additional validation or processing
+
+      // Check for duplicate email before submission (example)
+      const email = emailInput.value.trim();
+      // This would be an AJAX call in real implementation:
+      // const emailExists = await checkEmailExists(email);
+      // if (emailExists) {
+      //   showError('email', validationRules.email.errorMessages.duplicate);
+      //   submitBtn.disabled = false;
+      //   submitBtn.innerHTML = 'Add Reporter';
+      //   return false;
+      // }
+
+      // If everything is valid, submit the form
+      form.submit();
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An error occurred while submitting the form. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Add Reporter';
+    }
+
+    return true;
+  });
+
+  // Initialize validation on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Validate all fields initially
+    validateAll();
+    updateSubmitButton();
+
+    // Add input event listeners for real-time validation
+    nameInput.addEventListener('input', function() {
+      validateName();
+      updateSubmitButton();
+    });
+
+    emailInput.addEventListener('input', function() {
+      validateEmail();
+      updateSubmitButton();
+    });
+
+    phoneInput.addEventListener('input', function() {
+      validatePhone();
+      updateSubmitButton();
+    });
+
+    photoInput.addEventListener('change', function() {
+      validatePhoto();
+      updateSubmitButton();
+    });
+  });
+
+  // Helper function to check email existence (placeholder)
+  async function checkEmailExists(email) {
+    // This would be an actual API call in production
+    // Example:
+    // try {
+    //   const response = await fetch(`/api/check-email?email=${encodeURIComponent(email)}`);
+    //   const data = await response.json();
+    //   return data.exists;
+    // } catch (error) {
+    //   console.error('Error checking email:', error);
+    //   return false;
+    // }
+    return false; // Placeholder
+  }
+
+  // Optional: Add paste validation for email
+  emailInput.addEventListener('paste', function(e) {
+    setTimeout(() => {
+      validateEmail();
+      updateSubmitButton();
+    }, 100);
+  });
+</script>
+</body>
+</html>
+{% endblock %}

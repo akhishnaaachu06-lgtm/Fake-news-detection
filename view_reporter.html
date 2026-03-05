@@ -1,0 +1,559 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#  <table width="442" height="302" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Slno</th>#}
+{#      <th>Name</th>#}
+{#      <th>Email</th>#}
+{#      <th>Phone</th>#}
+{#    </tr>#}
+{#       {% for i in data %}#}
+{#    <tr>#}
+{#      <td>{{ forloop.counter }}</td>#}
+{#      <td>{{ i.name }}</td>#}
+{#      <td>{{ i.email }}</td>#}
+{#      <td>&nbsp;{{ i.phone }}</td>#}
+{#    </tr>#}
+{#      {% endfor %}#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<style>
+    /* Modern Dashboard Styles */
+    .dashboard-container {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        min-height: 100vh;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        max-width: 1200px;
+        margin: 0 auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header Styles */
+    .card-header {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        padding: 40px 50px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .card-header::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .header-title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .header-icon {
+        background: rgba(255, 255, 255, 0.2);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header-text h1 {
+        font-size: 36px;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -0.5px;
+        background: linear-gradient(to right, #ffffff, #e0e7ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .header-text p {
+        font-size: 17px;
+        opacity: 0.9;
+        margin-top: 8px;
+        color: #e0e7ff;
+    }
+
+    .header-stats {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        padding: 20px 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        min-width: 180px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+    }
+
+    .stat-card:hover::before {
+        left: 100%;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-number {
+        font-size: 36px;
+        font-weight: 800;
+        display: block;
+        line-height: 1;
+        margin-bottom: 8px;
+        color: white;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        opacity: 0.9;
+        color: #e0e7ff;
+    }
+
+    /* Table Styles */
+    .table-container {
+        padding: 40px;
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+    }
+
+    .users-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .users-table th {
+        padding: 22px 20px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #4b5563;
+        background: #f9fafb;
+        border-bottom: 3px solid #e5e7eb;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .users-table th:hover {
+        background: #f3f4f6;
+    }
+
+    .users-table th:first-child {
+        border-top-left-radius: 12px;
+        padding-left: 30px;
+    }
+
+    .users-table th:last-child {
+        border-top-right-radius: 12px;
+        padding-right: 30px;
+    }
+
+    .users-table tbody tr {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 1px solid #f3f4f6;
+        position: relative;
+    }
+
+    .users-table tbody tr:hover {
+        background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+        transform: translateX(10px);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+    }
+
+    .users-table tbody tr::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent, #6366f1, transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .users-table tbody tr:hover::after {
+        opacity: 1;
+    }
+
+    .users-table td {
+        padding: 24px 20px;
+        color: #4b5563;
+        font-size: 16px;
+        vertical-align: middle;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    .users-table td:first-child {
+        padding-left: 30px;
+        font-weight: 700;
+        color: #6366f1;
+        font-size: 18px;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border-radius: 12px 0 0 12px;
+    }
+
+    .users-table td:last-child {
+        padding-right: 30px;
+        border-radius: 0 12px 12px 0;
+    }
+
+    /* Column Specific Styles */
+    .name-cell {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 17px;
+        position: relative;
+        padding-left: 15px;
+    }
+
+    .name-cell::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .email-cell {
+        color: #6b7280;
+        position: relative;
+        padding-left: 35px;
+    }
+
+    .email-cell::before {
+        content: '✉';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6366f1;
+        font-size: 16px;
+    }
+
+    .phone-cell {
+        color: #1f2937;
+        font-weight: 500;
+        font-family: 'SF Mono', 'Roboto Mono', monospace;
+        background: #f9fafb;
+        padding: 10px 18px;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .phone-cell:hover {
+        background: #6366f1;
+        color: white;
+        border-color: #6366f1;
+        transform: scale(1.05);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 80px 40px;
+        color: #9ca3af;
+    }
+
+    .empty-icon {
+        font-size: 80px;
+        margin-bottom: 25px;
+        opacity: 0.3;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .empty-state h3 {
+        font-size: 28px;
+        margin-bottom: 15px;
+        color: #6b7280;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        font-size: 18px;
+        max-width: 500px;
+        margin: 0 auto;
+        line-height: 1.6;
+        color: #9ca3af;
+    }
+
+    /* Footer */
+    .table-footer {
+        background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        padding: 25px 40px;
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .footer-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .total-badge {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        background: #10b981;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .dashboard-container {
+            padding: 20px;
+        }
+
+        .card-header {
+            padding: 30px;
+        }
+
+        .table-container {
+            padding: 25px;
+            overflow-x: auto;
+        }
+
+        .users-table {
+            min-width: 800px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header-title {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .header-text h1 {
+            font-size: 28px;
+        }
+
+        .header-stats {
+            flex-direction: column;
+        }
+
+        .stat-card {
+            min-width: 100%;
+        }
+
+        .table-footer {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="content-card">
+        <!-- Header Section -->
+        <div class="card-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <div class="header-icon">
+                        👥
+                    </div>
+                    <div class="header-text">
+                        <h1>Reporters Directory</h1>
+                        <p>Manage and view all registered reporters in the system</p>
+                    </div>
+                </div>
+
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">{{ data|length }}</span>
+                        <span class="stat-label">Total reporters</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">{{ data|length }}</span>
+                        <span class="stat-label">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <form id="form1" name="form1" method="post" action="">
+                {% if data %}
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td class="name-cell">{{ i.name }}</td>
+                            <td class="email-cell">{{ i.email }}</td>
+                            <td><span class="phone-cell">{{ i.phone }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">👤</div>
+                    <h3>No reporters Found</h3>
+                    <p>There are currently no reporters registered in the system.</p>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="table-footer">
+            <div class="footer-info">
+                <span class="total-badge">{{ data|length }} Reporter{{ data|length|pluralize }}</span>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>System Active</span>
+                </div>
+            </div>
+            <div>
+                Last Synced: <span style="font-weight: 700;">{% now "g:i A" %}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

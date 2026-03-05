@@ -1,0 +1,371 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form id="form1" name="form1" method="post" action="">#}
+{#  <table width="311" height="127" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Slno</th>#}
+{#      <th>Area</th>#}
+{#      <th>News</th>#}
+{#      <th>Status</th>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">&nbsp;</th>#}
+{#      <td>&nbsp;</td>#}
+{#      <td>&nbsp;</td>#}
+{#      <td>&nbsp;</td>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>News Management</title>
+<style>
+    /* Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Styles */
+    .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+        transform: rotate(30deg);
+        opacity: 0.3;
+    }
+
+    .header h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header p {
+        opacity: 0.9;
+        font-size: 16px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Table Styles */
+    .table-container {
+        padding: 30px;
+        overflow-x: auto;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 600px;
+    }
+
+    .data-table thead {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .data-table th {
+        padding: 18px 20px;
+        text-align: left;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 15px;
+        border-bottom: 2px solid #dee2e6;
+        position: relative;
+        letter-spacing: 0.5px;
+    }
+
+    .data-table th::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .data-table th:hover::after {
+        transform: scaleX(1);
+    }
+
+    .data-table th:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    .data-table th:last-child {
+        border-top-right-radius: 10px;
+    }
+
+    .data-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f1f3f4;
+    }
+
+    .data-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .data-table td {
+        padding: 20px;
+        color: #495057;
+        font-size: 15px;
+        border-bottom: 1px solid #f1f3f4;
+        vertical-align: middle;
+    }
+
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Column-specific styles */
+    .data-table th:nth-child(1),
+    .data-table td:nth-child(1) {
+        width: 80px;
+        text-align: center;
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    .data-table th:nth-child(2),
+    .data-table td:nth-child(2) {
+        width: 200px;
+        color: #2c3e50;
+    }
+
+    .data-table th:nth-child(3),
+    .data-table td:nth-child(3) {
+        color: #495057;
+    }
+
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+        width: 120px;
+    }
+
+    /* Status badges (for future use) */
+    .status {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        min-width: 100px;
+    }
+
+    .status-active {
+        background: linear-gradient(135deg, #4cd964 0%, #5ac8fa 100%);
+        color: white;
+    }
+
+    .status-inactive {
+        background: linear-gradient(135deg, #ff9500 0%, #ff5e3a 100%);
+        color: white;
+    }
+
+    /* Empty state styling */
+    .data-table td {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .data-table tr:hover td {
+        color: #495057;
+        font-style: normal;
+    }
+
+    /* Footer */
+    .table-footer {
+        padding: 20px 30px;
+        background: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+
+    .records-count {
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .container {
+            margin: 10px;
+            border-radius: 12px;
+        }
+
+        .header {
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .table-container {
+            padding: 15px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 10px;
+        }
+
+        .header {
+            padding: 15px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 8px;
+            font-size: 14px;
+        }
+    }
+
+    /* Decorative elements */
+    .corner-decoration {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        opacity: 0.1;
+    }
+
+    .corner-top-left {
+        top: 0;
+        left: 0;
+        border-left: 3px solid white;
+        border-top: 3px solid white;
+    }
+
+    .corner-bottom-right {
+        bottom: 0;
+        right: 0;
+        border-right: 3px solid white;
+        border-bottom: 3px solid white;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <div class="corner-decoration corner-top-left"></div>
+        <div class="corner-decoration corner-bottom-right"></div>
+        <h1>News Management</h1>
+        <p>View and manage news entries across different areas</p>
+    </div>
+
+    <div class="table-container">
+        <form id="form1" name="form1" method="post" action="">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="row">Slno</th>
+                        <th>Area</th>
+                        <th>News</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><span class="area-cell">{{ i.AREA.areas }}</span></td>
+                        <td class="news-content">{{ i.newss }}</td>
+
+                        <td class="status-content">{{ i.status }}</td>
+                        <td>&nbsp;<span class="accent-dot"></span></td>
+                    </tr>
+                     {% endfor %}
+                    <!-- Additional rows would go here -->
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div class="table-footer">
+        <div class="records-count">
+            Showing <strong>1</strong> entry
+        </div>
+        <div class="navigation">
+            <!-- Navigation elements can be added here -->
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

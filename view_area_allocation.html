@@ -1,0 +1,502 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="" method="post">#}
+{#<table width="687" height="243" border="1">#}
+{#<caption>View area</caption>#}
+{#  <tr>#}
+{#    <th height="89" scope="row">slno</th>#}
+{#    <th>district</th>#}
+{#    <th>area</th>#}
+{#    <th>longitude</th>#}
+{#    <th>latitude</th>#}
+{#    <th>Action</th>#}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <td height="146" scope="row">&nbsp;{{ forloop.counter }}</td>#}
+{#    <td>&nbsp;{{ i.district }}</td>#}
+{#    <td>&nbsp;{{ i.areas }}</td>#}
+{#    <td>{{ i.latitude }}</td>#}
+{#    <td>{{ i.longitude }}</td>#}
+{#    <td><p><a href="/allocate_area_post/{{ i.id }}">allocate</a></p>#}
+{#   </td>#}
+{#  </tr>#}
+{#{% endfor %}#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>View Areas</title>
+<style>
+    /* Modern gradient background */
+    body1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Glassmorphism container */
+    form {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 50px;
+        max-width: 1200px;
+        width: 100%;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Elegant table styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 15px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Premium caption */
+    caption {
+        font-size: 32px;
+        font-weight: 700;
+        color: transparent;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        padding-bottom: 30px;
+        margin-bottom: 25px;
+        position: relative;
+        text-align: left;
+        letter-spacing: -0.5px;
+    }
+
+    caption::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 2px;
+        animation: lineExpand 1s ease-out forwards;
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+
+    @keyframes lineExpand {
+        to { transform: scaleX(1); }
+    }
+
+    /* Premium table headers */
+    th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.6s;
+    }
+
+    th:hover::before {
+        left: 100%;
+    }
+
+    th:last-child {
+        border-right: none;
+    }
+
+    /* Elegant table cells */
+    td {
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        color: #333;
+        background: white;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+        line-height: 1.6;
+    }
+
+    /* Serial number column */
+    td:first-child {
+        background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+        font-weight: 700;
+        color: #667eea;
+        border-right: 2px solid rgba(102, 126, 234, 0.2);
+        text-align: center;
+        width: 60px;
+    }
+
+    /* Alternate row coloring */
+    tr:nth-child(even) td {
+        background: linear-gradient(135deg, #fafbff 0%, #f5f7ff 100%);
+    }
+
+    /* Elegant row hover effect */
+    tr:hover td {
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+        transform: translateX(8px);
+        box-shadow: -5px 0 15px rgba(102, 126, 234, 0.1);
+        position: relative;
+        z-index: 2;
+    }
+
+    tr:hover td:first-child {
+        background: linear-gradient(135deg, #e8edff 0%, #e0e6ff 100%);
+    }
+
+    /* District column styling */
+    td:nth-child(2) {
+        font-weight: 600;
+        color: #222;
+        position: relative;
+        padding-left: 40px;
+    }
+
+    td:nth-child(2)::before {
+        content: '📍';
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 16px;
+    }
+
+    /* Area column styling */
+    td:nth-child(3) {
+        color: #764ba2;
+        font-weight: 600;
+        position: relative;
+        padding-left: 40px;
+        background: linear-gradient(135deg, rgba(118, 75, 162, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-radius: 4px;
+        margin: 2px;
+    }
+
+    td:nth-child(3)::before {
+        content: '🏙️';
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 15px;
+    }
+
+    /* Coordinate columns styling */
+    td:nth-child(4), td:nth-child(5) {
+        color: #555;
+        font-family: 'Courier New', monospace;
+        font-weight: 500;
+        position: relative;
+        padding-left: 40px;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.02) 100%);
+        font-size: 14px;
+    }
+
+    td:nth-child(4)::before {
+        content: '🌐';
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 15px;
+    }
+
+    td:nth-child(5)::before {
+        content: '🌍';
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 15px;
+    }
+
+    /* Action button styling */
+    td:last-child p {
+        margin: 0;
+        padding: 0;
+    }
+
+    td:last-child a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        min-width: 100px;
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+        box-shadow: 0 6px 15px rgba(76, 175, 80, 0.2);
+    }
+
+    td:last-child a::before {
+        content: '📋';
+        margin-right: 8px;
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    td:last-child a:hover {
+        background: linear-gradient(135deg, #45a049 0%, #4CAF50 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(76, 175, 80, 0.3);
+        border-color: rgba(255, 255, 255, 0.2);
+        letter-spacing: 0.8px;
+    }
+
+    td:last-child a:hover::before {
+        transform: translateY(-2px);
+    }
+
+    td:last-child a:active {
+        transform: translateY(-1px);
+    }
+
+    /* Staggered row animations */
+    tr {
+        animation: fadeInRow 0.5s ease-out forwards;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    @keyframes fadeInRow {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    tr:nth-child(1) { animation-delay: 0.1s; }
+    tr:nth-child(2) { animation-delay: 0.2s; }
+    tr:nth-child(3) { animation-delay: 0.3s; }
+    tr:nth-child(4) { animation-delay: 0.4s; }
+    tr:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        body {
+            padding: 30px 20px;
+        }
+
+        form {
+            padding: 40px 35px;
+            margin: 0 20px;
+        }
+
+        caption {
+            font-size: 28px;
+            padding-bottom: 25px;
+        }
+
+        caption::after {
+            width: 60px;
+            bottom: 15px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-radius: 12px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 35px 25px;
+            border-radius: 20px;
+        }
+
+        caption {
+            font-size: 24px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        caption::after {
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+        }
+
+        @keyframes lineExpand {
+            to { transform: translateX(-50%) scaleX(1); }
+        }
+
+        /* Mobile cards view */
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            animation: fadeInRowMobile 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        @keyframes fadeInRowMobile {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            padding: 20px 25px 20px 45%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            min-height: 65px;
+            background: transparent !important;
+        }
+
+        td:last-child {
+            border-bottom: none;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        td:before {
+            position: absolute;
+            left: 25px;
+            width: 40%;
+            font-weight: 700;
+            color: #667eea;
+            content: attr(data-label);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        /* Add data labels for mobile */
+        td:nth-child(1):before { content: "Serial"; }
+        td:nth-child(2):before { content: "District"; }
+        td:nth-child(3):before { content: "Area"; }
+        td:nth-child(4):before { content: "Latitude"; }
+        td:nth-child(5):before { content: "Longitude"; }
+        td:nth-child(6):before { content: "Action"; }
+
+        /* Remove icons on mobile */
+        td:nth-child(2)::before,
+        td:nth-child(3)::before,
+        td:nth-child(4)::before,
+        td:nth-child(5)::before {
+            display: none;
+        }
+
+        /* Adjust content display */
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5) {
+            padding-left: 45%;
+            background: transparent !important;
+        }
+
+        td:nth-child(4),
+        td:nth-child(5) {
+            font-family: inherit;
+        }
+
+        td:last-child a {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+</head>
+
+<body id="body1"><form action="" method="post">
+<table width="687" height="243" border="1">
+<caption>View area</caption>
+  <tr>
+    <th height="89" scope="row">slno</th>
+    <th>district</th>
+    <th>area</th>
+    <th>longitude</th>
+    <th>latitude</th>
+    <th>Action</th>
+  </tr>
+    {% for i in data %}
+  <tr>
+    <td height="146" scope="row">{{ forloop.counter }}</td>
+    <td>{{ i.district }}</td>
+    <td>{{ i.areas }}</td>
+    <td>{{ i.latitude }}</td>
+    <td>{{ i.longitude }}</td>
+    <td><p><a href="/allocate_area_post/{{ i.id }}">allocate</a></p>
+   </td>
+  </tr>
+{% endfor %}
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,689 @@
+{#{% extends 'reporter/reporterindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="/edit_news_rep_post/ {{ data.id }}" method="post" enctype="multipart/form-data"><table width="200" border="1">#}
+{#  <tr>#}
+{#    <th scope="row">Title</th>#}
+{#    <td><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" value="{{ data.title }}" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">News</th>#}
+{#    <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2"  value="{{ data.newss }}"/></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Image</th>#}
+{#    <td><label for="fileField"></label>#}
+{#         <img src="{{ data.image }}" alt="" height="100" width="100"/>#}
+{#      <input type="file" name="fileField" id="fileField" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Video</th>#}
+{#    <td><label for="fileField2"></label>#}
+{#          <a href="{{ data.video}}">open</a>#}
+{#      <input type="file" name="fileField2" id="fileField2" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Date</th>#}
+{#    <td><label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3"  value="{{ data.date }}"/></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Edit" /></th>#}
+{#    </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'reporter/reporterindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit News Article</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f5f7fa;
+        padding: 20px;
+    }
+
+    .edit-form-container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        padding: 30px 40px;
+    }
+
+    .form-header h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .form-header h2 i {
+        color: #3498db;
+    }
+
+    .form-header p {
+        color: #bdc3c7;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    .news-id {
+        background: rgba(52, 152, 219, 0.2);
+        color: #3498db;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 10px;
+        display: inline-block;
+    }
+
+    .form-body {
+        padding: 40px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+    .form-section.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 12px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-label i {
+        color: #3498db;
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid #e0e6ed;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s;
+        background-color: #f8fafc;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #3498db;
+        background-color: white;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+    }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+        font-family: inherit;
+        line-height: 1.6;
+    }
+
+    .file-upload-section {
+        border: 2px dashed #d1d9e6;
+        border-radius: 10px;
+        padding: 25px;
+        background-color: #f8fafc;
+        transition: all 0.3s;
+    }
+
+    .file-upload-section:hover {
+        border-color: #3498db;
+        background-color: #f0f8ff;
+    }
+
+    .current-file {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #e0e6ed;
+    }
+
+    .current-file img {
+        width: 100px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 2px solid #e0e6ed;
+    }
+
+    .file-info {
+        flex: 1;
+    }
+
+    .file-info h4 {
+        color: #2c3e50;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .file-info p {
+        color: #718096;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .current-file-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .current-file-link:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    }
+
+    .file-input-container {
+        position: relative;
+    }
+
+    .file-input-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 25px;
+        background: white;
+        border: 2px dashed #bdc3c7;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #718096;
+    }
+
+    .file-input-label:hover {
+        border-color: #3498db;
+        color: #3498db;
+        background: #f0f8ff;
+    }
+
+    .file-input-label i {
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #3498db;
+    }
+
+    .file-input-label span {
+        font-size: 14px;
+        color: #95a5a6;
+        margin-top: 5px;
+    }
+
+    .file-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .preview-container {
+        margin-top: 15px;
+        display: none;
+    }
+
+    .preview-container.active {
+        display: block;
+    }
+
+    .preview-image {
+        max-width: 200px;
+        max-height: 150px;
+        border-radius: 8px;
+        border: 2px solid #e0e6ed;
+        margin-top: 10px;
+    }
+
+    .date-input-container {
+        position: relative;
+    }
+
+    .date-input-container i {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #718096;
+        pointer-events: none;
+    }
+
+    .form-footer {
+        grid-column: 1 / -1;
+        padding-top: 30px;
+        border-top: 1px solid #e0e6ed;
+        text-align: center;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: white;
+        border: none;
+        padding: 16px 40px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #27ae60, #219653);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+    }
+
+    .cancel-btn {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 16px 30px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 15px;
+    }
+
+    .cancel-btn:hover {
+        background: #7f8c8d;
+        transform: translateY(-2px);
+    }
+
+    .required {
+        color: #e74c3c;
+        margin-left: 4px;
+    }
+
+    .help-text {
+        color: #718096;
+        font-size: 14px;
+        margin-top: 8px;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .form-body {
+            padding: 25px;
+        }
+
+        .form-header {
+            padding: 25px;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .submit-btn, .cancel-btn {
+            width: 100%;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .current-file {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .file-input-label {
+            padding: 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="edit-form-container">
+        <div class="form-header">
+            <h2><i class="fas fa-edit"></i> Edit News Article</h2>
+            <p>Update the details of your news article below</p>
+            <div class="news-id">Article ID: {{ data.id }}</div>
+        </div>
+
+        <form action="/edit_news_rep_post/ {{ data.id }}" method="post" enctype="multipart/form-data">
+            <div class="form-body">
+                <div class="form-grid">
+                    <div class="form-section">
+                        <label class="form-label" for="textfield">
+                            <i class="fas fa-heading"></i> Title <span class="required">*</span>
+                        </label>
+                        <input type="text" name="textfield" id="textfield" class="form-control" value="{{ data.title }}" placeholder="Enter news title" required />
+                        <div class="help-text">Enter a clear and descriptive title for your news article</div>
+                    </div>
+
+                    <div class="form-section full-width">
+                        <label class="form-label" for="textfield2">
+                            <i class="fas fa-newspaper"></i> News Content <span class="required">*</span>
+                        </label>
+                        <textarea name="textfield2" id="textfield2" class="form-control" placeholder="Enter news content" required>{{ data.newss }}</textarea>
+                        <div class="help-text">Write the full content of your news article</div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">
+                            <i class="fas fa-image"></i> Current Image
+                        </label>
+                        <div class="file-upload-section">
+                            <div class="current-file">
+                                {% if data.image %}
+                                <img src="{{ data.image }}" alt="Current Image" />
+                                <div class="file-info">
+                                    <h4>Current Image</h4>
+                                    <p>Image will be replaced if you upload a new one</p>
+                                </div>
+                                {% else %}
+                                <div class="file-info">
+                                    <h4>No Image Uploaded</h4>
+                                    <p>Upload an image for this news article</p>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="file-input-container">
+                                <label class="file-input-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <div>Click to upload new image</div>
+                                    <span>JPG, PNG, GIF (Max 5MB)</span>
+                                    <input type="file" name="fileField" id="fileField" class="file-input" accept="image/*" onchange="previewImage(this)" />
+                                </label>
+                            </div>
+
+                            <div class="preview-container" id="imagePreview">
+                                <p>New Image Preview:</p>
+                                <img class="preview-image" id="previewImage" src="" alt="Preview" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">
+                            <i class="fas fa-video"></i> Current Video
+                        </label>
+                        <div class="file-upload-section">
+                            {% if data.video %}
+                            <div class="current-file">
+                                <div class="file-info">
+                                    <h4>Current Video</h4>
+                                    <p>Video will be replaced if you upload a new one</p>
+                                </div>
+                                <a href="{{ data.video }}" class="current-file-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Open Video
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="current-file">
+                                <div class="file-info">
+                                    <h4>No Video Uploaded</h4>
+                                    <p>Upload a video for this news article</p>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="file-input-container">
+                                <label class="file-input-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <div>Click to upload new video</div>
+                                    <span>MP4, MOV, AVI (Max 50MB)</span>
+                                    <input type="file" name="fileField2" id="fileField2" class="file-input" accept="video/*" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label" for="textfield3">
+                            <i class="fas fa-calendar-alt"></i> Date <span class="required">*</span>
+                        </label>
+                        <div class="date-input-container">
+                            <input type="text" name="textfield3" id="textfield3" class="form-control" value="{{ data.date }}" placeholder="YYYY-MM-DD" required />
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="help-text">Enter the publication date (Format: YYYY-MM-DD)</div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" name="button" id="button" class="submit-btn">
+                            <i class="fas fa-save"></i> Update News Article
+                        </button>
+                        <a href="javascript:history.back()" class="cancel-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        // Image preview functionality
+        function previewImage(input) {
+            const previewContainer = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.add('active');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                previewContainer.classList.remove('active');
+                previewImage.src = '';
+            }
+        }
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const title = document.getElementById('textfield').value.trim();
+            const newsContent = document.getElementById('textfield2').value.trim();
+            const date = document.getElementById('textfield3').value.trim();
+
+            // Basic validation
+            if (!title) {
+                alert('Please enter a title for the news article');
+                e.preventDefault();
+                return false;
+            }
+
+            if (!newsContent) {
+                alert('Please enter news content');
+                e.preventDefault();
+                return false;
+            }
+
+            if (!date) {
+                alert('Please enter a date');
+                e.preventDefault();
+                return false;
+            }
+
+            // Date format validation (basic)
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!dateRegex.test(date)) {
+                alert('Please enter date in YYYY-MM-DD format');
+                e.preventDefault();
+                return false;
+            }
+
+            // File size validation for image
+            const imageInput = document.getElementById('fileField');
+            if (imageInput.files.length > 0) {
+                const imageSize = imageInput.files[0].size / 1024 / 1024; // in MB
+                if (imageSize > 5) {
+                    alert('Image size should be less than 5MB');
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            // File size validation for video
+            const videoInput = document.getElementById('fileField2');
+            if (videoInput.files.length > 0) {
+                const videoSize = videoInput.files[0].size / 1024 / 1024; // in MB
+                if (videoSize > 50) {
+                    alert('Video size should be less than 50MB');
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            // Confirmation dialog
+            const confirmed = confirm('Are you sure you want to update this news article?');
+            if (!confirmed) {
+                e.preventDefault();
+                return false;
+            }
+
+            return true;
+        });
+
+        // Auto-format date input
+        document.getElementById('textfield3').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+
+            if (value.length >= 4) {
+                value = value.substring(0,4) + '-' + value.substring(4);
+            }
+            if (value.length >= 7) {
+                value = value.substring(0,7) + '-' + value.substring(7,9);
+            }
+
+            e.target.value = value;
+        });
+
+        // Make the date field a date picker if supported
+        if (document.createElement('input').type === 'date') {
+            document.getElementById('textfield3').type = 'date';
+        }
+
+        // Show success message if redirected from successful update
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success')) {
+            showSuccessMessage();
+        }
+
+        function showSuccessMessage() {
+            const message = document.createElement('div');
+            message.className = 'success-message';
+            message.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>News article updated successfully!</span>
+            `;
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #2ecc71;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.remove();
+            }, 4000);
+
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

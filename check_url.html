@@ -1,0 +1,343 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{##}
+{#<style>#}
+{#    body {#}
+{#        background: linear-gradient(135deg,#667eea,#764ba2);#}
+{#        font-family: 'Segoe UI', sans-serif;#}
+{#        padding: 60px 20px;#}
+{#        min-height: 100vh;#}
+{#    }#}
+{##}
+{#    .detect-card {#}
+{#        max-width: 750px;#}
+{#        margin: auto;#}
+{#        background: rgba(255,255,255,0.97);#}
+{#        padding: 50px;#}
+{#        border-radius: 25px;#}
+{#        box-shadow: 0 30px 60px rgba(0,0,0,0.25);#}
+{#        animation: fadeInUp 0.6s ease;#}
+{#    }#}
+{##}
+{#    @keyframes fadeInUp {#}
+{#        from {opacity:0; transform: translateY(40px);}#}
+{#        to {opacity:1; transform: translateY(0);}#}
+{#    }#}
+{##}
+{#    .title {#}
+{#        text-align: center;#}
+{#        font-size: 34px;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 35px;#}
+{#        background: linear-gradient(135deg,#667eea,#764ba2);#}
+{#        -webkit-background-clip: text;#}
+{#        -webkit-text-fill-color: transparent;#}
+{#    }#}
+{##}
+{#    .form-group {#}
+{#        margin-bottom: 25px;#}
+{#    }#}
+{##}
+{#    input[type="text"] {#}
+{#        width: 100%;#}
+{#        padding: 16px;#}
+{#        border-radius: 12px;#}
+{#        border: 2px solid #ddd;#}
+{#        font-size: 15px;#}
+{#        outline: none;#}
+{#        transition: 0.3s ease;#}
+{#    }#}
+{##}
+{#    input[type="text"]:focus {#}
+{#        border-color: #667eea;#}
+{#        box-shadow: 0 0 12px rgba(102,126,234,0.4);#}
+{#    }#}
+{##}
+{#    button {#}
+{#        width: 100%;#}
+{#        padding: 16px;#}
+{#        border-radius: 12px;#}
+{#        border: none;#}
+{#        font-size: 16px;#}
+{#        font-weight: 600;#}
+{#        cursor: pointer;#}
+{#        background: linear-gradient(135deg,#667eea,#764ba2);#}
+{#        color: white;#}
+{#        transition: 0.3s ease;#}
+{#    }#}
+{##}
+{#    button:hover {#}
+{#        transform: translateY(-3px);#}
+{#        box-shadow: 0 15px 30px rgba(102,126,234,0.3);#}
+{#    }#}
+{##}
+{#    .loader {#}
+{#        text-align: center;#}
+{#        margin-top: 25px;#}
+{#        display: none;#}
+{#    }#}
+{##}
+{#    .spinner {#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        border: 6px solid #eee;#}
+{#        border-top: 6px solid #667eea;#}
+{#        border-radius: 50%;#}
+{#        animation: spin 1s linear infinite;#}
+{#        margin: auto;#}
+{#    }#}
+{##}
+{#    @keyframes spin {#}
+{#        100% { transform: rotate(360deg); }#}
+{#    }#}
+{##}
+{#    .result-box {#}
+{#        margin-top: 40px;#}
+{#        padding: 25px;#}
+{#        border-radius: 15px;#}
+{#        background: #f4f7ff;#}
+{#        animation: fadeResult 0.6s ease;#}
+{#    }#}
+{##}
+{#    @keyframes fadeResult {#}
+{#        from {opacity:0; transform: translateY(20px);}#}
+{#        to {opacity:1; transform: translateY(0);}#}
+{#    }#}
+{##}
+{#    .verdict {#}
+{#        font-size: 22px;#}
+{#        font-weight: bold;#}
+{#        margin-bottom: 10px;#}
+{#    }#}
+{##}
+{#    .real { color: #28a745; }#}
+{#    .fake { color: #dc3545; }#}
+{##}
+{#    .confidence {#}
+{#        font-weight: 600;#}
+{#        margin-bottom: 10px;#}
+{#        color: #333;#}
+{#    }#}
+{##}
+{#    .reason {#}
+{#        font-size: 15px;#}
+{#        color: #555;#}
+{#    }#}
+{##}
+{#    @media(max-width:768px){#}
+{#        .detect-card{#}
+{#            padding: 35px 25px;#}
+{#        }#}
+{##}
+{#        .title{#}
+{#            font-size: 26px;#}
+{#        }#}
+{#    }#}
+{#</style>#}
+{##}
+{#<div class="detect-card">#}
+{#    <div class="title">Fake URL Detection</div>#}
+{##}
+{#    <form method="POST" onsubmit="showLoader()">#}
+{#        {% csrf_token %}#}
+{#        <div class="form-group">#}
+{#            <input type="text" name="news_url" placeholder="Enter news article URL..." required>#}
+{#        </div>#}
+{#        <button type="submit">Analyze News</button>#}
+{#    </form>#}
+{##}
+{#    <!-- Loader -->#}
+{#    <div class="loader" id="loader">#}
+{#        <div class="spinner"></div>#}
+{#        <p style="margin-top:10px;">Analyzing with AI... Please wait</p>#}
+{#    </div>#}
+{##}
+{#    <!-- Result Section -->#}
+{#    {% if result %}#}
+{#    <div class="result-box">#}
+{#        {% if "REAL" in result %}#}
+{#            <div class="verdict real">✅ REAL Url</div>#}
+{#        {% elif "FAKE" in result %}#}
+{#            <div class="verdict fake">❌ FAKE Url</div>#}
+{#        {% endif %}#}
+{##}
+{#        <div class="confidence">#}
+{#            {{ result|linebreaks }}#}
+{#        </div>#}
+{#    </div>#}
+{#    {% endif %}#}
+{##}
+{#</div>#}
+{##}
+{#<script>#}
+{#    function showLoader() {#}
+{#        document.getElementById("loader").style.display = "block";#}
+{#    }#}
+{#</script>#}
+{##}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+
+
+
+<style>
+body {
+    background: linear-gradient(135deg,#141e30,#243b55);
+    font-family: 'Segoe UI', sans-serif;
+    padding: 60px 20px;
+}
+
+/* Home Button */
+.home-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: white;
+    color: #243b55;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.home-btn:hover {
+    background: #243b55;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: #ffffff;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from {opacity:0; transform: translateY(40px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #243b55;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #243b55;
+    box-shadow: 0 0 10px rgba(36,59,85,0.4);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #243b55;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #141e30;
+    transform: translateY(-2px);
+}
+
+.loader {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #eee;
+    border-top: 5px solid #243b55;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f4f7fa;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.safe { color: green; font-weight: bold; }
+.suspicious { color: red; font-weight: bold; }
+
+</style>
+
+<!-- Home Button -->
+<a href="/adminhome" class="home-btn">← Back to Home</a>
+
+<div class="container">
+    <div class="title">🔐 Fake URL Detection</div>
+
+    <form method="POST" onsubmit="showLoader()">
+        {% csrf_token %}
+        <input type="text" name="news_url" placeholder="Enter URL (example: https://google.com)" required>
+        <button type="submit">Check URL</button>
+    </form>
+
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Analyzing URL security...</p>
+    </div>
+
+    {% if result %}
+        <div class="result">
+            {% if "SAFE" in result %}
+                <div class="safe">✅ SAFE URL</div>
+            {% elif "SUSPICIOUS" in result %}
+                <div class="suspicious">⚠️ SUSPICIOUS URL</div>
+            {% endif %}
+            <div style="margin-top:10px;">
+                {{ result|linebreaks }}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function showLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+</script>

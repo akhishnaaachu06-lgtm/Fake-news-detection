@@ -1,0 +1,500 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="/add_news_post/{{ id }}" method="post" enctype="multipart/form-data"><table width="200" border="1">#}
+{#  <tr>#}
+{#    <th scope="row">Title</th>#}
+{#    <td><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">News</th>#}
+{#    <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Image</th>#}
+{#    <td><label for="fileField"></label>#}
+{#      <input type="file" name="fileField" id="fileField" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Video</th>#}
+{#    <td><label for="fileField2"></label>#}
+{#      <input type="file" name="fileField2" id="fileField2" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>#}
+{#    </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Add News</title>#}
+{#<style>#}
+{#    .news-form-container {#}
+{#        max-width: 700px;#}
+{#        margin: 30px auto;#}
+{#        padding: 25px;#}
+{#        background-color: #f8f9fa;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0 15px rgba(0,0,0,0.1);#}
+{#    }#}
+{##}
+{#    .form-table {#}
+{#        width: 100%;#}
+{#        border-collapse: collapse;#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    .form-table tr {#}
+{#        border-bottom: 1px solid #e0e0e0;#}
+{#    }#}
+{##}
+{#    .form-table th {#}
+{#        text-align: left;#}
+{#        padding: 15px 10px;#}
+{#        width: 150px;#}
+{#        font-weight: 600;#}
+{#        color: #2c3e50;#}
+{#        background-color: #f1f3f4;#}
+{#    }#}
+{##}
+{#    .form-table td {#}
+{#        padding: 15px 10px;#}
+{#    }#}
+{##}
+{#    .form-input {#}
+{#        width: 100%;#}
+{#        padding: 12px;#}
+{#        border: 1px solid #ddd;#}
+{#        border-radius: 5px;#}
+{#        font-size: 14px;#}
+{#        box-sizing: border-box;#}
+{#        transition: border 0.3s;#}
+{#    }#}
+{##}
+{#    .form-input:focus {#}
+{#        border-color: #4a90e2;#}
+{#        outline: none;#}
+{#        box-shadow: 0 0 0 2px rgba(74,144,226,0.2);#}
+{#    }#}
+{##}
+{#    .submit-btn {#}
+{#        background-color: #4a90e2;#}
+{#        color: white;#}
+{#        padding: 12px 30px;#}
+{#        border: none;#}
+{#        border-radius: 5px;#}
+{#        font-size: 16px;#}
+{#        font-weight: 600;#}
+{#        cursor: pointer;#}
+{#        transition: background-color 0.3s;#}
+{#        display: block;#}
+{#        margin: 20px auto 0;#}
+{#    }#}
+{##}
+{#    .submit-btn:hover {#}
+{#        background-color: #3a7bc8;#}
+{#    }#}
+{##}
+{#    .form-heading {#}
+{#        text-align: center;#}
+{#        color: #2c3e50;#}
+{#        margin-bottom: 25px;#}
+{#        font-size: 24px;#}
+{#        padding-bottom: 10px;#}
+{#        border-bottom: 2px solid #4a90e2;#}
+{#    }#}
+{##}
+{#    .file-input {#}
+{#        padding: 8px 0;#}
+{#    }#}
+{##}
+{#    @media (max-width: 768px) {#}
+{#        .news-form-container {#}
+{#            margin: 15px;#}
+{#            padding: 15px;#}
+{#        }#}
+{##}
+{#        .form-table th,#}
+{#        .form-table td {#}
+{#            display: block;#}
+{#            width: 100%;#}
+{#            padding: 10px 0;#}
+{#        }#}
+{##}
+{#        .form-table th {#}
+{#            background-color: transparent;#}
+{#            padding-bottom: 5px;#}
+{#        }#}
+{#    }#}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body id="body1">#}
+{#    <div class="news-form-container">#}
+{#        <h2 class="form-heading">Add News</h2>#}
+{#        <form action="/add_news_post/{{ id }}" method="post" enctype="multipart/form-data">#}
+{#            <table class="form-table">#}
+{#                <tr>#}
+{#                    <th scope="row">Title</th>#}
+{#                    <td>#}
+{#                        <input type="text" name="textfield" id="textfield" class="form-input" placeholder="Enter news title" required />#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <th scope="row">News</th>#}
+{#                    <td>#}
+{#                        <input type="text" name="textfield2" id="textfield2" class="form-input" placeholder="Enter news content" required />#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <th scope="row">Image</th>#}
+{#                    <td>#}
+{#                        <input type="file" name="fileField" id="fileField" class="form-input file-input" accept="image/*" />#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <th scope="row">Video</th>#}
+{#                    <td>#}
+{#                        <input type="file" name="fileField2" id="fileField2" class="form-input file-input" accept="video/*" />#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#            <button type="submit" name="button" id="button" class="submit-btn">Add News</button>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Add News</title>
+<style>
+    :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --border: #dee2e6;
+        --success: #4cc9f0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body1 {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #f0f2f5;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 600px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(67, 97, 238, 0.15);
+        overflow: hidden;
+        transform: translateY(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 70px rgba(67, 97, 238, 0.2);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        padding: 30px 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .card-header::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+    }
+
+    .card-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .card-subtitle {
+        font-size: 14px;
+        opacity: 0.9;
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+    }
+
+    .card-body {
+        padding: 40px;
+    }
+
+    .input-group {
+        margin-bottom: 25px;
+    }
+
+    .input-label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 15px;
+    }
+
+    .input-label i {
+        margin-right: 10px;
+        color: var(--primary);
+        font-size: 18px;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--light);
+        color: var(--dark);
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .input-field::placeholder {
+        color: var(--gray);
+        opacity: 0.7;
+    }
+
+    .file-upload {
+        position: relative;
+    }
+
+    .file-upload input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .file-upload-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border: 2px dashed var(--border);
+        border-radius: 12px;
+        background: var(--light);
+        color: var(--gray);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .file-upload-label:hover {
+        border-color: var(--primary);
+        background: rgba(67, 97, 238, 0.05);
+        color: var(--primary);
+    }
+
+    .file-upload-label i {
+        font-size: 24px;
+        margin-right: 12px;
+    }
+
+    .file-info {
+        display: block;
+        font-size: 13px;
+        margin-top: 5px;
+        color: var(--gray);
+    }
+
+    .btn-submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 30px;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    .btn-submit i {
+        font-size: 20px;
+    }
+
+    .required-star {
+        color: var(--accent);
+        margin-left: 4px;
+    }
+
+    @media (max-width: 640px) {
+        .card-header {
+            padding: 25px 30px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-title {
+            font-size: 24px;
+        }
+
+        .input-field {
+            padding: 12px 16px;
+        }
+
+        .btn-submit {
+            padding: 16px;
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+
+<body id="body1">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Create News Article</h1>
+            <p class="card-subtitle">Fill in the details below to add news</p>
+        </div>
+
+        <div class="card-body">
+            <form action="/add_news_post/{{ id }}" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <label class="input-label">
+                        <span>Title<span class="required-star">*</span></span>
+                    </label>
+                    <input type="text" name="textfield" id="textfield"
+                           class="input-field" placeholder="News headline" required />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">
+                        <span>News Content<span class="required-star">*</span></span>
+                    </label>
+                    <input type="text" name="textfield2" id="textfield2"
+                           class="input-field" placeholder="Enter the news content here" required />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Image Upload</label>
+                    <div class="file-upload">
+                        <input type="file" name="fileField" id="fileField"
+                               accept="image/*" />
+                        <label for="fileField" class="file-upload-label">
+                            <i>📷</i>
+                            <div>
+                                <div>Click to upload image</div>
+                                <span class="file-info">PNG, JPG, GIF up to 5MB</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Video Upload</label>
+                    <div class="file-upload">
+                        <input type="file" name="fileField2" id="fileField2"
+                               accept="video/*" />
+                        <label for="fileField2" class="file-upload-label">
+                            <i>🎬</i>
+                            <div>
+                                <div>Click to upload video</div>
+                                <span class="file-info">MP4, AVI, MOV up to 50MB</span>
+                            </div>
+                                               </label>
+                    </div>
+                </div>
+
+                <button type="submit" name="button" id="button" class="btn-submit">
+                    <span>Publish News</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

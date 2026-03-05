@@ -1,0 +1,239 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="/edit_news_post/{{ data.id }}" method="post" enctype="multipart/form-data"><table width="200" border="1">#}
+{#  <tr>#}
+{#    <th scope="row">Title</th>#}
+{#    <td><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" value="{{ data.title }}"/></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">News</th>#}
+{#    <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" value="{{ data.newss }}" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Image</th>#}
+{#    <td><label for="fileField"></label>#}
+{#        <img src="{{ data.image }}" alt="" height="100" width="100"/>#}
+{#      <input type="file" name="fileField" id="fileField" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Video</th>#}
+{#    <td><label for="fileField2"></label>#}
+{#        <a href="{{ data.video}}">open</a>#}
+{#      <input type="file" name="fileField2" id="fileField2" /></td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Edit" /></th>#}
+{#    </tr>#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit News</title>
+<style>
+    .edit-form-container {
+        max-width: 800px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-heading {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 600;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 15px;
+    }
+
+    .form-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .form-table tr {
+        border-bottom: 1px solid #ecf0f1;
+        transition: background 0.3s;
+    }
+
+    .form-table tr:hover {
+        background: #f8f9fa;
+    }
+
+    .form-table th {
+        text-align: left;
+        padding: 18px 15px;
+        width: 25%;
+        font-weight: 600;
+        color: #34495e;
+        background: #f8f9fa;
+        font-size: 16px;
+    }
+
+    .form-table td {
+        padding: 18px 15px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .file-input {
+        padding: 10px 0;
+    }
+
+    .media-preview {
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    .image-preview {
+        border-radius: 6px;
+        border: 2px solid #eee;
+        object-fit: cover;
+    }
+
+    .video-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-size: 14px;
+        transition: background 0.3s;
+    }
+
+    .video-link:hover {
+        background: #2980b9;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #3498db, #2c3e50);
+        color: white;
+        border: none;
+        padding: 14px 32px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: block;
+        margin: 30px auto 0;
+        min-width: 150px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .file-label {
+        display: block;
+        margin-top: 8px;
+        color: #7f8c8d;
+        font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+        .edit-form-container {
+            padding: 20px;
+            margin: 15px;
+        }
+
+        .form-table th,
+        .form-table td {
+            display: block;
+            width: 100%;
+            padding: 12px;
+        }
+
+        .form-table th {
+            background: #2c3e50;
+            color: white;
+            border-radius: 4px 4px 0 0;
+            margin-top: 10px;
+        }
+    }
+</style>
+</head>
+
+<body>
+<div class="edit-form-container">
+    <h1 class="form-heading">Edit News Content</h1>
+    <form action="/edit_news_post/{{ data.id }}" method="post" enctype="multipart/form-data">
+        <table class="form-table">
+            <tr>
+                <th scope="row">Title</th>
+                <td>
+                    <input type="text" name="textfield" class="form-input" value="{{ data.title }}" required />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">News</th>
+                <td>
+                    <input type="text" name="textfield2" class="form-input" value="{{ data.newss }}" required />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Image</th>
+                <td>
+                    <div class="media-preview">
+                        <img src="{{ data.image }}" alt="Current Image" class="image-preview" height="100" width="100"/>
+                    </div>
+                    <input type="file" name="fileField" id="fileField" class="form-input file-input" />
+                    <span class="file-label">Leave empty to keep current image</span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Video</th>
+                <td>
+                    {% if data.video %}
+                    <a href="{{ data.video }}" class="video-link" target="_blank">View Current Video</a>
+                    {% endif %}
+                    <input type="file" name="fileField2" id="fileField2" class="form-input file-input" />
+                    <span class="file-label">Leave empty to keep current video</span>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" name="button" id="button" class="submit-btn">Update News</button>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}

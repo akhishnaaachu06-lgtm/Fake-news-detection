@@ -1,0 +1,472 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="" method="post"><table width="476" height="243" border="1">#}
+{#<caption>View feedback</caption>#}
+{#  <tr>#}
+{#    <th width="104" height="89" scope="row">slno</th>#}
+{#    <td width="213">feedback</td>#}
+{#    <td width="137">date</td>#}
+{#    <td width="137">name</td>#}
+{#    #}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <th height="146" scope="row"> {{ forloop.counter }}</th>#}
+{#    <td>&nbsp;{{ i.feedback }}</td>#}
+{#    <td>&nbsp;{{ i.date }}</td>#}
+{#    <td>{{ i.name }}</td>#}
+{#  </tr>#}
+{#    {% endfor %}#}
+{#  #}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>View Feedback</title>
+<style>
+    /* Elegant gradient background */
+    body1 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Premium glassmorphism container */
+    form {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 50px;
+        max-width: 1000px;
+        width: 100%;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        animation: elegantEntrance 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @keyframes elegantEntrance {
+        from {
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Elegant table styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 15px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Premium caption with gradient */
+    caption {
+        font-size: 34px;
+        font-weight: 800;
+        color: transparent;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        padding-bottom: 30px;
+        margin-bottom: 25px;
+        position: relative;
+        text-align: left;
+        letter-spacing: -0.8px;
+    }
+
+    caption::after {
+        content: '💬';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 32px;
+        opacity: 0.2;
+    }
+
+    caption::before {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #f093fb, #f5576c);
+        border-radius: 2px;
+        animation: underlineGrow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+
+    @keyframes underlineGrow {
+        to { transform: scaleX(1); }
+    }
+
+    /* Premium table headers */
+    th {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        padding: 22px 28px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        font-size: 14px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        transition: 0.7s;
+    }
+
+    th:hover::before {
+        left: 100%;
+    }
+
+    th:last-child {
+        border-right: none;
+    }
+
+    /* Elegant table cells */
+    td, th[scope="row"] {
+        padding: 22px 28px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        color: #333;
+        background: white;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        vertical-align: top;
+        line-height: 1.7;
+    }
+
+    /* Serial number column */
+    th[scope="row"] {
+        background: linear-gradient(135deg, #fff5f7 0%, #ffeef1 100%);
+        font-weight: 700;
+        color: #f5576c;
+        border-right: 2px solid rgba(245, 87, 108, 0.2);
+        text-align: center;
+        width: 70px;
+        font-size: 16px;
+    }
+
+    /* Alternate row coloring */
+    tr:nth-child(even) td,
+    tr:nth-child(even) th[scope="row"] {
+        background: linear-gradient(135deg, #fef5f7 0%, #fceff2 100%);
+    }
+
+    /* Premium row hover effect */
+    tr:hover td,
+    tr:hover th[scope="row"] {
+        background: linear-gradient(135deg, #fff0f3 0%, #ffe8ec 100%);
+        transform: translateX(10px);
+        box-shadow: -8px 0 25px rgba(245, 87, 108, 0.12);
+        position: relative;
+        z-index: 2;
+    }
+
+    tr:hover th[scope="row"] {
+        background: linear-gradient(135deg, #ffe8ec 0%, #ffdfe4 100%);
+        transform: translateX(0);
+    }
+
+    /* Feedback content styling */
+    td:nth-child(2) {
+        max-width: 400px;
+        word-wrap: break-word;
+        font-weight: 500;
+        color: #222;
+        line-height: 1.8;
+        padding-right: 40px;
+        position: relative;
+    }
+
+    td:nth-child(2)::before {
+        content: '💭';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.2;
+        font-size: 20px;
+        transition: opacity 0.3s ease;
+    }
+
+    tr:hover td:nth-child(2)::before {
+        opacity: 0.4;
+    }
+
+    /* Date column styling */
+    td:nth-child(3) {
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 13px;
+        color: #666;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+        border-radius: 8px;
+        padding: 12px 18px;
+        text-align: center;
+        width: 150px;
+        font-weight: 500;
+    }
+
+    /* Name column styling */
+    td:nth-child(4) {
+        font-weight: 700;
+        color: #f5576c;
+        background: linear-gradient(135deg, #fff5f0 0%, #fff0e8 100%);
+        border-left: 3px solid rgba(245, 87, 108, 0.3);
+        border-radius: 6px;
+        padding-left: 35px;
+        position: relative;
+    }
+
+    td:nth-child(4)::before {
+        content: '👤';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        opacity: 0.5;
+    }
+
+    /* Staggered row animations */
+    tr {
+        animation: fadeInRow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    @keyframes fadeInRow {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    tr:nth-child(1) { animation-delay: 0.1s; }
+    tr:nth-child(2) { animation-delay: 0.2s; }
+    tr:nth-child(3) { animation-delay: 0.3s; }
+    tr:nth-child(4) { animation-delay: 0.4s; }
+    tr:nth-child(5) { animation-delay: 0.5s; }
+    tr:nth-child(6) { animation-delay: 0.6s; }
+
+    /* Responsive design */
+    @media (max-width: 1100px) {
+        body {
+            padding: 30px;
+        }
+
+        form {
+            padding: 40px 35px;
+        }
+
+        caption {
+            font-size: 30px;
+            padding-bottom: 25px;
+        }
+
+        caption::after {
+            font-size: 28px;
+        }
+
+        caption::before {
+            width: 70px;
+            bottom: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 35px 25px;
+            border-radius: 20px;
+        }
+
+        caption {
+            font-size: 26px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        caption::after {
+            display: none;
+        }
+
+        caption::before {
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+        }
+
+        @keyframes underlineGrow {
+            to { transform: translateX(-50%) scaleX(1); }
+        }
+
+        /* Elegant mobile cards view */
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            animation: fadeInRowMobile 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInRowMobile {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        td, th[scope="row"] {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            padding: 20px 25px 20px 45%;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            min-height: 65px;
+            background: transparent !important;
+        }
+
+        td:last-child, th[scope="row"]:last-child {
+            border-bottom: none;
+        }
+
+        td:before, th[scope="row"]:before {
+            position: absolute;
+            left: 25px;
+            width: 40%;
+            font-weight: 800;
+            color: #f5576c;
+            content: attr(data-label);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            opacity: 0.9;
+            padding-top: 3px;
+        }
+
+        /* Add premium data labels for mobile */
+        td:nth-child(1):before { content: "Serial"; }
+        td:nth-child(2):before { content: "Feedback"; }
+        td:nth-child(3):before { content: "Date"; }
+        td:nth-child(4):before { content: "Submitted By"; }
+
+        th[scope="row"]:before { content: "Serial"; }
+
+        td:nth-child(2) {
+            max-width: none;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.8;
+            padding-right: 25px;
+        }
+
+        td:nth-child(2)::before {
+            display: none;
+        }
+
+        td:nth-child(3) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+            padding-left: 45%;
+            font-family: inherit;
+            font-size: 14px;
+            border-radius: 6px;
+            margin: 5px;
+        }
+
+        td:nth-child(4) {
+            background: linear-gradient(135deg, #fff5f0 0%, #fff0e8 100%);
+            padding-left: 45%;
+            border-left: none;
+            border-radius: 6px;
+            margin: 5px;
+        }
+
+        td:nth-child(4)::before {
+            left: 25px;
+        }
+    }
+</style>
+</head>
+
+<body id="body1">
+<form action="" method="post"><table width="476" height="243" border="1">
+<caption>View feedback</caption>
+  <tr>
+    <th width="104" height="89" scope="row">slno</th>
+    <td width="213">feedback</td>
+    <td width="137">date</td>
+    <td width="137">name</td>
+
+  </tr>
+    {% for i in data %}
+  <tr>
+    <th height="146" scope="row"> {{ forloop.counter }}</th>
+    <td>{{ i.feedback }}</td>
+    <td>{{ i.date }}</td>
+    <td>{{ i.USER.name }}</td>
+  </tr>
+    {% endfor %}
+
+</table>
+</form>
+</body>
+</html>
+{% endblock %}

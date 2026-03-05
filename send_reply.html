@@ -1,0 +1,324 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form action="/send_reply_post/{{ id }}" method="post">#}
+{#<table width="543" height="222" border="1">#}
+{#<caption>send reply</caption>#}
+{#      <tr>#}
+{#    <th scope="row">reply</th>#}
+{#    <td>#}
+{#      #}
+{#        <label for="textfield3"></label>#}
+{#        <label for="textarea"></label>#}
+{#        <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>#}
+{#      #}
+{#      #}
+{#    </td>#}
+{#  </tr>#}
+{##}
+{#  <tr>#}
+{#    <th colspan="2" scope="row">#}
+{#      <input type="submit" name="button" id="button" value="Send" />#}
+{#    </th>#}
+{#  </tr>#}
+{#</table>#}
+{##}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Send Reply</title>
+<style>
+    /* Clean black and white design */
+    body1 {
+        background: #ffffff;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Form container with subtle shadow */
+    form {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e5e5;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Clean table styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 25px;
+    }
+
+    /* Minimal caption styling */
+    caption {
+        font-size: 24px;
+        font-weight: 600;
+        color: #000000;
+        padding-bottom: 20px;
+        margin-bottom: 10px;
+        position: relative;
+        text-align: left;
+        letter-spacing: -0.5px;
+    }
+
+    caption::after {
+        content: '';
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: #000000;
+    }
+
+    /* Professional table headers */
+    th {
+        background: #000000;
+        padding: 18px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px 0 0 8px;
+        width: 20%;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        border-right: 2px solid #000000;
+    }
+
+    /* Clean table cells */
+    td {
+        padding: 0;
+        background: #fafafa;
+        border: none;
+        border-radius: 0 8px 8px 0;
+        border-left: 1px solid #e0e0e0;
+    }
+
+    /* Professional textarea styling */
+    textarea {
+        width: 100%;
+        padding: 18px 20px;
+        border: 1px solid #d0d0d0;
+        border-radius: 8px;
+        font-size: 15px;
+        color: #333333;
+        background: #ffffff;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+        font-family: inherit;
+        line-height: 1.6;
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    textarea:hover {
+        border-color: #666666;
+        background: #fcfcfc;
+    }
+
+    textarea:focus {
+        outline: none;
+        border-color: #000000;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        background: #ffffff;
+    }
+
+    /* Placeholder styling */
+    textarea::placeholder {
+        color: #999999;
+        font-style: italic;
+    }
+
+    /* Last row styling */
+    tr:last-child th {
+        background: transparent;
+        border: none;
+        padding: 10px 0 0 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    tr:last-child td {
+        background: transparent;
+        border: none;
+        padding: 10px 0 0 0;
+    }
+
+    /* Professional submit button */
+    input[type="submit"] {
+        background: #000000;
+        color: #ffffff;
+        padding: 16px 40px;
+        border: 2px solid #000000;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    input[type="submit"]:hover {
+        background: #ffffff;
+        color: #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    input[type="submit"]:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Row hover effect */
+    tr:not(:last-child):hover td {
+        background: #f5f5f5;
+    }
+
+    /* Textarea character counter (optional enhancement) */
+    .char-counter {
+        font-size: 12px;
+        color: #999999;
+        text-align: right;
+        margin-top: 8px;
+        font-family: monospace;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 30px 25px;
+            border-radius: 10px;
+        }
+
+        th, td {
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        th {
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            border-right: none;
+            border-bottom: 2px solid #000000;
+        }
+
+        td {
+            border-radius: 0 0 8px 8px;
+            border-left: none;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        caption {
+            font-size: 20px;
+            padding-bottom: 15px;
+        }
+
+        caption::after {
+            width: 30px;
+            bottom: 8px;
+        }
+
+        textarea {
+            padding: 15px 18px;
+            min-height: 120px;
+        }
+
+        input[type="submit"] {
+            padding: 14px 30px;
+        }
+    }
+
+    /* Focus effect for entire form */
+    form:focus-within {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Optional: Add a subtle pattern in the background */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, #f5f5f5 25%, transparent 25%),
+                    linear-gradient(-45deg, #f5f5f5 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #f5f5f5 75%),
+                    linear-gradient(-45deg, transparent 75%, #f5f5f5 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        opacity: 0.3;
+        z-index: -1;
+    }
+</style>
+</head>
+
+<body id="body1 ">
+<form action="/send_reply_post/{{ id }}" method="post">
+<table width="543" height="222" border="1">
+<caption>send reply</caption>
+      <tr>
+    <th scope="row">reply</th>
+    <td>
+
+        <label for="textfield3"></label>
+        <label for="textarea"></label>
+        <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="2" scope="row">
+      <input type="submit" name="button" id="button" value="Send" />
+    </th>
+  </tr>
+</table>
+
+</form>
+</body>
+</html>
+{% endblock %}

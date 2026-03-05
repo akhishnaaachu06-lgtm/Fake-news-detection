@@ -1,0 +1,792 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body onload="initMap()">#}
+{#<form id="form1" name="form1" method="post" action="/add_post">#}
+{#  <table width="308" border="1">#}
+{#       <tr>#}
+{#      <th width="168" scope="row">District</th>#}
+{#      <td width="124"><label for="textfield"></label>#}
+{#      <select name="select">#}
+{#        <option selected="selected">Kannur</option>#}
+{#        <option>Kozhikode</option>#}
+{#        <option>Malappuram</option>#}
+{#        <option>Wayanad</option>#}
+{#        <option>Palakkad</option>#}
+{#        <option>Kasargode</option>#}
+{#        <option>trissur</option>#}
+{#        <option>Ernakulam</option>#}
+{#        <option>Idukki</option>#}
+{#        <option>Pathanamthitta</option>#}
+{#        <option>Kollam</option>#}
+{#        <option>Alappuzha</option>#}
+{#        <option>Kottayam</option>#}
+{#        <option>Trivandrum</option>#}
+{#      </select></td>#}
+{#    </tr>#}
+{##}
+{#    <tr>#}
+{#      <th scope="row">Area</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Location</th>#}
+{#        <td>#}
+{#     <div id="map" style="height: 300px; width: 100%; border-radius: 10px; margin-bottom: 10px;"></div>#}
+{#<input type="hidden" name="latitude" id="latitude" required />#}
+{#            <input type="hidden" name="longitude" id="longitude" required /></td>#}
+{##}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>#}
+{#    </tr>#}
+{##}
+{#  </table>#}
+{#</form>#}
+{#<script>#}
+{#  let map, marker;#}
+{##}
+{#  function initMap() {#}
+{#    // Default location (Kannur, Kerala fallback)#}
+{#    const defaultLocation = { lat: 11.868536, lng: 75.363197 };#}
+{##}
+{#    map = new google.maps.Map(document.getElementById("map"), {#}
+{#      center: defaultLocation,#}
+{#      zoom: 14,  // default zoom#}
+{#    });#}
+{##}
+{#    marker = new google.maps.Marker({#}
+{#      position: defaultLocation,#}
+{#      map: map,#}
+{#      draggable: true,#}
+{#    });#}
+{##}
+{#    // Try to get current location#}
+{#    if (navigator.geolocation) {#}
+{#      navigator.geolocation.getCurrentPosition(#}
+{#        function (position) {#}
+{#          const currentLocation = {#}
+{#            lat: position.coords.latitude,#}
+{#            lng: position.coords.longitude,#}
+{#          };#}
+{##}
+{#          map.setCenter(currentLocation);#}
+{#          map.setZoom(17);  // ✅ zoom closer to current location#}
+{#          marker.setPosition(currentLocation);#}
+{##}
+{#          // Update hidden fields#}
+{#          document.getElementById("latitude").value = currentLocation.lat;#}
+{#          document.getElementById("longitude").value = currentLocation.lng;#}
+{#        },#}
+{#        function () {#}
+{#          // If user denies location, use default#}
+{#          document.getElementById("latitude").value = defaultLocation.lat;#}
+{#          document.getElementById("longitude").value = defaultLocation.lng;#}
+{#        }#}
+{#      );#}
+{#    } else {#}
+{#      // Browser doesn’t support Geolocation#}
+{#      document.getElementById("latitude").value = defaultLocation.lat;#}
+{#      document.getElementById("longitude").value = defaultLocation.lng;#}
+{#    }#}
+{##}
+{#    // Update hidden fields on marker drag#}
+{#    google.maps.event.addListener(marker, 'dragend', function (event) {#}
+{#      document.getElementById("latitude").value = event.latLng.lat();#}
+{#      document.getElementById("longitude").value = event.latLng.lng();#}
+{#    });#}
+{##}
+{#    // Update hidden fields on map click#}
+{#    map.addListener("click", (e) => {#}
+{#      placeMarker(e.latLng);#}
+{#    });#}
+{#  }#}
+{##}
+{#  function placeMarker(location) {#}
+{#    marker.setPosition(location);#}
+{#    document.getElementById("latitude").value = location.lat();#}
+{#    document.getElementById("longitude").value = location.lng();#}
+{#  }#}
+{#</script>#}
+{##}
+{#<!-- Load Google Maps API -->#}
+{#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&callback=initMap"#}
+{#        async defer></script>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#<style>#}
+{#    body {#}
+{#        font-family: Arial, sans-serif;#}
+{#        background-color: #f4f4f4;#}
+{#        margin: 0;#}
+{#        padding: 20px;#}
+{#    }#}
+{##}
+{#    form {#}
+{#        max-width: 800px;#}
+{#        margin: 0 auto;#}
+{#        background: white;#}
+{#        padding: 20px;#}
+{#        border-radius: 8px;#}
+{#        box-shadow: 0 2px 10px rgba(0,0,0,0.1);#}
+{#    }#}
+{##}
+{#    table {#}
+{#        width: 100%;#}
+{#        border-collapse: collapse;#}
+{#    }#}
+{##}
+{#    th, td {#}
+{#        padding: 12px 15px;#}
+{#        text-align: left;#}
+{#        border-bottom: 1px solid #ddd;#}
+{#    }#}
+{##}
+{#    th {#}
+{#        background-color: #f8f9fa;#}
+{#        font-weight: 600;#}
+{#        color: #333;#}
+{#        width: 30%;#}
+{#    }#}
+{##}
+{#    td {#}
+{#        width: 70%;#}
+{#    }#}
+{##}
+{#    select, input[type="text"] {#}
+{#        width: 100%;#}
+{#        padding: 8px 12px;#}
+{#        border: 1px solid #ddd;#}
+{#        border-radius: 4px;#}
+{#        font-size: 14px;#}
+{#        box-sizing: border-box;#}
+{#    }#}
+{##}
+{#    select:focus, input[type="text"]:focus {#}
+{#        outline: none;#}
+{#        border-color: #4CAF50;#}
+{#        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);#}
+{#    }#}
+{##}
+{#    input[type="submit"] {#}
+{#        background-color: #4CAF50;#}
+{#        color: white;#}
+{#        padding: 12px 24px;#}
+{#        border: none;#}
+{#        border-radius: 4px;#}
+{#        cursor: pointer;#}
+{#        font-size: 16px;#}
+{#        font-weight: 500;#}
+{#        width: 100%;#}
+{#        transition: background-color 0.3s;#}
+{#    }#}
+{##}
+{#    input[type="submit"]:hover {#}
+{#        background-color: #45a049;#}
+{#    }#}
+{##}
+{#    #map {#}
+{#        height: 300px;#}
+{#        width: 100%;#}
+{#        border-radius: 8px;#}
+{#        margin-bottom: 10px;#}
+{#        border: 1px solid #ddd;#}
+{#    }#}
+{##}
+{#    tr:last-child th {#}
+{#        background-color: transparent;#}
+{#        border-bottom: none;#}
+{#        text-align: center;#}
+{#        padding-top: 20px;#}
+{#    }#}
+{##}
+{#    tr:last-child td {#}
+{#        border-bottom: none;#}
+{#    }#}
+{#</style>#}
+{#</head>#}
+{##}
+{#<body onload="initMap()">#}
+{#<form id="form1" name="form1" method="post" action="/add_post">#}
+{#  <table width="308" border="1">#}
+{#       <tr>#}
+{#      <th width="168" scope="row">District</th>#}
+{#      <td width="124"><label for="textfield"></label>#}
+{#      <select name="select">#}
+{#        <option selected="selected">Kannur</option>#}
+{#        <option>Kozhikode</option>#}
+{#        <option>Malappuram</option>#}
+{#        <option>Wayanad</option>#}
+{#        <option>Palakkad</option>#}
+{#        <option>Kasargode</option>#}
+{#        <option>trissur</option>#}
+{#        <option>Ernakulam</option>#}
+{#        <option>Idukki</option>#}
+{#        <option>Pathanamthitta</option>#}
+{#        <option>Kollam</option>#}
+{#        <option>Alappuzha</option>#}
+{#        <option>Kottayam</option>#}
+{#        <option>Trivandrum</option>#}
+{#      </select></td>#}
+{#    </tr>#}
+{##}
+{#    <tr>#}
+{#      <th scope="row">Area</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Location</th>#}
+{#        <td>#}
+{#     <div id="map" style="height: 300px; width: 100%; border-radius: 10px; margin-bottom: 10px;"></div>#}
+{#<input type="hidden" name="latitude" id="latitude" required />#}
+{#            <input type="hidden" name="longitude" id="longitude" required /></td>#}
+{##}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>#}
+{#    </tr>#}
+{##}
+{#  </table>#}
+{#</form>#}
+{#<script>#}
+{#  let map, marker;#}
+{##}
+{#  function initMap() {#}
+{#    // Default location (Kannur, Kerala fallback)#}
+{#    const defaultLocation = { lat: 11.868536, lng: 75.363197 };#}
+{##}
+{#    map = new google.maps.Map(document.getElementById("map"), {#}
+{#      center: defaultLocation,#}
+{#      zoom: 14,  // default zoom#}
+{#    });#}
+{##}
+{#    marker = new google.maps.Marker({#}
+{#      position: defaultLocation,#}
+{#      map: map,#}
+{#      draggable: true,#}
+{#    });#}
+{##}
+{#    // Try to get current location#}
+{#    if (navigator.geolocation) {#}
+{#      navigator.geolocation.getCurrentPosition(#}
+{#        function (position) {#}
+{#          const currentLocation = {#}
+{#            lat: position.coords.latitude,#}
+{#            lng: position.coords.longitude,#}
+{#          };#}
+{##}
+{#          map.setCenter(currentLocation);#}
+{#          map.setZoom(17);  // ✅ zoom closer to current location#}
+{#          marker.setPosition(currentLocation);#}
+{##}
+{#          // Update hidden fields#}
+{#          document.getElementById("latitude").value = currentLocation.lat;#}
+{#          document.getElementById("longitude").value = currentLocation.lng;#}
+{#        },#}
+{#        function () {#}
+{#          // If user denies location, use default#}
+{#          document.getElementById("latitude").value = defaultLocation.lat;#}
+{#          document.getElementById("longitude").value = defaultLocation.lng;#}
+{#        }#}
+{#      );#}
+{#    } else {#}
+{#      // Browser doesn’t support Geolocation#}
+{#      document.getElementById("latitude").value = defaultLocation.lat;#}
+{#      document.getElementById("longitude").value = defaultLocation.lng;#}
+{#    }#}
+{##}
+{#    // Update hidden fields on marker drag#}
+{#    google.maps.event.addListener(marker, 'dragend', function (event) {#}
+{#      document.getElementById("latitude").value = event.latLng.lat();#}
+{#      document.getElementById("longitude").value = event.latLng.lng();#}
+{#    });#}
+{##}
+{#    // Update hidden fields on map click#}
+{#    map.addListener("click", (e) => {#}
+{#      placeMarker(e.latLng);#}
+{#    });#}
+{#  }#}
+{##}
+{#  function placeMarker(location) {#}
+{#    marker.setPosition(location);#}
+{#    document.getElementById("latitude").value = location.lat();#}
+{#    document.getElementById("longitude").value = location.lng();#}
+{#  }#}
+{#</script>#}
+{##}
+{#<!-- Load Google Maps API -->#}
+{#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&callback=initMap"#}
+{#        async defer></script>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Add Area</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    form {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+        width: 30%;
+    }
+
+    td {
+        width: 70%;
+    }
+
+    select, input[type="text"] {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    select:focus, input[type="text"]:focus {
+        outline: none;
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    #map {
+        height: 300px;
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+    }
+
+    tr:last-child th {
+        background-color: transparent;
+        border-bottom: none;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Validation Styles */
+    .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2) !important;
+    }
+
+    .success {
+        border-color: #28a745 !important;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .validation-info {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    .location-status {
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        display: inline-block;
+    }
+
+    .location-not-selected {
+        background-color: #ffeaa7;
+        color: #e17055;
+    }
+
+    .location-selected {
+        background-color: #55efc4;
+        color: #00b894;
+    }
+
+    .coordinate-display {
+        font-size: 11px;
+        color: #666;
+        margin-top: 5px;
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 3px 6px;
+        border-radius: 3px;
+        display: inline-block;
+    }
+</style>
+</head>
+
+<body onload="initMap()">
+<form id="form1" name="form1" method="post" action="/add_post" onsubmit="return validateForm()">
+  <table width="308" border="1">
+       <tr>
+      <th width="168" scope="row">District<span class="required">*</span></th>
+      <td width="124">
+          <label for="textfield"></label>
+          <select name="select" id="districtSelect">
+            <option value="">-- Select District --</option>
+            <option value="Kannur">Kannur</option>
+            <option value="Kozhikode">Kozhikode</option>
+            <option value="Malappuram">Malappuram</option>
+            <option value="Wayanad">Wayanad</option>
+            <option value="Palakkad">Palakkad</option>
+            <option value="Kasargode">Kasargode</option>
+            <option value="trissur">trissur</option>
+            <option value="Ernakulam">Ernakulam</option>
+            <option value="Idukki">Idukki</option>
+            <option value="Pathanamthitta">Pathanamthitta</option>
+            <option value="Kollam">Kollam</option>
+            <option value="Alappuzha">Alappuzha</option>
+            <option value="Kottayam">Kottayam</option>
+            <option value="Trivandrum">Trivandrum</option>
+          </select>
+          <div id="districtError" class="error-message">Please select a district</div>
+      </td>
+    </tr>
+
+    <tr>
+      <th scope="row">Area<span class="required">*</span></th>
+      <td>
+          <label for="textfield2"></label>
+          <input type="text" name="textfield2" id="textfield2" placeholder="Enter area name" />
+          <div id="areaError" class="error-message">Please enter area name (3-100 characters)</div>
+          <div class="validation-info">Minimum 3 characters, maximum 100 characters</div>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Location<span class="required">*</span></th>
+        <td>
+            <div id="locationStatus" class="location-status location-not-selected">📍 Location not selected</div>
+            <div id="map" style="height: 300px; width: 100%; border-radius: 10px; margin-bottom: 10px;"></div>
+            <div id="coordinateInfo" class="coordinate-display" style="display: none;">
+                Selected Coordinates: <span id="latDisplay">0</span>, <span id="lngDisplay">0</span>
+            </div>
+            <div class="validation-info">Click on map or drag the marker to select location</div>
+            <div id="locationError" class="error-message">Please select a location on the map</div>
+            <input type="hidden" name="latitude" id="latitude" required />
+            <input type="hidden" name="longitude" id="longitude" required />
+        </td>
+    </tr>
+    <tr>
+      <th colspan="2" scope="row">
+          <input type="submit" name="button" id="button" value="Add Area" />
+          <div id="formError" class="error-message" style="text-align: center; margin-top: 10px;"></div>
+      </th>
+    </tr>
+  </table>
+</form>
+<script>
+  let map, marker;
+  let isLocationSelected = false;
+  const defaultLocation = { lat: 11.868536, lng: 75.363197 };
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: defaultLocation,
+      zoom: 14,
+    });
+
+    marker = new google.maps.Marker({
+      position: defaultLocation,
+      map: map,
+      draggable: true,
+      title: "Drag to adjust location"
+    });
+
+    // Try to get current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          map.setCenter(currentLocation);
+          map.setZoom(17);
+          marker.setPosition(currentLocation);
+          updateCoordinates(currentLocation.lat, currentLocation.lng, true);
+          updateLocationStatus(true);
+        },
+        function () {
+          // If user denies location, use default
+          updateCoordinates(defaultLocation.lat, defaultLocation.lng, false);
+          updateLocationStatus(false);
+        }
+      );
+    } else {
+      updateCoordinates(defaultLocation.lat, defaultLocation.lng, false);
+      updateLocationStatus(false);
+    }
+
+    // Update on marker drag
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+      updateCoordinates(event.latLng.lat(), event.latLng.lng(), true);
+      updateLocationStatus(true);
+      clearError('locationError');
+    });
+
+    // Update on map click
+    map.addListener("click", (e) => {
+      placeMarker(e.latLng);
+      updateLocationStatus(true);
+      clearError('locationError');
+    });
+  }
+
+  function placeMarker(location) {
+    marker.setPosition(location);
+    updateCoordinates(location.lat(), location.lng(), true);
+  }
+
+  function updateCoordinates(lat, lng, selected) {
+    document.getElementById("latitude").value = lat;
+    document.getElementById("longitude").value = lng;
+    isLocationSelected = selected;
+
+    if (selected) {
+      document.getElementById("latDisplay").textContent = lat.toFixed(6);
+      document.getElementById("lngDisplay").textContent = lng.toFixed(6);
+      document.getElementById("coordinateInfo").style.display = "block";
+    }
+  }
+
+  function updateLocationStatus(selected) {
+    const statusElement = document.getElementById("locationStatus");
+    if (selected) {
+      statusElement.textContent = "✅ Location selected";
+      statusElement.className = "location-status location-selected";
+    } else {
+      statusElement.textContent = "📍 Location not selected";
+      statusElement.className = "location-status location-not-selected";
+    }
+  }
+
+  // Validation Functions
+  function validateDistrict() {
+    const districtSelect = document.getElementById("districtSelect");
+    const districtValue = districtSelect.value.trim();
+
+    if (!districtValue) {
+      showError('districtError', 'Please select a district');
+      districtSelect.classList.add('error');
+      return false;
+    }
+
+    clearError('districtError');
+    districtSelect.classList.remove('error');
+    districtSelect.classList.add('success');
+    return true;
+  }
+
+  function validateArea() {
+    const areaInput = document.getElementById("textfield2");
+    const areaValue = areaInput.value.trim();
+
+    if (!areaValue) {
+      showError('areaError', 'Please enter area name');
+      areaInput.classList.add('error');
+      return false;
+    }
+
+    if (areaValue.length < 3 || areaValue.length > 100) {
+      showError('areaError', 'Area name must be between 3 and 100 characters');
+      areaInput.classList.add('error');
+      return false;
+    }
+
+    // Check for invalid characters
+    const invalidChars = /[<>{}[\]\\]/;
+    if (invalidChars.test(areaValue)) {
+      showError('areaError', 'Area name contains invalid characters');
+      areaInput.classList.add('error');
+      return false;
+    }
+
+    clearError('areaError');
+    areaInput.classList.remove('error');
+    areaInput.classList.add('success');
+    return true;
+  }
+
+  function validateLocation() {
+    const lat = parseFloat(document.getElementById("latitude").value);
+    const lng = parseFloat(document.getElementById("longitude").value);
+
+    if (!isLocationSelected || isNaN(lat) || isNaN(lng)) {
+      showError('locationError', 'Please select a location on the map');
+      document.getElementById('map').style.borderColor = '#dc3545';
+      return false;
+    }
+
+    // Validate coordinate ranges (Kerala, India approximate bounds)
+    if (lat < 8.0 || lat > 13.0 || lng < 74.0 || lng > 78.0) {
+      showError('locationError', 'Please select a location within Kerala region');
+      document.getElementById('map').style.borderColor = '#dc3545';
+      return false;
+    }
+
+    clearError('locationError');
+    document.getElementById('map').style.borderColor = '#28a745';
+    return true;
+  }
+
+  function validateForm() {
+    // Reset all errors
+    clearAllErrors();
+
+    // Validate each field
+    const isDistrictValid = validateDistrict();
+    const isAreaValid = validateArea();
+    const isLocationValid = validateLocation();
+
+    // If all valid, return true to submit
+    if (isDistrictValid && isAreaValid && isLocationValid) {
+      return true;
+    }
+
+    // Show general error message
+    showError('formError', 'Please fix the errors above before submitting');
+    return false;
+  }
+
+  function showError(elementId, message) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = message;
+      element.style.display = 'block';
+    }
+  }
+
+  function clearError(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.style.display = 'none';
+    }
+  }
+
+  function clearAllErrors() {
+    clearError('districtError');
+    clearError('areaError');
+    clearError('locationError');
+    clearError('formError');
+
+    // Reset border colors
+    document.getElementById('map').style.borderColor = '#ddd';
+    document.getElementById('districtSelect').classList.remove('error', 'success');
+    document.getElementById('textfield2').classList.remove('error', 'success');
+  }
+
+  // Real-time validation for area field
+  document.getElementById('textfield2').addEventListener('input', function() {
+    if (this.value.trim().length > 0) {
+      validateArea();
+    } else {
+      clearError('areaError');
+      this.classList.remove('error', 'success');
+    }
+  });
+
+  // Real-time validation for district
+  document.getElementById('districtSelect').addEventListener('change', function() {
+    if (this.value) {
+      validateDistrict();
+    } else {
+      clearError('districtError');
+      this.classList.remove('error', 'success');
+    }
+  });
+
+  // Prevent form submission on Enter in input fields
+  document.getElementById('textfield2').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  });
+</script>
+
+<!-- Load Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&callback=initMap"
+        async defer></script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,534 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body onload="initMap()">#}
+{#<form id="form1" name="form1" method="post" action="/edit_area_post/{{ data.id }}">#}
+{#  <table width="308" border="1">#}
+{#       <tr>#}
+{#      <th width="168" scope="row">District</th>#}
+{#      <td width="124"><label for="textfield"></label>#}
+{#      <select name="select">#}
+{#        <option selected="selected" {% if data.district == 'Kannur' %}selected{% endif %}>Kannur</option>#}
+{#        <option {% if data.district == 'Kozhikode' %}selected{% endif %} >Kozhikode</option>#}
+{#        <option {% if data.district == 'Malappuram' %}selected{% endif %}>Malappuram</option>#}
+{#        <option {% if data.district == 'Wayanad' %}selected{% endif %}>Wayanad</option>#}
+{#        <option {% if data.district == 'Palakkad' %}selected{% endif %}>Palakkad</option>#}
+{#        <option {% if data.district == 'Kasargode' %}selected{% endif %}>Kasargode</option>#}
+{#        <option {% if data.district == 'trissur' %}selected{% endif %}>trissur</option>#}
+{#        <option {% if data.district == 'Ernakulam' %}selected{% endif %}>Ernakulam</option>#}
+{#        <option {% if data.district == 'Idukki' %}selected{% endif %}>Idukki</option>#}
+{#        <option {% if data.district == 'Pathanamthitta' %}selected{% endif %}>Pathanamthitta</option>#}
+{#        <option {% if data.district == 'Kollam' %}selected{% endif %}>Kollam</option>#}
+{#        <option {% if data.district == 'Alappuzha' %}selected{% endif %}>Alappuzha</option>#}
+{#        <option {% if data.district == 'Kottayam' %}selected{% endif %}>Kottayam</option>#}
+{#        <option {% if data.district == 'Trivandrum' %}selected{% endif %}>Trivandrum</option>#}
+{#      </select></td>#}
+{#    </tr>#}
+{##}
+{#    <tr>#}
+{#      <th scope="row">Area</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2"  value="{{ data.areas }}"/></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Location</th>#}
+{#        <td>#}
+{#     <div id="map" style="height: 300px; width: 100%; border-radius: 10px; margin-bottom: 10px;"></div>#}
+{#<input type="hidden" name="latitude" id="latitude" required value="{{ data.latitude }}"/>#}
+{#            <input type="hidden" name="longitude" id="longitude" required value="{{ data.longitude }}"/></td>#}
+{##}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>#}
+{#    </tr>#}
+{##}
+{#  </table>#}
+{#</form>#}
+{#<script>#}
+{#  let map, marker;#}
+{##}
+{#  function initMap() {#}
+{#    // Default location (Kannur, Kerala fallback)#}
+{#    const defaultLocation = { lat: 11.868536, lng: 75.363197 };#}
+{##}
+{#    map = new google.maps.Map(document.getElementById("map"), {#}
+{#      center: defaultLocation,#}
+{#      zoom: 14,  // default zoom#}
+{#    });#}
+{##}
+{#    marker = new google.maps.Marker({#}
+{#      position: defaultLocation,#}
+{#      map: map,#}
+{#      draggable: true,#}
+{#    });#}
+{##}
+{#    // Try to get current location#}
+{#    if (navigator.geolocation) {#}
+{#      navigator.geolocation.getCurrentPosition(#}
+{#        function (position) {#}
+{#          const currentLocation = {#}
+{#            lat: position.coords.latitude,#}
+{#            lng: position.coords.longitude,#}
+{#          };#}
+{##}
+{#          map.setCenter(currentLocation);#}
+{#          map.setZoom(17);  // ✅ zoom closer to current location#}
+{#          marker.setPosition(currentLocation);#}
+{##}
+{#          // Update hidden fields#}
+{#          document.getElementById("latitude").value = currentLocation.lat;#}
+{#          document.getElementById("longitude").value = currentLocation.lng;#}
+{#        },#}
+{#        function () {#}
+{#          // If user denies location, use default#}
+{#          document.getElementById("latitude").value = defaultLocation.lat;#}
+{#          document.getElementById("longitude").value = defaultLocation.lng;#}
+{#        }#}
+{#      );#}
+{#    } else {#}
+{#      // Browser doesn’t support Geolocation#}
+{#      document.getElementById("latitude").value = defaultLocation.lat;#}
+{#      document.getElementById("longitude").value = defaultLocation.lng;#}
+{#    }#}
+{##}
+{#    // Update hidden fields on marker drag#}
+{#    google.maps.event.addListener(marker, 'dragend', function (event) {#}
+{#      document.getElementById("latitude").value = event.latLng.lat();#}
+{#      document.getElementById("longitude").value = event.latLng.lng();#}
+{#    });#}
+{##}
+{#    // Update hidden fields on map click#}
+{#    map.addListener("click", (e) => {#}
+{#      placeMarker(e.latLng);#}
+{#    });#}
+{#  }#}
+{##}
+{#  function placeMarker(location) {#}
+{#    marker.setPosition(location);#}
+{#    document.getElementById("latitude").value = location.lat();#}
+{#    document.getElementById("longitude").value = location.lng();#}
+{#  }#}
+{#</script>#}
+{##}
+{#<!-- Load Google Maps API -->#}
+{#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&callback=initMap"#}
+{#        async defer></script>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit Area</title>
+<style>
+    /* Modern gradient background only for this page */
+    body11 {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* Main form container with glass effect */
+    #form1 {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 40px;
+        max-width: 700px;
+        margin: 0 auto;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    #form1 table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 25px;
+    }
+
+    /* Modern card-like table headers */
+    #form1 th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 18px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        border-radius: 12px 0 0 12px;
+        width: 35%;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #form1 th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    #form1 th:hover::before {
+        left: 100%;
+    }
+
+    /* Table cells with subtle gradient */
+    #form1 td {
+        padding: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 255, 0.9) 100%);
+        border: none;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Custom select dropdown */
+    #form1 select {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #333;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 20px center;
+        background-size: 18px;
+        padding-right: 50px;
+        font-weight: 500;
+    }
+
+    #form1 select:hover {
+        border-color: #6a11cb;
+        box-shadow: 0 5px 20px rgba(106, 17, 203, 0.1);
+        transform: translateY(-1px);
+    }
+
+    #form1 select:focus {
+        outline: none;
+        border-color: #2575fc;
+        box-shadow: 0 5px 25px rgba(37, 117, 252, 0.2);
+        background: white;
+    }
+
+    /* Elegant input fields */
+    #form1 input[type="text"] {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #333;
+        background: white;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    #form1 input[type="text"]:hover {
+        border-color: #6a11cb;
+        box-shadow: 0 5px 20px rgba(106, 17, 203, 0.1);
+        transform: translateY(-1px);
+    }
+
+    #form1 input[type="text"]:focus {
+        outline: none;
+        border-color: #2575fc;
+        box-shadow: 0 5px 25px rgba(37, 117, 252, 0.2);
+        background: white;
+    }
+
+    /* Enhanced map container */
+    #form1 #map {
+        height: 320px;
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        border: 2px solid rgba(106, 17, 203, 0.2);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    #form1 #map:hover {
+        border-color: #6a11cb;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(106, 17, 203, 0.15);
+    }
+
+    #form1 #map::before {
+        content: 'Click or drag marker to adjust location';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(106, 17, 203, 0.9);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    #form1 #map:hover::before {
+        opacity: 1;
+    }
+
+    /* Modern submit button */
+    #form1 input[type="submit"] {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        padding: 18px 40px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        width: 100%;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+        text-transform: uppercase;
+        margin-top: 10px;
+    }
+
+    #form1 input[type="submit"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(106, 17, 203, 0.4);
+        letter-spacing: 1.2px;
+    }
+
+    #form1 input[type="submit"]:active {
+        transform: translateY(-1px);
+    }
+
+    #form1 input[type="submit"]::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+
+    #form1 input[type="submit"]:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(40, 40);
+            opacity: 0;
+        }
+    }
+
+    /* Last row styling */
+    #form1 tr:last-child th {
+        background: transparent;
+        border: none;
+        padding: 20px 0 0 0;
+        text-align: center;
+    }
+
+    #form1 tr:last-child td {
+        background: transparent;
+        border: none;
+        padding: 20px 0 0 0;
+        box-shadow: none;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        #form1 {
+            padding: 30px 25px;
+            border-radius: 20px;
+        }
+
+        #form1 th, #form1 td {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 5px;
+        }
+
+        #form1 th {
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+
+        #form1 td {
+            border-radius: 0 0 12px 12px;
+        }
+
+        #form1 #map {
+            height: 280px;
+        }
+
+        #form1 #map::before {
+            font-size: 11px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+</head>
+
+<body id="body1" onload="initMap()">
+<form id="form1" name="form1" method="post" action="/edit_area_post/{{ data.id }}">
+  <table width="308" border="1">
+       <tr>
+      <th width="168" scope="row">District</th>
+      <td width="124"><label for="textfield"></label>
+      <select name="select">
+        <option selected="selected" {% if data.district == 'Kannur' %}selected{% endif %}>Kannur</option>
+        <option {% if data.district == 'Kozhikode' %}selected{% endif %} >Kozhikode</option>
+        <option {% if data.district == 'Malappuram' %}selected{% endif %}>Malappuram</option>
+        <option {% if data.district == 'Wayanad' %}selected{% endif %}>Wayanad</option>
+        <option {% if data.district == 'Palakkad' %}selected{% endif %}>Palakkad</option>
+        <option {% if data.district == 'Kasargode' %}selected{% endif %}>Kasargode</option>
+        <option {% if data.district == 'trissur' %}selected{% endif %}>trissur</option>
+        <option {% if data.district == 'Ernakulam' %}selected{% endif %}>Ernakulam</option>
+        <option {% if data.district == 'Idukki' %}selected{% endif %}>Idukki</option>
+        <option {% if data.district == 'Pathanamthitta' %}selected{% endif %}>Pathanamthitta</option>
+        <option {% if data.district == 'Kollam' %}selected{% endif %}>Kollam</option>
+        <option {% if data.district == 'Alappuzha' %}selected{% endif %}>Alappuzha</option>
+        <option {% if data.district == 'Kottayam' %}selected{% endif %}>Kottayam</option>
+        <option {% if data.district == 'Trivandrum' %}selected{% endif %}>Trivandrum</option>
+      </select></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Area</th>
+      <td><label for="textfield2"></label>
+      <input type="text" name="textfield2" id="textfield2"  value="{{ data.areas }}"/></td>
+    </tr>
+    <tr>
+      <th scope="row">Location</th>
+        <td>
+     <div id="map" style="height: 300px; width: 100%; border-radius: 10px; margin-bottom: 10px;"></div>
+<input type="hidden" name="latitude" id="latitude" required value="{{ data.latitude }}"/>
+            <input type="hidden" name="longitude" id="longitude" required value="{{ data.longitude }}"/></td>
+
+    </tr>
+    <tr>
+      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Add" /></th>
+    </tr>
+
+  </table>
+</form>
+<script>
+  let map, marker;
+
+  function initMap() {
+    // Default location (Kannur, Kerala fallback)
+    const defaultLocation = { lat: 11.868536, lng: 75.363197 };
+
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: defaultLocation,
+      zoom: 14,  // default zoom
+    });
+
+    marker = new google.maps.Marker({
+      position: defaultLocation,
+      map: map,
+      draggable: true,
+    });
+
+    // Try to get current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          map.setCenter(currentLocation);
+          map.setZoom(17);  // ✅ zoom closer to current location
+          marker.setPosition(currentLocation);
+
+          // Update hidden fields
+          document.getElementById("latitude").value = currentLocation.lat;
+          document.getElementById("longitude").value = currentLocation.lng;
+        },
+        function () {
+          // If user denies location, use default
+          document.getElementById("latitude").value = defaultLocation.lat;
+          document.getElementById("longitude").value = defaultLocation.lng;
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      document.getElementById("latitude").value = defaultLocation.lat;
+      document.getElementById("longitude").value = defaultLocation.lng;
+    }
+
+    // Update hidden fields on marker drag
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+      document.getElementById("latitude").value = event.latLng.lat();
+      document.getElementById("longitude").value = event.latLng.lng();
+    });
+
+    // Update hidden fields on map click
+    map.addListener("click", (e) => {
+      placeMarker(e.latLng);
+    });
+  }
+
+  function placeMarker(location) {
+    marker.setPosition(location);
+    document.getElementById("latitude").value = location.lat();
+    document.getElementById("longitude").value = location.lng();
+  }
+</script>
+
+<!-- Load Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&callback=initMap"
+        async defer></script>
+</body>
+</html>
+{% endblock %}

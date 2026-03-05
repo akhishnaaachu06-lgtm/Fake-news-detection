@@ -1,0 +1,348 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="/login_post">#}
+{#  <table width="370" border="1">#}
+{#  <caption> Login</caption>#}
+{#    <tr>#}
+{#      <th width="180" scope="row">username</th>#}
+{#      <td width="174"><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">password</th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="Login" /></th>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{##}
+{##}
+{##}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>No Cap News - Login</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        background-image:
+            radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    }
+
+    .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        padding: 50px 40px;
+        width: 420px;
+        animation: fadeInUp 0.8s ease-out;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #ff3366, #1a2980, #26d0ce);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #form1 {
+        margin: 0;
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .logo h1 {
+        font-size: 42px;
+        font-weight: 800;
+        margin: 0;
+        background: linear-gradient(90deg, #1a2980, #26d0ce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 1px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .logo h1::after {
+        content: '🔍';
+        font-size: 28px;
+        position: absolute;
+        right: -45px;
+        top: 0;
+    }
+
+    .tagline {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        margin-top: 8px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    caption {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+        border: none;
+        border-collapse: separate;
+        border-spacing: 0 20px;
+    }
+
+    th, td {
+        border: none;
+        padding: 0;
+    }
+
+    th {
+        background: none;
+        color: #1a2980;
+        font-weight: 600;
+        text-align: left;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding-bottom: 8px;
+        width: 120px;
+    }
+
+    .input-container {
+        position: relative;
+        margin-top: 5px;
+    }
+
+    .input-container i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #1a2980;
+        font-size: 18px;
+    }
+
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 16px 16px 16px 50px;
+        border: 2px solid #e6f7ff;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background: #f8fdff;
+        color: #333;
+        font-weight: 500;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #26d0ce;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(38, 208, 206, 0.15);
+        background: white;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .submit-btn {
+        background: linear-gradient(90deg, #1a2980, #26d0ce);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 18px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 10px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(26, 41, 128, 0.25);
+        background: linear-gradient(90deg, #1a2980, #1a2980);
+    }
+
+    .submit-btn:active {
+        transform: translateY(-1px);
+    }
+
+    .submit-btn::after {
+        content: '→';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .submit-btn:hover::after {
+        opacity: 1;
+    }
+
+    .footer-links {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #eee;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .footer-links a {
+        color: #1a2980;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #26d0ce;
+        text-decoration: underline;
+    }
+
+    .security-badge {
+        background: #e6f7ff;
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-size: 12px;
+        color: #1a2980;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 5px;
+    }
+
+    .security-badge i {
+        font-size: 14px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("textfield2");
+        var toggleIcon = document.querySelector(".password-toggle i");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.className = "fas fa-eye-slash";
+        } else {
+            passwordField.type = "password";
+            toggleIcon.className = "fas fa-eye";
+        }
+    }
+</script>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="/login_post">
+  <div class="login-container">
+    <div class="logo">
+        <h1>NO CAP NEWS</h1>
+        <div class="tagline">Detect Truth in a World of Fiction</div>
+        <div class="security-badge">
+            <i class="fas fa-shield-alt"></i> Secure Login • Verified Sources
+        </div>
+    </div>
+
+    <caption> Login</caption>
+    <table width="370" border="1">
+      <tr>
+        <th width="180" scope="row">username</th>
+        <td width="174">
+            <div class="input-container">
+                <i class="fas fa-user"></i>
+                <input type="text" name="textfield" id="textfield" placeholder="Enter your username" />
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">password</th>
+        <td>
+            <div class="input-container">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="textfield2" id="textfield2" placeholder="Enter your password" />
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2" scope="row">
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </th>
+      </tr>
+    </table>
+
+    <div class="footer-links">
+        New to No Cap News? <a href="/register">Create Account</a> •
+        <a href="/forgotpassword">Forgot Password?</a> •
+        <a href="/about">How We Detect Fake News</a>
+    </div>
+  </div>
+</form>
+</body>
+</html>
+
+

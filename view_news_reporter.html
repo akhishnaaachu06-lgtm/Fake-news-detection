@@ -1,0 +1,633 @@
+{#{% extends 'reporter/reporterindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="" method="post"><table width="687" height="243" border="1">#}
+{#<caption>View news</caption>#}
+{#  <tr>#}
+{#    <th height="89" scope="row">slno</th>#}
+{#    <td>title</td>#}
+{#    <td>news</td>#}
+{#    <td>image</td>#}
+{#    <td>vedio</td>#}
+{#    <td>date</td>#}
+{#    <td>Action</td>#}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <th height="146" scope="row">{{ forloop.counter }}</th>#}
+{#    <td>{{i.title}}</td>#}
+{#    <td>{{ i.news }}</td>#}
+{#    <td><img src="{{ i.image }}" alt="" height="100" width="100"/></td>#}
+{#    <td>#}
+{#        <a href="{{ i.video }}">video</a>#}
+{#    </td>#}
+{#    <td>{{ i.date }}</td>#}
+{#    <td><a href="/edit_news_rep/{{ i.id }}">edit</a></td>#}
+{#  </tr>#}
+{#  {% endfor %}#}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'reporter/reporterindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>View News - Reporter Dashboard</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .news-container {
+        padding: 30px;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e0e6ed;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .page-title {
+        font-size: 28px;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .news-count {
+        background-color: #3498db;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .add-news-btn {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);
+    }
+
+    .add-news-btn:hover {
+        background: linear-gradient(135deg, #27ae60, #219653);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(46, 204, 113, 0.3);
+    }
+
+    .add-news-btn i {
+        margin-right: 8px;
+        font-size: 16px;
+    }
+
+    .news-table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        overflow-x: auto;
+    }
+
+    .news-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1100px;
+    }
+
+    .news-table thead {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+    }
+
+    .news-table thead th {
+        color: white;
+        font-weight: 600;
+        text-align: left;
+        padding: 18px 20px;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+    .news-table tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+        transition: all 0.2s ease;
+    }
+
+    .news-table tbody tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .news-table tbody td {
+        padding: 20px;
+        color: #4a5568;
+        vertical-align: top;
+        border: none;
+    }
+
+    .news-table tbody th {
+        padding: 20px;
+        font-weight: 500;
+        color: #2c3e50;
+        border: none;
+    }
+
+    .slno-cell {
+        font-weight: 600;
+        color: #3498db;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .title-cell {
+        font-weight: 600;
+        color: #2c3e50;
+        max-width: 200px;
+    }
+
+    .news-content {
+        max-width: 300px;
+        line-height: 1.5;
+        color: #4a5568;
+        font-size: 14px;
+        max-height: 100px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .news-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .news-content::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 2px;
+    }
+
+    .image-cell img {
+        width: 100px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        transition: transform 0.3s ease;
+    }
+
+    .image-cell img:hover {
+        transform: scale(1.8);
+        z-index: 10;
+        position: relative;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-link {
+        display: inline-flex;
+        align-items: center;
+        background-color: #e74c3c;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .video-link:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(231, 76, 60, 0.3);
+    }
+
+    .video-link i {
+        margin-right: 6px;
+    }
+
+    .date-cell {
+        color: #718096;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .action-cell {
+        text-align: center;
+    }
+
+    .edit-btn {
+        display: inline-flex;
+        align-items: center;
+        background-color: #3498db;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(52, 152, 219, 0.3);
+    }
+
+    .edit-btn i {
+        margin-right: 6px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .delete-btn {
+        display: inline-flex;
+        align-items: center;
+        background-color: #e74c3c;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(231, 76, 60, 0.3);
+    }
+
+    .delete-btn i {
+        margin-right: 6px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #a0aec0;
+    }
+
+    .empty-state i {
+        font-size: 60px;
+        margin-bottom: 20px;
+        color: #cbd5e0;
+    }
+
+    .empty-state p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state .add-news-btn {
+        margin-top: 10px;
+    }
+
+    .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 8px;
+    }
+
+    .pagination-btn {
+        padding: 8px 14px;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        color: #4a5568;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-btn:hover {
+        background-color: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+
+    .pagination-btn.active {
+        background-color: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+
+    @media (max-width: 1200px) {
+        .news-container {
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-right {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .news-table-container {
+            border-radius: 8px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .news-container {
+            padding: 15px;
+        }
+
+        .page-title {
+            font-size: 22px;
+        }
+
+        .news-table thead th {
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        .news-table tbody td,
+        .news-table tbody th {
+            padding: 15px;
+        }
+
+        .image-cell img {
+            width: 80px;
+            height: 60px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .add-news-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="news-container">
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1 class="page-title">News Management</h1>
+                <div class="news-count">{{ data|length }} News Article{% if data|length != 1 %}s{% endif %}</div>
+            </div>
+
+            <div class="header-right">
+                <a href="/add_news" class="add-news-btn">
+                    <i class="fas fa-plus-circle"></i> Add New Article
+                </a>
+            </div>
+        </div>
+
+        <form action="" method="post">
+            <div class="news-table-container">
+                {% if data %}
+                <table class="news-table">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Title</th>
+                            <th>News Content</th>
+                            <th>Image</th>
+                            <th>Video</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <th class="slno-cell">{{ forloop.counter }}</th>
+                            <td class="title-cell">{{ i.title }}</td>
+                            <td>
+                                <div class="news-content">{{ i.news }}</div>
+                            </td>
+                            <td class="image-cell">
+                                {% if i.image %}
+                                <img src="{{ i.image }}" alt="News Image" />
+                                {% else %}
+                                <div style="color: #a0aec0; font-style: italic;">No Image</div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if i.video %}
+                                <a href="{{ i.video }}" class="video-link" target="_blank">
+                                    <i class="fas fa-play-circle"></i> Play Video
+                                </a>
+                                {% else %}
+                                <div style="color: #a0aec0; font-style: italic;">No Video</div>
+                                {% endif %}
+                            </td>
+                            <td class="date-cell">{{ i.date }}</td>
+                            <td class="action-cell">
+                                <div class="action-buttons">
+                                    <a href="/edit_news_rep/{{ i.id }}" class="edit-btn">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="/delete_news/{{ i.id }}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this news article?')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <div class="pagination">
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                    <div style="color: #718096; font-size: 14px;">
+                        Showing {{ data|length }} of {{ data|length }} entries
+                    </div>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="far fa-newspaper"></i>
+                    <p>No news articles found. Start by adding your first news story.</p>
+                    <a href="/add_news" class="add-news-btn">
+                        <i class="fas fa-plus-circle"></i> Add Your First News Article
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        // Image hover zoom effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.image-cell img');
+            images.forEach(img => {
+                img.addEventListener('mouseenter', function() {
+                    const rect = this.getBoundingClientRect();
+                    if (rect.left < 150) {
+                        this.style.transformOrigin = 'left center';
+                    } else if (window.innerWidth - rect.right < 150) {
+                        this.style.transformOrigin = 'right center';
+                    } else {
+                        this.style.transformOrigin = 'center center';
+                    }
+                });
+
+                img.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Pagination functionality
+            const paginationBtns = document.querySelectorAll('.pagination-btn');
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    paginationBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Success message display
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success')) {
+                showNotification('News article updated successfully!', 'success');
+            }
+            if (urlParams.has('added')) {
+                showNotification('News article added successfully!', 'success');
+            }
+            if (urlParams.has('deleted')) {
+                showNotification('News article deleted successfully!', 'info');
+            }
+        });
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#2ecc71' : '#3498db'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+            `;
+
+            notification.querySelector('button').style.cssText = `
+                background: transparent;
+                border: none;
+                color: white;
+                cursor: pointer;
+                margin-left: auto;
+                font-size: 16px;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Add CSS animation for notification
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+{% endblock %}

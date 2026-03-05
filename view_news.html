@@ -1,0 +1,567 @@
+{#{% extends 'admin/adminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="" method="post"><table width="687" height="243" border="1">#}
+{#<caption>View news</caption>#}
+{#  <tr>#}
+{#    <th height="89" scope="row">slno</th>#}
+{#    <td>title</td>#}
+{#    <td>news</td>#}
+{#    <td>image</td>#}
+{#    <td>video</td>#}
+{#    <td>date</td>#}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <th height="146" scope="row">{{ forloop.counter }}</th>#}
+{#    <td>&nbsp;{{ i.title }}</td>#}
+{#    <td> {{ i.news }}</td>#}
+{#    <td>&nbsp;<img src="{{i.image}}" alt="" height="100px" width="100px"/> </td>#}
+{#    <td><a href="{{i.video}}">view video</a> </td>#}
+{#    <td>{{ i.date }}</td>#}
+{#  </tr>#}
+{#    {% endfor %}#}
+{#  #}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>View News</title>
+<style>
+    /* Modern gradient background */
+    body1 {
+        background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Premium glassmorphism container */
+    form {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 50px;
+        max-width: 1400px;
+        width: 100%;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        animation: newsEntrance 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @keyframes newsEntrance {
+        from {
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Elegant table styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 15px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Premium caption with news theme */
+    caption {
+        font-size: 36px;
+        font-weight: 800;
+        color: transparent;
+        background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        padding-bottom: 30px;
+        margin-bottom: 25px;
+        position: relative;
+        text-align: left;
+        letter-spacing: -1px;
+    }
+
+    caption::before {
+        content: '📰';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        opacity: 0.2;
+    }
+
+    caption::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #00b4db, #0083b0);
+        border-radius: 2px;
+        animation: newsUnderline 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+
+    @keyframes newsUnderline {
+        to { transform: scaleX(1); }
+    }
+
+    /* Premium table headers */
+    th {
+        background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+        padding: 22px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        font-size: 14px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        transition: 0.7s;
+    }
+
+    th:hover::before {
+        left: 100%;
+    }
+
+    th:last-child {
+        border-right: none;
+    }
+
+    /* Elegant table cells */
+    td, th[scope="row"] {
+        padding: 22px 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        color: #333;
+        background: white;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        vertical-align: top;
+        line-height: 1.7;
+    }
+
+    /* Serial number column */
+    th[scope="row"] {
+        background: linear-gradient(135deg, #e6f7ff 0%, #d6f2ff 100%);
+        font-weight: 700;
+        color: #0083b0;
+        border-right: 2px solid rgba(0, 131, 176, 0.2);
+        text-align: center;
+        width: 70px;
+        font-size: 16px;
+    }
+
+    /* Alternate row coloring */
+    tr:nth-child(even) td,
+    tr:nth-child(even) th[scope="row"] {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e6f5ff 100%);
+    }
+
+    /* Premium row hover effect */
+    tr:hover td,
+    tr:hover th[scope="row"] {
+        background: linear-gradient(135deg, #e6f7ff 0%, #d6f2ff 100%);
+        transform: translateX(8px);
+        box-shadow: -8px 0 25px rgba(0, 180, 219, 0.15);
+        position: relative;
+        z-index: 2;
+    }
+
+    tr:hover th[scope="row"] {
+        background: linear-gradient(135deg, #d6f2ff 0%, #c6edff 100%);
+        transform: translateX(0);
+    }
+
+    /* Title column styling */
+    td:nth-child(2) {
+        font-weight: 700;
+        color: #0083b0;
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 200px;
+        word-wrap: break-word;
+        position: relative;
+    }
+
+    td:nth-child(2)::before {
+        content: '📋';
+        position: absolute;
+        left: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.3;
+        font-size: 18px;
+    }
+
+    /* News content styling */
+    td:nth-child(3) {
+        max-width: 300px;
+        word-wrap: break-word;
+        font-weight: 500;
+        color: #222;
+        line-height: 1.8;
+        padding-right: 30px;
+        position: relative;
+    }
+
+    td:nth-child(3)::before {
+        content: '📝';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.2;
+        font-size: 20px;
+        transition: opacity 0.3s ease;
+    }
+
+    tr:hover td:nth-child(3)::before {
+        opacity: 0.4;
+    }
+
+    /* Image column styling */
+    td:nth-child(4) {
+        text-align: center;
+        padding: 15px;
+    }
+
+    img {
+        border-radius: 12px;
+        border: 3px solid rgba(0, 180, 219, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        object-fit: cover;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e6f5ff 100%);
+        padding: 5px;
+    }
+
+    img:hover {
+        transform: scale(1.08);
+        border-color: #00b4db;
+        box-shadow: 0 12px 30px rgba(0, 180, 219, 0.25);
+    }
+
+    /* Video link styling */
+    td:nth-child(5) {
+        text-align: center;
+    }
+
+    td a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid transparent;
+        min-width: 120px;
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+        box-shadow: 0 6px 20px rgba(0, 180, 219, 0.2);
+    }
+
+    td a::before {
+        content: '▶️';
+        margin-right: 8px;
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    td a:hover {
+        background: linear-gradient(135deg, #0083b0 0%, #00b4db 100%);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 180, 219, 0.3);
+        border-color: rgba(255, 255, 255, 0.3);
+        letter-spacing: 0.8px;
+    }
+
+    td a:hover::before {
+        transform: translateX(2px);
+    }
+
+    td a:active {
+        transform: translateY(-1px);
+    }
+
+    /* Date column styling */
+    td:nth-child(6) {
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 13px;
+        color: #666;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+        border-radius: 8px;
+        padding: 12px 18px;
+        text-align: center;
+        width: 150px;
+        font-weight: 500;
+    }
+
+    /* Staggered row animations */
+    tr {
+        animation: newsRowFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    @keyframes newsRowFadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    tr:nth-child(1) { animation-delay: 0.1s; }
+    tr:nth-child(2) { animation-delay: 0.2s; }
+    tr:nth-child(3) { animation-delay: 0.3s; }
+    tr:nth-child(4) { animation-delay: 0.4s; }
+    tr:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        body {
+            padding: 30px;
+        }
+
+        form {
+            padding: 40px 35px;
+            margin: 0 20px;
+        }
+
+        caption {
+            font-size: 32px;
+            padding-bottom: 25px;
+        }
+
+        caption::before {
+            font-size: 36px;
+        }
+
+        caption::after {
+            width: 70px;
+            bottom: 15px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-radius: 16px;
+        }
+
+        td:nth-child(3) {
+            max-width: 250px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 35px 25px;
+            border-radius: 20px;
+        }
+
+        caption {
+            font-size: 28px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        caption::before {
+            display: none;
+        }
+
+        caption::after {
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+        }
+
+        @keyframes newsUnderline {
+            to { transform: translateX(-50%) scaleX(1); }
+        }
+
+        /* Elegant mobile cards view */
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 30px;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            padding: 0;
+            animation: newsRowMobile 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes newsRowMobile {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        td, th[scope="row"] {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            padding: 20px 25px 20px 40%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            min-height: 70px;
+            background: transparent !important;
+        }
+
+        td:nth-child(4), td:nth-child(5) {
+            justify-content: center;
+            padding: 20px;
+        }
+
+        td:last-child, th[scope="row"]:last-child {
+            border-bottom: none;
+        }
+
+        td:before, th[scope="row"]:before {
+            position: absolute;
+            left: 25px;
+            width: 35%;
+            font-weight: 800;
+            color: #0083b0;
+            content: attr(data-label);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            opacity: 0.9;
+        }
+
+        /* Add premium data labels for mobile */
+        td:nth-child(1):before { content: "Serial"; }
+        td:nth-child(2):before { content: "Title"; }
+        td:nth-child(3):before { content: "News"; }
+        td:nth-child(4):before { content: "Image"; }
+        td:nth-child(5):before { content: "Video"; }
+        td:nth-child(6):before { content: "Date"; }
+
+        th[scope="row"]:before { content: "Serial"; }
+
+        td:nth-child(2), td:nth-child(3) {
+            max-width: none;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.7;
+        }
+
+        td:nth-child(2)::before,
+        td:nth-child(3)::before {
+            display: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+
+        td a {
+            padding: 10px 20px;
+            min-width: 100px;
+        }
+
+        td:nth-child(6) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 5px;
+            width: auto;
+            justify-content: flex-start;
+        }
+    }
+</style>
+</head>
+
+<body id="body1">
+<form action="" method="post"><table width="687" height="243" border="1">
+<caption>View news</caption>
+  <tr>
+    <th height="89" scope="row">slno</th>
+    <td>title</td>
+    <td>news</td>
+    <td>image</td>
+    <td>video</td>
+    <td>date</td>
+  </tr>
+    {% for i in data %}
+  <tr>
+    <th height="146" scope="row">{{ forloop.counter }}</th>
+    <td>&nbsp;{{ i.title }}</td>
+    <td> {{ i.news }}</td>
+    <td><img src="{{i.image}}" alt="" height="100px" width="100px"/> </td>
+    <td><a href="{{i.video}}">view video</a> </td>
+    <td>{{ i.date }}</td>
+  </tr>
+    {% endfor %}
+
+</table>
+</form>
+</body>
+</html>
+{% endblock %}

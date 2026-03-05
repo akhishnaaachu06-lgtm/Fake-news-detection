@@ -1,0 +1,859 @@
+{#{% extends 'subadmin/subadminindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form action="/subadmin_change_password_post" method="post">#}
+{#<table width="543" height="222" border="1">#}
+{#<caption>Change password</caption>#}
+{#  <tr>#}
+{#    <th width="202" scope="row">Current password</th>#}
+{#    <td width="325">#}
+{#      <label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">New password</th>#}
+{#    <td>#}
+{#      <label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  <tr>#}
+{#    <th scope="row">Confirm password</th>#}
+{#    <td>#}
+{#      <label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3" />#}
+{#    </td>#}
+{#  </tr>#}
+{#  #}
+{#  <tr>#}
+{#    <th colspan="2" scope="row">#}
+{#      <input type="submit" name="button" id="button" value="Submit" />#}
+{#    </th>#}
+{#  </tr>#}
+{#</table>#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Change Password</title>
+<style>
+    /* Page styling */
+    body1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Form container */
+    form {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 50px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 25px;
+    }
+
+    /* Caption styling */
+    caption {
+        font-size: 32px;
+        font-weight: 700;
+        color: transparent;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        padding-bottom: 30px;
+        margin-bottom: 20px;
+        position: relative;
+        text-align: left;
+        letter-spacing: -0.5px;
+    }
+
+    caption::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 2px;
+        animation: lineExpand 1s ease-out forwards;
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+
+    @keyframes lineExpand {
+        to { transform: scaleX(1); }
+    }
+
+    /* Table headers */
+    th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px 25px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        border: none;
+        border-radius: 12px 0 0 12px;
+        width: 35%;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    th::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.6s;
+    }
+
+    th:hover::before {
+        left: 100%;
+    }
+
+    /* Table cells */
+    td {
+        padding: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 255, 0.9) 100%);
+        border: none;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    /* Input fields */
+    input[type="password"] {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #333;
+        background: white;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    input[type="password"]:hover {
+        border-color: rgba(102, 126, 234, 0.3);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1), inset 0 2px 8px rgba(102, 126, 234, 0.05);
+        transform: translateY(-1px);
+    }
+
+    input[type="password"]:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 5px 25px rgba(102, 126, 234, 0.2), inset 0 2px 8px rgba(102, 126, 234, 0.05);
+        background: white;
+    }
+
+    /* Submit button row */
+    tr:last-child th {
+        background: transparent;
+        border: none;
+        padding: 25px 0 0 0;
+        text-align: center;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    tr:last-child td {
+        background: transparent;
+        border: none;
+        padding: 25px 0 0 0;
+        box-shadow: none;
+    }
+
+    /* Submit button */
+    input[type="submit"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 18px 40px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        width: 100%;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        text-transform: uppercase;
+    }
+
+    input[type="submit"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        letter-spacing: 1.2px;
+    }
+
+    input[type="submit"]:active {
+        transform: translateY(-1px);
+    }
+
+    input[type="submit"]::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    input[type="submit"]:hover::before {
+        width: 400px;
+        height: 400px;
+    }
+
+    /* Row hover effect */
+    tr:hover td {
+        transform: translateX(5px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        form {
+            padding: 35px 25px;
+            border-radius: 20px;
+        }
+
+        th, td {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        th {
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+
+        td {
+            border-radius: 0 0 12px 12px;
+        }
+
+        caption {
+            font-size: 28px;
+            padding-bottom: 25px;
+            text-align: center;
+        }
+
+        caption::after {
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+        }
+
+        @keyframes lineExpand {
+            to { transform: translateX(-50%) scaleX(1); }
+        }
+
+        input[type="password"] {
+            padding: 14px 18px;
+        }
+
+        input[type="submit"] {
+            padding: 16px 30px;
+        }
+    }
+
+    /* Validation Styles */
+    .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: rgba(220, 53, 69, 0.05);
+        border-radius: 6px;
+        border-left: 3px solid #dc3545;
+        display: none;
+    }
+
+    .success-message {
+        color: #28a745;
+        font-size: 12px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: rgba(40, 167, 69, 0.05);
+        border-radius: 6px;
+        border-left: 3px solid #28a745;
+        display: none;
+    }
+
+    .error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
+    }
+
+    .success {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1) !important;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .password-strength {
+        margin-top: 10px;
+        height: 6px;
+        border-radius: 3px;
+        background: #e9ecef;
+        overflow: hidden;
+        display: none;
+    }
+
+    .strength-meter {
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease, background 0.3s ease;
+        border-radius: 3px;
+    }
+
+    .strength-weak { background: #dc3545; }
+    .strength-medium { background: #ffc107; }
+    .strength-strong { background: #28a745; }
+
+    .password-requirements {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 10px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 3px solid #667eea;
+        display: none;
+    }
+
+    .requirement {
+        margin: 6px 0;
+        padding-left: 22px;
+        position: relative;
+    }
+
+    .requirement::before {
+        content: '❌';
+        position: absolute;
+        left: 0;
+        font-size: 11px;
+    }
+
+    .requirement.valid::before {
+        content: '✅';
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 15px;
+        padding: 12px;
+        background: rgba(220, 53, 69, 0.05);
+        border-radius: 8px;
+        display: none;
+    }
+
+    .password-match {
+        font-size: 12px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        display: none;
+    }
+
+    .password-match.match {
+        color: #28a745;
+        background: rgba(40, 167, 69, 0.05);
+        border-left: 3px solid #28a745;
+    }
+
+    .password-match.mismatch {
+        color: #dc3545;
+        background: rgba(220, 53, 69, 0.05);
+        border-left: 3px solid #dc3545;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: #6c757d;
+        padding: 5px;
+        z-index: 2;
+    }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .field-wrapper {
+        position: relative;
+    }
+</style>
+</head>
+
+<body id="body1">
+<form id="passwordForm" action="/subadmin_change_password_post" method="post" onsubmit="return validatePasswordForm()">
+<table width="543" height="222" border="1">
+<caption>Change password</caption>
+  <tr>
+    <th width="202" scope="row">Current password<span class="required">*</span></th>
+    <td width="325">
+      <div class="password-wrapper">
+        <input type="password" name="textfield" id="textfield" placeholder="Enter current password" />
+        <button type="button" class="toggle-password" onclick="togglePassword('textfield', this)">👁️</button>
+      </div>
+      <div id="currentPasswordError" class="error-message">Current password is required</div>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">New password<span class="required">*</span></th>
+    <td>
+      <div class="password-wrapper">
+        <input type="password" name="textfield2" id="textfield2" placeholder="Enter new password" />
+        <button type="button" class="toggle-password" onclick="togglePassword('textfield2', this)">👁️</button>
+      </div>
+      <div id="newPasswordError" class="error-message"></div>
+
+      <!-- Password Strength Meter -->
+      <div class="password-strength" id="passwordStrength">
+        <div id="strengthMeter" class="strength-meter"></div>
+      </div>
+
+      <!-- Password Requirements -->
+      <div class="password-requirements" id="passwordRequirements">
+        <div class="requirement" id="reqLength">At least 8 characters</div>
+        <div class="requirement" id="reqUppercase">At least one uppercase letter</div>
+        <div class="requirement" id="reqLowercase">At least one lowercase letter</div>
+        <div class="requirement" id="reqNumber">At least one number</div>
+        <div class="requirement" id="reqSpecial">At least one special character</div>
+        <div class="requirement" id="reqNoSpaces">No spaces allowed</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">Confirm password<span class="required">*</span></th>
+    <td>
+      <div class="password-wrapper">
+        <input type="password" name="textfield3" id="textfield3" placeholder="Confirm new password" />
+        <button type="button" class="toggle-password" onclick="togglePassword('textfield3', this)">👁️</button>
+      </div>
+      <div id="confirmPasswordError" class="error-message"></div>
+      <div id="passwordMatch" class="password-match"></div>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="2" scope="row">
+      <input type="submit" name="button" id="button" value="Change Password" />
+      <div id="formError" class="form-error"></div>
+    </th>
+  </tr>
+</table>
+</form>
+
+<script>
+    // Password validation rules
+    const passwordRules = {
+        minLength: 8,
+        maxLength: 32,
+        requireUppercase: true,
+        requireLowercase: true,
+        requireNumber: true,
+        requireSpecial: true,
+        allowSpaces: false
+    };
+
+    // Toggle password visibility
+    function togglePassword(fieldId, button) {
+        const field = document.getElementById(fieldId);
+        if (field.type === 'password') {
+            field.type = 'text';
+            button.textContent = '🙈';
+        } else {
+            field.type = 'password';
+            button.textContent = '👁️';
+        }
+    }
+
+    // Check password strength
+    function checkPasswordStrength(password) {
+        let score = 0;
+        const meter = document.getElementById('strengthMeter');
+        const requirements = {
+            length: password.length >= passwordRules.minLength,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /[0-9]/.test(password),
+            special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+            noSpaces: !/\s/.test(password)
+        };
+
+        // Update requirement indicators
+        document.getElementById('reqLength').className = requirements.length ? 'requirement valid' : 'requirement';
+        document.getElementById('reqUppercase').className = requirements.uppercase ? 'requirement valid' : 'requirement';
+        document.getElementById('reqLowercase').className = requirements.lowercase ? 'requirement valid' : 'requirement';
+        document.getElementById('reqNumber').className = requirements.number ? 'requirement valid' : 'requirement';
+        document.getElementById('reqSpecial').className = requirements.special ? 'requirement valid' : 'requirement';
+        document.getElementById('reqNoSpaces').className = requirements.noSpaces ? 'requirement valid' : 'requirement';
+
+        // Calculate score
+        if (requirements.length) score++;
+        if (requirements.uppercase) score++;
+        if (requirements.lowercase) score++;
+        if (requirements.number) score++;
+        if (requirements.special) score++;
+        if (requirements.noSpaces) score++;
+
+        // Show/hide strength meter and requirements
+        const strengthDiv = document.getElementById('passwordStrength');
+        const requirementsDiv = document.getElementById('passwordRequirements');
+        if (password.length > 0) {
+            strengthDiv.style.display = 'block';
+            requirementsDiv.style.display = 'block';
+        } else {
+            strengthDiv.style.display = 'none';
+            requirementsDiv.style.display = 'none';
+        }
+
+        // Update strength meter width and color
+        meter.className = 'strength-meter';
+        if (password.length === 0) {
+            meter.style.width = '0%';
+        } else if (score <= 2) {
+            meter.className = 'strength-meter strength-weak';
+            meter.style.width = '33%';
+        } else if (score <= 4) {
+            meter.className = 'strength-meter strength-medium';
+            meter.style.width = '66%';
+        } else {
+            meter.className = 'strength-meter strength-strong';
+            meter.style.width = '100%';
+        }
+
+        return requirements;
+    }
+
+    // Validate current password
+    function validateCurrentPassword() {
+        const currentPassword = document.getElementById('textfield');
+        const value = currentPassword.value.trim();
+
+        if (!value) {
+            showError('currentPasswordError', 'Current password is required');
+            currentPassword.classList.add('error');
+            currentPassword.classList.remove('success');
+            return false;
+        }
+
+        if (value.length < 4 || value.length > 50) {
+            showError('currentPasswordError', 'Password must be between 4 and 50 characters');
+            currentPassword.classList.add('error');
+            currentPassword.classList.remove('success');
+            return false;
+        }
+
+        clearError('currentPasswordError');
+        currentPassword.classList.remove('error');
+        currentPassword.classList.add('success');
+        return true;
+    }
+
+    // Validate new password
+    function validateNewPassword() {
+        const newPassword = document.getElementById('textfield2');
+        const value = newPassword.value.trim();
+        const requirements = checkPasswordStrength(value);
+
+        if (!value) {
+            showError('newPasswordError', 'New password is required');
+            newPassword.classList.add('error');
+            newPassword.classList.remove('success');
+            return false;
+        }
+
+        // Check length
+        if (value.length < passwordRules.minLength) {
+            showError('newPasswordError', `Password must be at least ${passwordRules.minLength} characters`);
+            newPassword.classList.add('error');
+            newPassword.classList.remove('success');
+            return false;
+        }
+
+        if (value.length > passwordRules.maxLength) {
+            showError('newPasswordError', `Password must not exceed ${passwordRules.maxLength} characters`);
+            newPassword.classList.add('error');
+            newPassword.classList.remove('success');
+            return false;
+        }
+
+        // Check requirements
+        let errorMessage = '';
+        if (passwordRules.requireUppercase && !requirements.uppercase) {
+            errorMessage = 'Password must contain at least one uppercase letter';
+        }
+        if (passwordRules.requireLowercase && !requirements.lowercase) {
+            errorMessage = 'Password must contain at least one lowercase letter';
+        }
+        if (passwordRules.requireNumber && !requirements.number) {
+            errorMessage = 'Password must contain at least one number';
+        }
+        if (passwordRules.requireSpecial && !requirements.special) {
+            errorMessage = 'Password must contain at least one special character';
+        }
+        if (!passwordRules.allowSpaces && !requirements.noSpaces) {
+            errorMessage = 'Password cannot contain spaces';
+        }
+
+        if (errorMessage) {
+            showError('newPasswordError', errorMessage);
+            newPassword.classList.add('error');
+            newPassword.classList.remove('success');
+            return false;
+        }
+
+        // Check if new password is same as current
+        const currentPassword = document.getElementById('textfield').value.trim();
+        if (value === currentPassword) {
+            showError('newPasswordError', 'New password must be different from current password');
+            newPassword.classList.add('error');
+            newPassword.classList.remove('success');
+            return false;
+        }
+
+        clearError('newPasswordError');
+        newPassword.classList.remove('error');
+        newPassword.classList.add('success');
+        return true;
+    }
+
+    // Validate confirm password
+    function validateConfirmPassword() {
+        const confirmPassword = document.getElementById('textfield3');
+        const newPassword = document.getElementById('textfield2');
+        const confirmValue = confirmPassword.value.trim();
+        const newValue = newPassword.value.trim();
+        const matchDiv = document.getElementById('passwordMatch');
+
+        if (!confirmValue) {
+            showError('confirmPasswordError', 'Please confirm your new password');
+            confirmPassword.classList.add('error');
+            confirmPassword.classList.remove('success');
+            matchDiv.style.display = 'none';
+            return false;
+        }
+
+        // Check if passwords match
+        if (confirmValue !== newValue) {
+            showError('confirmPasswordError', 'Passwords do not match');
+            confirmPassword.classList.add('error');
+            confirmPassword.classList.remove('success');
+            matchDiv.textContent = '❌ Passwords do not match';
+            matchDiv.className = 'password-match mismatch';
+            matchDiv.style.display = 'block';
+            return false;
+        }
+
+        clearError('confirmPasswordError');
+        confirmPassword.classList.remove('error');
+        confirmPassword.classList.add('success');
+        matchDiv.textContent = '✅ Passwords match';
+        matchDiv.className = 'password-match match';
+        matchDiv.style.display = 'block';
+        return true;
+    }
+
+    // Main form validation
+    function validatePasswordForm() {
+        // Clear previous errors
+        clearAllErrors();
+
+        // Validate all fields
+        const isCurrentValid = validateCurrentPassword();
+        const isNewValid = validateNewPassword();
+        const isConfirmValid = validateConfirmPassword();
+
+        // If all valid, return true to submit
+        if (isCurrentValid && isNewValid && isConfirmValid) {
+            return true;
+        }
+
+        // Show general error message
+        showFormError('Please fix the errors above before changing your password');
+        return false;
+    }
+
+    // Helper functions
+    function showError(elementId, message) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+    }
+
+    function clearError(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style.display = 'none';
+        }
+    }
+
+    function showFormError(message) {
+        const formError = document.getElementById('formError');
+        formError.textContent = message;
+        formError.style.display = 'block';
+
+        // Scroll to error
+        formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function clearAllErrors() {
+        clearError('currentPasswordError');
+        clearError('newPasswordError');
+        clearError('confirmPasswordError');
+        clearError('formError');
+    }
+
+    // Real-time validation
+    document.getElementById('textfield').addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateCurrentPassword();
+        } else {
+            clearError('currentPasswordError');
+            this.classList.remove('error', 'success');
+        }
+    });
+
+    document.getElementById('textfield2').addEventListener('input', function() {
+        const value = this.value.trim();
+        if (value.length > 0) {
+            validateNewPassword();
+            // Update confirm password validation
+            if (document.getElementById('textfield3').value.trim().length > 0) {
+                validateConfirmPassword();
+            }
+        } else {
+            clearError('newPasswordError');
+            this.classList.remove('error', 'success');
+        }
+
+        // Check password strength in real-time
+        checkPasswordStrength(value);
+    });
+
+    document.getElementById('textfield3').addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateConfirmPassword();
+        } else {
+            clearError('confirmPasswordError');
+            this.classList.remove('error', 'success');
+            document.getElementById('passwordMatch').style.display = 'none';
+        }
+    });
+
+    // Prevent form submission on Enter in input fields
+    const passwordInputs = document.querySelectorAll('input[type="password"]');
+    passwordInputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Prevent spaces in password fields
+    passwordInputs.forEach(input => {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+            }
+        });
+
+        input.addEventListener('paste', function(e) {
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            if (pastedText.includes(' ')) {
+                e.preventDefault();
+                // Remove spaces from pasted text
+                const cleanedText = pastedText.replace(/\s/g, '');
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + cleanedText + this.value.substring(end);
+                this.selectionStart = this.selectionEnd = start + cleanedText.length;
+
+                // Trigger validation
+                this.dispatchEvent(new Event('input'));
+            }
+        });
+    });
+
+    // Initialize with all fields empty
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide strength meter and requirements initially
+        document.getElementById('passwordStrength').style.display = 'none';
+        document.getElementById('passwordRequirements').style.display = 'none';
+    });
+</script>
+</body>
+</html>
+{% endblock %}

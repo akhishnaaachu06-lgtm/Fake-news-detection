@@ -1,0 +1,326 @@
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form id="form1" name="form1" method="post" action="">#}
+{##}
+{#<table width="687" height="243" border="1">#}
+{##}
+{#  <tr>#}
+{#    <th height="89" scope="row">Slno</th>#}
+{#    <td>Date</td>#}
+{#    <td>Title</td>#}
+{#    <td>News</td>#}
+{#    <td>Image</td>#}
+{#    <td>Video</td>#}
+{#  </tr>#}
+{#    {% for i in data %}#}
+{#  <tr>#}
+{#    <th height="146" scope="row">{{ forloop.counter }}</th>#}
+{#    <td>{{ i.date }}</td>#}
+{#    <td>{{ i.title }}</td>#}
+{#    <td>{{ i.newss}}</td>#}
+{#    <td><img src="{{ i.image }}" alt="" height="100" width="100"/></td>#}
+{#    <td>&nbsp; <a href="{{ i.video }}">video</a>#}
+{#    </td>#}
+{#  </tr>#}
+{#    {% endfor %}#}
+{#  #}
+{#</table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+{% extends 'subadmin/subadminindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>News Dashboard</title>
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 30px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .header p {
+        color: #7f8c8d;
+        font-size: 1.1em;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .news-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    .news-table thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .news-table th {
+        color: white;
+        font-weight: 600;
+        font-size: 1.1em;
+        padding: 20px 15px;
+        text-align: left;
+        letter-spacing: 0.5px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .news-table th:last-child {
+        border-right: none;
+    }
+
+    .news-table tbody tr {
+        border-bottom: 1px solid #eef2f7;
+        transition: all 0.3s ease;
+    }
+
+    .news-table tbody tr:hover {
+        background-color: #f8fafc;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .news-table td {
+        padding: 20px 15px;
+        color: #4a5568;
+        font-size: 1em;
+        vertical-align: top;
+    }
+
+    .news-table th:nth-child(1),
+    .news-table td:nth-child(1) {
+        width: 70px;
+        text-align: center;
+        font-weight: 600;
+        color: #667eea;
+    }
+
+    .news-table th:nth-child(2),
+    .news-table td:nth-child(2) {
+        width: 120px;
+    }
+
+    .date-cell {
+        font-weight: 500;
+        color: #718096;
+        font-size: 0.95em;
+    }
+
+    .title-cell {
+        font-weight: 600;
+        color: #2d3748;
+        max-width: 200px;
+    }
+
+    .news-content {
+        max-width: 300px;
+        line-height: 1.5;
+        color: #4a5568;
+        font-size: 0.95em;
+    }
+
+    .image-cell {
+        text-align: center;
+    }
+
+    .news-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-image:hover {
+        transform: scale(1.05);
+        border-color: #667eea;
+    }
+
+    .video-link {
+        display: inline-block;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    }
+
+    .video-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        text-decoration: none;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px;
+        color: #a0aec0;
+        font-size: 1.2em;
+    }
+
+    .empty-state i {
+        font-size: 3em;
+        margin-bottom: 20px;
+        color: #cbd5e0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .news-table {
+            min-width: 1000px;
+        }
+
+        body {
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .header p {
+            font-size: 1em;
+        }
+
+        .news-table th,
+        .news-table td {
+            padding: 15px 10px;
+            font-size: 0.9em;
+        }
+
+        .video-link {
+            padding: 6px 15px;
+            font-size: 0.85em;
+        }
+    }
+
+    .footer {
+        text-align: center;
+        color: #718096;
+        font-size: 0.9em;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+</style>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="">
+    <div class="container">
+        <div class="header">
+            <h1>📰 News Dashboard</h1>
+            <p>Comprehensive overview of all news articles</p>
+        </div>
+
+        <div class="table-container">
+            {% if data %}
+            <table class="news-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Video</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="date-cell">{{ i.date }}</td>
+                        <td class="title-cell">{{ i.title }}</td>
+                        <td class="news-content">{{ i.newss }}</td>
+                        <td class="image-cell">
+                            {% if i.image %}
+                            <img src="{{ i.image }}" alt="{{ i.title }}" class="news-image"/>
+                            {% else %}
+                            <span style="color: #a0aec0;">No Image</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if i.video %}
+                            <a href="{{ i.video }}" class="video-link" target="_blank">▶ Play</a>
+                            {% else %}
+                            <span style="color: #a0aec0;">No Video</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <div>📭</div>
+                <p>No news articles found. Start by adding some news!</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            <p>Total Articles: {{ data|length }} • Last Updated: {% now "F j, Y, g:i a" %}</p>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+{% endblock %}

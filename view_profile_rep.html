@@ -1,0 +1,333 @@
+{#{% extends 'reporter/reporterindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body><form id="form1" name="form1" method="post" action="/edit_profile_rep_post">#}
+{#  <table width="200" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Name</th>#}
+{#      <td><label for="textfield"></label>#}
+{#      <input type="text" name="textfield" id="textfield" value="{{ data.name }}"/></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#    <th scope="row">photo</th>#}
+{#    <td>#}
+{#      <label for="textfield2"></label>#}
+{#      <label for="fileField"></label>#}
+{#      <input type="file" name="fileField" id="fileField" value="{{ data.photo }}" /></td>#}
+{#  </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Phn </th>#}
+{#      <td><label for="textfield2"></label>#}
+{#      <input type="text" name="textfield2" id="textfield2" value="{{ data.phone }}" /></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th scope="row">Email</th>#}
+{#      <td><label for="textfield3"></label>#}
+{#      <input type="text" name="textfield3" id="textfield3"  value="{{ data.email }}"/></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <th colspan="2" scope="row"><input type="submit" name="button" id="button" value="edit" /></th>#}
+{#    </tr>#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+{% extends 'reporter/reporterindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit Profile - Reporter</title>
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .profile-header h2 {
+        color: #2c3e50;
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+    }
+
+    .profile-header p {
+        color: #7f8c8d;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .file-upload-container {
+        border: 2px dashed #bdc3c7;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+        transition: all 0.3s;
+    }
+
+    .file-upload-container:hover {
+        border-color: #3498db;
+        background-color: #f0f8ff;
+    }
+
+    .file-upload-label {
+        display: block;
+        cursor: pointer;
+        color: #7f8c8d;
+        font-size: 16px;
+    }
+
+    .file-upload-label span {
+        display: block;
+        margin-top: 8px;
+        font-size: 14px;
+        color: #95a5a6;
+    }
+
+    .current-photo-info {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #7f8c8d;
+        font-style: italic;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        border: none;
+        padding: 16px 32px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #2980b9, #1c6ea4);
+        box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+    }
+
+    .form-col {
+        flex: 1;
+        padding: 0 15px;
+        min-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+        .profile-container {
+            padding: 25px;
+            margin: 20px;
+        }
+
+        .form-col {
+            min-width: 100%;
+        }
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7f8c8d;
+    }
+
+    .input-icon input {
+        padding-left: 45px;
+    }
+</style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>Edit Your Profile</h2>
+            <p>Update your personal information and profile photo</p>
+        </div>
+
+        <form id="form1" name="form1" method="post" action="/edit_profile_rep_post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="textfield">Full Name</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="textfield" id="textfield" class="form-control" value="{{ data.name }}" placeholder="Enter your full name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="textfield2">Phone Number</label>
+                        <div class="input-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="text" name="textfield2" id="textfield2" class="form-control" value="{{ data.phone }}" placeholder="Enter your phone number"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="textfield3">Email Address</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" name="textfield3" id="textfield3" class="form-control" value="{{ data.email }}" placeholder="Enter your email address"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Profile Photo</label>
+                        <div class="file-upload-container">
+                            <label for="fileField" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #3498db; margin-bottom: 10px;"></i>
+                                <div>Click to upload a new photo</div>
+                                <span>JPEG, PNG or GIF (Max 5MB)</span>
+                                <input type="file" name="fileField" id="fileField" style="display: none;" onchange="previewFile()"/>
+                            </label>
+                        </div>
+                        <div class="current-photo-info">
+                            {% if data.photo %}
+                            Current photo: {{ data.photo }}
+                            {% else %}
+                            No photo uploaded yet
+                            {% endif %}
+                        </div>
+                        <div id="filePreview" style="margin-top: 15px; display: none;">
+                            <img id="previewImage" src="" alt="Preview" style="max-width: 150px; border-radius: 8px; border: 1px solid #ddd;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name="button" id="button" class="submit-btn" value="Update Profile" />
+            </div>
+        </form>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        function previewFile() {
+            const preview = document.getElementById('previewImage');
+            const filePreview = document.getElementById('filePreview');
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                filePreview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+                filePreview.style.display = 'none';
+            }
+        }
+
+        // Form validation
+        document.getElementById('form1').addEventListener('submit', function(event) {
+            const name = document.getElementById('textfield').value.trim();
+            const phone = document.getElementById('textfield2').value.trim();
+            const email = document.getElementById('textfield3').value.trim();
+
+            if (!name) {
+                alert('Please enter your name');
+                event.preventDefault();
+                return;
+            }
+
+            if (!phone) {
+                alert('Please enter your phone number');
+                event.preventDefault();
+                return;
+            }
+
+            if (!email) {
+                alert('Please enter your email address');
+                event.preventDefault();
+                return;
+            }
+
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                event.preventDefault();
+                return;
+            }
+
+            // If everything is valid, show a confirmation message
+            alert('Profile updated successfully!');
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

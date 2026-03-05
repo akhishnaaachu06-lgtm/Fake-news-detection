@@ -1,0 +1,774 @@
+{#{% extends 'reporter/reporterindex.html' %}#}
+{#{% block body %}#}
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml">#}
+{#<head>#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Untitled Document</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<form id="form1" name="form1" method="post" action="">#}
+{#  <table width="718" height="460" border="1">#}
+{#    <tr>#}
+{#      <th scope="row">Slno</th>#}
+{#      <th>user</th>#}
+{#      <th>news</th>#}
+{#      <th>like/comment</th>#}
+{#      <th>date</th>#}
+{#    </tr>#}
+{#      {% for i in data %}#}
+{#    <tr>#}
+{#      <th scope="row">{{ forloop.counter }}</th>#}
+{#      <td>{{ i.USER.name }}<br>{{i.USER.email }}<br>{{ i.USER.phone }}<br>{{ i.AREA.district}}</td>#}
+{#      <td>&nbsp;{{ i.NEWS.title }}<br>{{ i.NEWS.newss }}<br>{{ i.NEWS.image }}<br>{{ i.NEWS.video }}</td>#}
+{#      <td>{{ i.like_comment }}</td>#}
+{#      <td>{{ i.date }}</td>#}
+{#    </tr>#}
+{#      {% endfor %}#}
+{#  </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+
+
+{% extends 'reporter/reporterindex.html' %}
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>User Feedback Dashboard</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .feedback-container {
+        padding: 30px;
+        background-color: #f8fafc;
+        min-height: 100vh;
+    }
+
+    .dashboard-header {
+        margin-bottom: 35px;
+    }
+
+    .page-title {
+        font-size: 32px;
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .page-title i {
+        color: #3498db;
+    }
+
+    .page-subtitle {
+        color: #718096;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+
+    .stats-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-bottom: 35px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #3498db;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card:nth-child(2) {
+        border-left-color: #2ecc71;
+    }
+
+    .stat-card:nth-child(3) {
+        border-left-color: #e74c3c;
+    }
+
+    .stat-card:nth-child(4) {
+        border-left-color: #f39c12;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .feedback-table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        overflow-x: auto;
+    }
+
+    .feedback-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1200px;
+    }
+
+    .feedback-table thead {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+    }
+
+    .feedback-table thead th {
+        color: white;
+        font-weight: 600;
+        text-align: left;
+        padding: 20px;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+    .feedback-table thead th i {
+        margin-right: 8px;
+    }
+
+    .feedback-table tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+        transition: all 0.2s ease;
+    }
+
+    .feedback-table tbody tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .feedback-table tbody td {
+        padding: 20px;
+        color: #4a5568;
+        vertical-align: top;
+        border: none;
+    }
+
+    .feedback-table tbody th {
+        padding: 20px;
+        font-weight: 600;
+        color: #3498db;
+        font-size: 16px;
+        border: none;
+        text-align: center;
+    }
+
+    .user-info {
+        background: #f0f8ff;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+    }
+
+    .user-name {
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 16px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .user-detail {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #5a6c7d;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .user-detail i {
+        color: #3498db;
+        width: 16px;
+    }
+
+    .news-info {
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #2ecc71;
+    }
+
+    .news-title {
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 16px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .news-content {
+        color: #5a6c7d;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        max-height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .news-media {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .media-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #718096;
+        font-size: 13px;
+        background: #edf2f7;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+
+    .feedback-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: capitalize;
+    }
+
+    .feedback-type.like {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: #27ae60;
+        border: 1px solid rgba(46, 204, 113, 0.2);
+    }
+
+    .feedback-type.comment {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: #2980b9;
+        border: 1px solid rgba(52, 152, 219, 0.2);
+    }
+
+    .feedback-type.both {
+        background-color: rgba(155, 89, 182, 0.1);
+        color: #8e44ad;
+        border: 1px solid rgba(155, 89, 182, 0.2);
+    }
+
+    .date-cell {
+        color: #718096;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .date-cell i {
+        margin-right: 8px;
+        color: #3498db;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #a0aec0;
+    }
+
+    .empty-state i {
+        font-size: 70px;
+        margin-bottom: 25px;
+        color: #cbd5e0;
+    }
+
+    .empty-state h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #718096;
+    }
+
+    .empty-state p {
+        font-size: 16px;
+        max-width: 500px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 8px;
+    }
+
+    .pagination-btn {
+        padding: 8px 14px;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        color: #4a5568;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .pagination-btn:hover {
+        background-color: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+
+    .pagination-btn.active {
+        background-color: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+
+    .export-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #2ecc71;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .export-btn:hover {
+        background: #27ae60;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+    }
+
+    .filters {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        padding: 12px 20px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        background: white;
+        font-size: 14px;
+        color: #4a5568;
+        min-width: 180px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    @media (max-width: 1200px) {
+        .feedback-container {
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 28px;
+        }
+
+        .feedback-table thead th {
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .feedback-table tbody td,
+        .feedback-table tbody th {
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .feedback-container {
+            padding: 15px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .stats-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .filters {
+            flex-direction: column;
+        }
+
+        .filter-select {
+            min-width: 100%;
+        }
+
+        .table-footer {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="feedback-container">
+        <div class="dashboard-header">
+            <h1 class="page-title">
+                <i class="fas fa-comments"></i> User Feedback
+            </h1>
+            <p class="page-subtitle">Monitor user interactions, likes, and comments on your news articles</p>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value">{{ data|length }}</div>
+                    <div class="stat-label">Total Interactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ data|length|default:"0" }}</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{% widthratio data|length 1 1 %}</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Engagement Rate</div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <select class="filter-select" onchange="filterFeedback(this.value)">
+                    <option value="all">All Feedback Types</option>
+                    <option value="like">Likes Only</option>
+                    <option value="comment">Comments Only</option>
+                    <option value="both">Both Like & Comment</option>
+                </select>
+
+                <select class="filter-select" onchange="filterByDate(this.value)">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+
+                <select class="filter-select" onchange="sortFeedback(this.value)">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="likes">Most Likes</option>
+                    <option value="comments">Most Comments</option>
+                </select>
+            </div>
+        </div>
+
+        <form id="form1" name="form1" method="post" action="">
+            <div class="feedback-table-container">
+                {% if data %}
+                <table class="feedback-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-hashtag"></i> SL No</th>
+                            <th><i class="fas fa-user"></i> User Details</th>
+                            <th><i class="fas fa-newspaper"></i> News Article</th>
+                            <th><i class="fas fa-heart"></i> Like/Comment</th>
+                            <th><i class="fas fa-calendar"></i> Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-name">
+                                        <i class="fas fa-user-circle"></i> {{ i.USER.name }}
+                                    </div>
+                                    <div class="user-detail">
+                                        <i class="fas fa-envelope"></i> {{ i.USER.email }}
+                                    </div>
+                                    <div class="user-detail">
+                                        <i class="fas fa-phone"></i> {{ i.USER.phone }}
+                                    </div>
+                                    <div class="user-detail">
+                                        <i class="fas fa-map-marker-alt"></i> {{ i.AREA.district }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="news-info">
+                                    <div class="news-title">
+                                        <i class="fas fa-heading"></i> {{ i.NEWS.title }}
+                                    </div>
+                                    <div class="news-content">
+                                        {{ i.NEWS.newss|truncatechars:150 }}
+                                    </div>
+                                    <div class="news-media">
+                                        {% if i.NEWS.image %}
+                                        <span class="media-item">
+                                            <i class="fas fa-image"></i> Has Image
+                                        </span>
+                                        {% endif %}
+                                        {% if i.NEWS.video %}
+                                        <span class="media-item">
+                                            <i class="fas fa-video"></i> Has Video
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="feedback-type
+                                    {% if 'like' in i.like_comment|lower and 'comment' in i.like_comment|lower %}both
+                                    {% elif 'like' in i.like_comment|lower %}like
+                                    {% elif 'comment' in i.like_comment|lower %}comment
+                                    {% else %}comment{% endif %}">
+                                    <i class="fas
+                                        {% if 'like' in i.like_comment|lower and 'comment' in i.like_comment|lower %}fa-star
+                                        {% elif 'like' in i.like_comment|lower %}fa-heart
+                                        {% elif 'comment' in i.like_comment|lower %}fa-comment
+                                        {% else %}fa-comment{% endif %}"></i>
+                                    {{ i.like_comment }}
+                                </div>
+                            </td>
+                            <td class="date-cell">
+                                <i class="fas fa-clock"></i> {{ i.date }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <div class="pagination">
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+
+                    <div style="color: #718096; font-size: 14px;">
+                        Showing {{ data|length }} of {{ data|length }} feedback entries
+                    </div>
+
+                    <button class="export-btn" onclick="exportFeedback()">
+                        <i class="fas fa-download"></i> Export Report
+                    </button>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="far fa-comment-dots"></i>
+                    <h3>No Feedback Yet</h3>
+                    <p>User feedback will appear here once readers start interacting with your news articles. Share your articles to encourage engagement.</p>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        // Filter feedback by type
+        function filterFeedback(type) {
+            const rows = document.querySelectorAll('.feedback-table tbody tr');
+            rows.forEach(row => {
+                const feedbackType = row.querySelector('.feedback-type').textContent.toLowerCase();
+                const showRow = type === 'all' ||
+                    (type === 'like' && feedbackType.includes('like')) ||
+                    (type === 'comment' && feedbackType.includes('comment')) ||
+                    (type === 'both' && feedbackType.includes('like') && feedbackType.includes('comment'));
+
+                row.style.display = showRow ? '' : 'none';
+            });
+
+            // Update count
+            updateVisibleCount();
+        }
+
+        // Filter by date (mock function - would need real date logic)
+        function filterByDate(range) {
+            // This is a mock implementation
+            // In a real app, you would make an AJAX request or filter based on actual dates
+            alert('Date filtering would require server-side implementation or more complex client-side date parsing');
+        }
+
+        // Sort feedback
+        function sortFeedback(order) {
+            const tbody = document.querySelector('.feedback-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                if (order === 'newest') {
+                    // Sort by date descending
+                    const dateA = a.querySelector('.date-cell').textContent;
+                    const dateB = b.querySelector('.date-cell').textContent;
+                    return new Date(dateB) - new Date(dateA);
+                } else if (order === 'oldest') {
+                    // Sort by date ascending
+                    const dateA = a.querySelector('.date-cell').textContent;
+                    const dateB = b.querySelector('.date-cell').textContent;
+                    return new Date(dateA) - new Date(dateB);
+                }
+                // For likes/comments, you would need to parse the values
+                return 0;
+            });
+
+            // Reorder rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Update visible count
+        function updateVisibleCount() {
+            const visibleRows = document.querySelectorAll('.feedback-table tbody tr[style=""]').length +
+                              document.querySelectorAll('.feedback-table tbody tr:not([style])').length;
+            const totalRows = document.querySelectorAll('.feedback-table tbody tr').length;
+
+            const countElement = document.querySelector('.table-footer div:nth-child(2)');
+            if (countElement) {
+                countElement.textContent = `Showing ${visibleRows} of ${totalRows} feedback entries`;
+            }
+        }
+
+        // Export feedback report
+        function exportFeedback() {
+            // Create a simple CSV export
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "SL No,User Name,User Email,User Phone,District,News Title,Feedback Type,Date\n";
+
+            document.querySelectorAll('.feedback-table tbody tr').forEach((row, index) => {
+                if (row.style.display !== 'none') {
+                    const cells = row.querySelectorAll('td');
+                    const userInfo = cells[0].querySelector('.user-info');
+                    const newsInfo = cells[1].querySelector('.news-info');
+                    const feedbackType = cells[2].querySelector('.feedback-type').textContent;
+                    const date = cells[3].textContent.trim();
+
+                    const userName = userInfo.querySelector('.user-name').textContent.replace(' ', '');
+                    const userEmail = userInfo.querySelectorAll('.user-detail')[0].textContent.replace(' ', '');
+                    const userPhone = userInfo.querySelectorAll('.user-detail')[1].textContent.replace(' ', '');
+                    const district = userInfo.querySelectorAll('.user-detail')[2].textContent.replace(' ', '');
+                    const newsTitle = newsInfo.querySelector('.news-title').textContent.replace(' ', '');
+
+                    csvContent += `${index + 1},"${userName}","${userEmail}","${userPhone}","${district}","${newsTitle}","${feedbackType}","${date}"\n`;
+                }
+            });
+
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `feedback_report_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Show success message
+            showNotification('Feedback report exported successfully!', 'success');
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#2ecc71' : '#3498db'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideInUp 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add CSS animation for notification
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInUp {
+                from {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize filters
+        document.addEventListener('DOMContentLoaded', function() {
+            updateVisibleCount();
+        });
+    </script>
+</body>
+</html>
+{% endblock %}
